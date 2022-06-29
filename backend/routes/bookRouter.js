@@ -12,9 +12,9 @@ router.get("", async (request, response) => {
       title: "The Bone Witch",
       series: "The Bone Witch Trilogy (Book 1)",
       author: "Rin Chupeco",
-      description: `"A high-fantasy Memoirs of a Geisha, Chupeco's latest excels in originality" ―Kirkus Reviews\n
+      description: `"A high-fantasy Memoirs of a Geisha, Chupeco's latest excels in originality" ―Kirkus Reviews
 
-      A story of\n scorned witches, sinister curses, and resurrection, The Bone Witch is the start of a dark fantasy trilogy, perfect for fans of Serpent & Dove and The Cruel Prince.
+      A story of scorned witches, sinister curses, and resurrection, The Bone Witch is the start of a dark fantasy trilogy, perfect for fans of Serpent & Dove and The Cruel Prince.
       
       Tea can raise the dead, but resurrection comes at a price...
       
