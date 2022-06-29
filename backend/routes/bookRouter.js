@@ -12,38 +12,27 @@ router.get("", async (request, response) => {
       title: "The Bone Witch",
       series: "The Bone Witch Trilogy (Book 1)",
       author: "Rin Chupeco",
-      description: `"A high-fantasy Memoirs of a Geisha, Chupeco's latest excels in originality" ―Kirkus Reviews
+      description: `<b>A story of scorned witches, sinister curses, and resurrection, The Bone Witch is the start of a dark fantasy trilogy, perfect for fans of Serpent & Dove and The Cruel Prince.</b><br><br>
 
-      A story of scorned witches, sinister curses, and resurrection, The Bone Witch is the start of a dark fantasy trilogy, perfect for fans of Serpent & Dove and The Cruel Prince.
-      
-      Tea can raise the dead, but resurrection comes at a price...
-      
-      When Tea accidentally resurrects her brother, Fox, from the dead, she learns she is different from the other witches in her family. Her gift for necromancy means that she's a bone witch, a title that makes her feared and ostracized by her community. But Tea finds solace and guidance with an older, wiser bone witch, who takes Tea and her brother to another land for training.
-      
-      In her new home, Tea puts all her energy into becoming an asha―one who can wield elemental magic. But dark forces are approaching quickly, and in the face of danger, Tea will have to overcome her obstacles...and make a powerful choice.
-      
-      Riveting and atmospheric, The Bone Witch is perfect for readers looking for
-      
-      witch novels for adults and teens
-      stories with diverse representation and multicultural influences
-      dark fantasy YA books and series
-      original worldbuilding and captivating writing
-      Praise for The Bone Witch:
-      
-      "A fantasy lover's fantasy" ―Foreword Reviews
-      
-      "Mesmerizing. Chupeco (The Suffering) does a magnificent job of balancing an intimate narrative perspective with sweeping worldbuilding, crafting her tale within a multicultural melting pot of influences as she presses toward a powerful cliffhanger."―Publishers Weekly, STARRED Review
-      
-      "Chupeco delights us with a fascinating world and a rich atmosphere for a story that is exceptionally written from beginning to end."―Buzzfeed
-      
-      "Readers who enjoy immersing themselves in detail will revel in Chupeco's finely wrought tale. Game of Thrones fans may see shades of Daenerys Targaryen in Tea, as she gathers a daeva army to unleash upon the world. Whether she is in the right remains a question unanswered, but the ending makes it clear her story is only beginning." ―Booklist
-      
-      The Bone Witch Trilogy:
-      
-      The Bone Witch (Book 1)
-      
-      The Heart Forger (Book 2)
-      
+      Tea can raise the dead, but resurrection comes at a price...<br><br>
+
+      When Tea accidentally resurrects her brother, Fox, from the dead, she learns she is different from the other witches in her family. Her gift for necromancy means that she's a bone witch, a title that makes her feared and ostracized by her community. But Tea finds solace and guidance with an older, wiser bone witch, who takes Tea and her brother to another land for training.<br><br>
+
+      In her new home, Tea puts all her energy into becoming an asha―one who can wield elemental magic. But dark forces are approaching quickly, and in the face of danger, Tea will have to overcome her obstacles...and make a powerful choice.<br><br>
+
+      <b>Riveting and atmospheric, The Bone Witch is perfect for readers looking for:</b><br><br>
+
+      <b>* Witch novels for adults and teens</b><br>
+      <b>* Stories with diverse representation and multicultural influences</b><br>
+      <b>* Dark fantasy YA books and series</b><br>
+      <b>* Original worldbuilding and captivating writing</b><br><br>
+
+      The Bone Witch Trilogy:<br><br>
+
+      The Bone Witch (Book 1)<br>
+
+      The Heart Forger (Book 2)<br>
+
       The Shadowglass (Book 3)`
     });
   
