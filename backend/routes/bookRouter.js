@@ -2,9 +2,9 @@
 const express = require('express');
 let router = express.Router();
 
-const bookClass = require("../modules/bookModel")
+const bookClass = require("../schema/bookSchema")
 
-
+// we are at /books
 router.get("", async (request, response) => {
     const bookObject = await new bookClass({
       image: "https://images-na.ssl-images-amazon.com/images/I/51AeBkt5xaL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",

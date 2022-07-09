@@ -19,12 +19,6 @@ export default {
 
 <style>
 
-
-body {
-  margin: 0;
-
-}
-
 #app {
     margin: 0;
       background-image: linear-gradient(to bottom right, 

@@ -1,14 +1,14 @@
 <template>
     <div class="socialMedia">
-        <a href="https://www.facebook.com/groups/ggfiction" target="_blank" rel="noopener noreferrer" class="icon facebook">
+        <a href="#needalink" target="_blank" rel="noopener noreferrer" class="icon facebook">
             <div class="tooltip">Facebook</div>
             <span><i class="fab fa-facebook-f"></i></span>
         </a>
-        <a href="https://discord.gg/cpdfHTRSw9" target="_blank" rel="noopener noreferrer" class="icon discord">
+        <a href="#needalink" target="_blank" rel="noopener noreferrer" class="icon discord">
             <div class="tooltip">Discord</div>
             <span><i class="fab fa-discord"></i></span>
         </a>
-        <a href="https://www.instagram.com/ggfiction/" target="_blank" rel="noopener noreferrer" class="icon instagram">
+        <a href="#needalink" target="_blank" rel="noopener noreferrer" class="icon instagram">
             <div class="tooltip">Instagram</div>
             <span><i class="fab fa-instagram"></i></span>
         </a>

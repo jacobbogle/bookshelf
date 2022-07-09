@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "@/views/Home-page.vue";
 import Books from "@/views/Books-page.vue";
 import About from "@/views/About-page.vue";
-import Arcade from "@/views/Arcade-page.vue";
+import Search from "@/views/Arcade-page.vue";
 
 
 
@@ -23,9 +23,9 @@ const routes = [
     component: Books,
   },
   {
-    path: "/arcade",
-    name: "Arcade",
-    component: Arcade,
+    path: "/search",
+    name: "Search",
+    component: Search,
   },
 ];
 

@@ -1,7 +1,7 @@
 <template>
   <header>
     <Nav/>
-    <h1><router-link to="/">GG Fiction</router-link></h1>
+    <h1><router-link to="/">Bookshelf</router-link></h1>
   </header>
 </template>
 

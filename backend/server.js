@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config({path:'../.env'})
 const express = require("express");
 const mongoose = require('mongoose');
 const app = express()
@@ -11,6 +11,7 @@ app.use(cors());
 //Routes
 const booksRoute = require("./routes/bookRouter")
 app.use("/books", booksRoute)
+
 
 //Set up default mongoose connection
 const mongoDB = process.env.SERVER_URL;

@@ -6,7 +6,7 @@
                   <router-link @click="closeMenu" to="/"><span>Home</span></router-link>
                   <router-link @click="closeMenu" to="/about"><span>About</span></router-link>
                   <router-link @click="closeMenu" to="/books"><span>Books</span></router-link>
-                  <router-link @click="closeMenu" to="/arcade"><span>Arcade</span></router-link>
+                  <router-link @click="closeMenu" to="/search"><span>Search</span></router-link>
                 </slot>
             </nav>
             <span class="bm-cross-button cross-style" @click="closeMenu" :class="{ hidden: !crossIcon }">
