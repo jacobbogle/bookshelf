@@ -13,7 +13,7 @@ SERVER_URL = <replace me with mongodb-url>
 
 PORT = 3000
 ```
-## api.config.json
+## api.config.json file
 ```
 {
     "API_KEY": <replace me with google api key>
