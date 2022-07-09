@@ -4,7 +4,7 @@
 ```
 npm install
 ```
-## files to change
+## files to add
 make sure there is a .env file in the root with your mondoDB-url set to SERVER_URL and sever port set to PORT. Then make a api.config.json file in root and asign the google api kei to API_KEY.
 
 ## .env file
