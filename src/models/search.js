@@ -7,7 +7,7 @@ const googleApiKey = api["API_KEY"]
 const googleBooksURL = 'https://www.googleapis.com/books/v1'
 
 
-const Search = () => {
+const SearchBar = () => {
 
     const state = ref({
         searchTitle: '',
@@ -53,4 +53,4 @@ const Search = () => {
     }
 }
 
-export default Search
+export default SearchBar
