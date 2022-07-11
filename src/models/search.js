@@ -60,9 +60,10 @@ const SearchBar = () => {
   };
 
   const postBook = async function (index) {
-    console.log("POSTING BOOK", state.value.books.items[index]);
+    let book = state.value.books.items[index];
+    console.log("POSTING BOOK", book);
     console.log(
-      "DESCRIPTIOPN:",
+      "DESCRIPTION:",
       state.value.books.items[index].searchInfo.textSnippet
     );
     let newBook = {

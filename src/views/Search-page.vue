@@ -52,7 +52,7 @@
             <!-- button to add to database -->
             <button @click="postBook(index)">Save Book</button>
 
-            <p :value="`${index}`">{{ book.searchInfo.textSnippet }}</p>
+            <p v-html="book.searchInfo.textSnippet" :value="`${index}`"></p>
           </div>
         </div>
       </div>
