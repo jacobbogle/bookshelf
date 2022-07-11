@@ -13,9 +13,9 @@ const SearchBar = () => {
         searchTitle: '',
         searchAuthor: '',
         searchISBN: '',
-        books: ''
+        bookObject: {},
+        books: {}
     })
-
     //makes the querystring and adds the needed api string for the GET of google books api
     //example : [?q=<searchTitle>&key=<googleApiKey>]
     //this needs to be appended to the url
@@ -24,28 +24,47 @@ const SearchBar = () => {
         let key = googleApiKey
         return ('?q=' + title + '&key=' + key)
     }
-    
+
+
+    async function setBetterObject(response) {
+        try {
+            let newObject = []
+            for (let i = 0; i < 10; i++) {
+                await fetch(String(response.items[i].selfLink)).then(
+                    res => res.json()
+                ).then(
+                    data => {
+                        newObject.push(data)
+                    }
+                )
+            }
+            state.value.bookObject = newObject
+        } catch (err) {
+            console.log(err) 
+        }
+    }
+
+
     //returns a json file of related books from searchTitle
     const searchByTitle = async () => {
         try {
             let URLSTRING = urlString()
             await fetch(googleBooksURL + "/volumes" + URLSTRING).then(
-                res => res.json()
+                res => {
+                    let response = res.json()
+                    return response
+                }
             ).then(
                 data => {
                     state.value.books = data
                 }
             )
-            //show books
-            console.log(state.value.books)
-
-            //pulls a* isbn
-            console.log(state.value.books.items[1].volumeInfo.industryIdentifiers[0].identifier)   
+            setBetterObject(state.value.books)
         } catch (err) {
-            //response.status(500).send(err);
             console.log(err) 
         }
     }
+
 
     return {
         state,

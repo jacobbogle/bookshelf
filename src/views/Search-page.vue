@@ -1,23 +1,23 @@
 <template>
 <div id="wrapper">
-  <div id="searchSection">
+  <div ref="test" id="searchSection">
     <h1>Search Page</h1>
     <input type="text" placeholder="Search" @keyup.enter="searchByTitle()" v-model="state.searchTitle">
-    <button v-on:click="searchByTitle()">Search</button>
+    <button v-on:click="searchByTitle(), countLoop()">Search</button>
   </div>
   <br>
-  <div id="bookCollection">
-    <div class="book-recommend" v-for="(book, index) in state.books.items" :key="index">
-      <div ref="bookBox" class="book-box">
-        <img class="bookImage" :src="`${book.volumeInfo.imageLinks.thumbnail}`" :alt="`${book.volumeInfo.title}`">
+  <div id="bookCollection" @change="countLoop()">
+    <div class="book-recommend" v-for="(book, index) in state.books.items" :key="index" @show="countLoop()">
+      <div :value="`${index}`" ref="bookBox" class="book-box">
+        <img ref="bookImage" :value="`${index}`" class="book-image" :src="`${book.volumeInfo.imageLinks.thumbnail}`" />
       </div>
-      <div ref="bookContent" class="book-content" style=" visibility: visible;">
-        <div class="text-content">
+      <div :value="`${index}`" style=" visibility: hidden;" ref="bookContent" class="book-content">
+        <div :value="`${index}`" class="text-content">
           <h2>{{book.volumeInfo.title}}</h2><!-- Book Title -->
           <h3>Rating: {{numGive(book.volumeInfo.averageRating)}}</h3><!-- Book Series Name -->
           <h4>By: {{textGive(book.volumeInfo.authors)}}</h4><!-- Author's Name -->
-          <a ref="amazon" class="Amazon" :href="`${book.volumeInfo.infoLink}`" target="_blank" rel="noopener noreferrer">Google Link</a><!-- Product Link -->
-          <p>{{book.searchInfo.textSnippet}}</p>
+          <a :value="`${index}`" ref="amazon" class="Amazon" :href="`${book.volumeInfo.infoLink}`" target="_blank" rel="noopener noreferrer">Google Link</a><!-- Product Link -->
+          <p :value="`${index}`">{{book.searchInfo.textSnippet}}</p>
         </div>
       </div>
     </div>
@@ -34,10 +34,32 @@ export default {
   },
   data() {
     return {
-      isBookContentOpen: false
+      isBookContentOpen: {
+        0: false,
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false,
+        9: false
+      },
+      forLoopCount: 0
       };
   },
   methods: {
+    countLoop() {
+      console.log('work')
+      console.log(this.forLoopCount)
+      this.forLoopCount += 1
+      if (this.forLoopCount === 10) {
+        this.bookImageSetter()
+        this.forLoopCount = 0
+      }
+        
+    },
     textGive(text) {
       try {
         let goodText = text.join(' ')
@@ -46,7 +68,7 @@ export default {
         return "N/A"
       }   
     },
-    numGive(num){
+    numGive(num) {
       try {
         if (num > 0) {
           return num + " // 5"
@@ -57,7 +79,91 @@ export default {
         return "N/A"
       }
     },
-  }
+    async bookImageSetter() {
+      try {
+        let response = await this.state.books
+        console.log(response)
+        let newObject = []
+        for (let i = 0; i < 10; i++) {
+          await fetch(String(response.items[i].selfLink)).then(
+            res => res.json()
+          ).then(
+            data => {
+              if (data.volumeInfo.imageLinks.small === 'undefined') {
+                null
+              } else {
+                this.$refs.bookImage[i].target.attributes[1].value = String(data.volumeInfo.imageLinks.small)
+              }
+            }
+          )
+        }
+        // for (let i = 0; i < 10; i++) {
+
+        // }
+        console.log(newObject)
+        } catch (err) {
+          console.log(err) 
+        }
+    },
+    openBookContent(index) {
+      this.$emit('openBookContent');
+      this.isBookContentOpen[index] = true;
+      if (window.innerWidth <= 684) {
+        this.$refs.bookContent[index].style.height = '390px';
+      } else {
+        this.$refs.bookContent[index].style.width = '256px';
+      }
+      this.$refs.bookContent[index].style.visibility = "visible";
+      this.$refs.amazon[index].style.visibility = "visible";
+      //this.$refs.bookContent.style.paddingLeft = '10px';
+    },
+    closeBookContent(index) {
+      this.isBookContentOpen[index] = false;
+      this.$emit('closeBookContent');
+      if (window.innerWidth <= 684) {
+        this.$refs.bookContent[index].style.width = '256px';
+        this.$refs.bookContent[index].style.height = '0px';
+      } else {
+      this.$refs.bookContent[index].style.width = '0px';
+      }
+      //this.$refs.bookContent.style.paddingLeft = '0px';
+      this.$refs.amazon[index].style.visibility = "hidden";
+      this.$refs.bookContent[index].style.visibility = "hidden";
+    },
+    documentClick(click) {
+      try {
+        let IndexOfClicked = click.target.__vnode.props.value
+        let book = this.$refs.bookBox[IndexOfClicked]
+        let bookCont = this.$refs.bookContent[IndexOfClicked]
+        let target = click.path[0]
+        if (
+          !book.contains(target) &&
+          !bookCont.contains(target)
+        ) {
+          this.closeBookContent(IndexOfClicked)
+        } else if (
+          book.contains(target)
+        ) {
+          if (this.isBookContentOpen[IndexOfClicked] === false) {
+            this.openBookContent(IndexOfClicked);
+          } else if (this.isBookContentOpen[IndexOfClicked] === true) {
+            this.closeBookContent(IndexOfClicked)
+          }
+        } 
+      } catch (err) {
+        console.log(err)
+        for (let i = 0; i < 10; i++) {
+          this.closeBookContent(i)
+        }
+      }
+    }
+  },
+  created: function() {
+    document.addEventListener('click', this.documentClick);
+  },
+  unmounted: function() {
+    document.removeEventListener('click', this.documentClick);
+  },
 }
 </script>
 
@@ -65,24 +171,8 @@ export default {
 @import "../book-objects/style.css";
 
 
-@media only screen and (max-width: 684px) {
-  .book-recommend {
-    flex-direction: column;
-  }
-
-  .book-content {
-    height: 0px;
-    width: 148px;
-  }
-}
-
-img {
-  width: 128px;
-  height: 197px;
-}
-
 .book-content {
-  height: 197px;
+  visibility: visible;
 }
 
 #searchSection {
