@@ -48,6 +48,10 @@
               rel="noopener noreferrer"
               >Google Link</a
             ><!-- Product Link -->
+
+            <!-- button to add to database -->
+            <button @click="postBook(index)">Save Book</button>
+
             <p :value="`${index}`">{{ book.searchInfo.textSnippet }}</p>
           </div>
         </div>
@@ -60,8 +64,9 @@
 import Search from "../models/search";
 export default {
   setup() {
-    const { state, searchByTitle } = Search();
-    return { state, searchByTitle };
+    const { state, searchByTitle, postBook } = Search();
+
+    return { state, searchByTitle, postBook };
   },
   data() {
     return {

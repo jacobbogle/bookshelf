@@ -70,7 +70,7 @@ router.post("", async (req, res) => {
       series: req.body.series,
       author: req.body.author,
       link: req.body.link,
-      description: req.body.descritption,
+      description: req.body.description,
     });
     res.status(200).json(book);
   } catch (err) {

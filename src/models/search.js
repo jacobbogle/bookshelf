@@ -1,3 +1,4 @@
+// import book from "@/book-objects/book";
 import { ref } from "vue";
 const api = require("../../api.config");
 //import { useRoute  } from 'vue-router'
@@ -58,9 +59,39 @@ const SearchBar = () => {
     }
   };
 
+  const postBook = async function (index) {
+    console.log("POSTING BOOK", state.value.books.items[index]);
+    console.log(
+      "DESCRIPTIOPN:",
+      state.value.books.items[index].searchInfo.textSnippet
+    );
+    let newBook = {
+      image: String(
+        state.value.books.items[index].volumeInfo.imageLinks.thumbnail
+      ),
+      title: String(state.value.books.items[index].volumeInfo.title),
+      series: "",
+      author: String(state.value.books.items[index].volumeInfo.authors),
+      link: String(state.value.books.items[index].volumeInfo.infoLink),
+      description: String(
+        state.value.books.items[index].searchInfo.textSnippet
+      ),
+    };
+    let response = await fetch("http://localhost:3000/books", {
+      method: "POST",
+      body: JSON.stringify(newBook),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let data = await response.json();
+    console.log(data);
+  };
+
   return {
     state,
     searchByTitle,
+    postBook,
   };
 };
 
