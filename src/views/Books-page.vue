@@ -1,48 +1,47 @@
 <template>
-<div id="wrapper">
-  <button id="getBooks" @click="getBooks()">getBooks</button>
-  <div id="bookCollection">
-    <div
-      class="book-recommend"
-      v-for="(book, index) in state.books"
-      :key="index"
-    >
-      <div :value="`${index}`" ref="bookBox" class="book-box">
-        <img
-          ref="bookImage"
-          :value="`${index}`"
-          class="book-image"
-          :src="`${book.image}`"
-        />
-      </div>
+  <div id="wrapper">
+    <div id="bookCollection">
       <div
-        :value="`${index}`"
-        style="visibility: hidden"
-        ref="bookContent"
-        class="book-content"
+        class="book-recommend"
+        v-for="(book, index) in state.books"
+        :key="index"
       >
-        <div :value="`${index}`" class="text-content">
-          <h2>{{ book.title }}</h2>
-          <!-- Book Title -->
-          <h3>Rating: {{ numGive(book.rating) }}</h3>
-          <!-- Book Series Name -->
-          <h4>By: {{ book.authors }}</h4>
-          <!-- Author's Name -->
-          <a
+        <div :value="`${index}`" ref="bookBox" class="book-box">
+          <img
+            ref="bookImage"
             :value="`${index}`"
-            ref="amazon"
-            class="Amazon"
-            :href="`${book.link}`"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Google Link</a
-          ><!-- Product Link -->
-          <p v-html="book.description" :value="`${index}`"></p>
+            class="book-image"
+            :src="`${book.image}`"
+          />
+        </div>
+        <div
+          :value="`${index}`"
+          style="visibility: hidden"
+          ref="bookContent"
+          class="book-content"
+        >
+          <div :value="`${index}`" class="text-content">
+            <h2>{{ book.title }}</h2>
+            <!-- Book Title -->
+            <h3>Rating: {{ numGive(book.rating) }}</h3>
+            <!-- Book Series Name -->
+            <h4>By: {{ book.authors }}</h4>
+            <!-- Author's Name -->
+            <a
+              :value="`${index}`"
+              ref="amazon"
+              class="Amazon"
+              :href="`${book.link}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Google Link</a
+            ><!-- Product Link -->
+            <p v-html="book.description" :value="`${index}`"></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -138,21 +137,20 @@ export default {
   },
   created: function () {
     document.addEventListener("click", this.documentClick);
+    this.getBooks();
   },
   unmounted: function () {
     document.removeEventListener("click", this.documentClick);
   },
-}
+};
 </script>
 
 <style scoped>
 @import "../book-objects/style.css";
 
 #getBooks {
-
   align-self: center;
 }
-
 
 #wrapper {
   grid-column: 1/-1;
@@ -160,18 +158,17 @@ export default {
 }
 
 #bookCollection {
-    grid-column: 1/-1;
-    grid-row: 2/3;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5rem;
+  grid-column: 1/-1;
+  grid-row: 2/3;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
 }
 
 #bookCollection > * {
-  margin: .5rem;
+  margin: 0.5rem;
 }
 </style>
-
