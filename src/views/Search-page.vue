@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper">
+  <div id="wrapper" @dblclick="closeAllBooks()">
     <div ref="test" id="searchSection">
       <h1>Search Page</h1>
       <input
@@ -11,7 +11,7 @@
       <button v-on:click="searchByTitle()">Search</button>
     </div>
     <br />
-    <div id="bookCollection">
+    <div id="bookCollection" >
       <div
         class="book-recommend"
         v-for="(book, index) in state.books.items"
@@ -21,7 +21,7 @@
           :value="`${index}`"
           ref="bookBox"
           class="book-box"
-          @click="openBookContent(index)"
+          @click="bookClickHandler(index)"
         >
           <img
             ref="bookImage"
@@ -75,7 +75,8 @@ export default {
   },
   data() {
     return {
-
+      isBookOpen: false,
+      IndexOfOpenedBook: null,
     };
   },
   methods: {
@@ -114,6 +115,33 @@ export default {
         return "https://cdn.pixabay.com/photo/2018/01/04/15/51/404-error-3060993_1280.png"
       }
     },
+    searchReset() {
+      this.isBookOpen = false
+      this.IndexOfOpenedBook = null
+    },
+    bookClickHandler(index) {
+      this.$emit("openBookContent");
+      if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
+        this.openBookContent(index)
+        this.IndexOfOpenedBook = index
+        this.isBookOpen = true
+        this.IndexOfOpenedBook = index
+      } else if (this.IndexOfOpenedBook === index && this.isBookOpen === true) {
+        this.closeBookContent(index)
+        this.isBookOpen = false
+      } else if (this.IndexOfOpenedBook === index && this.isBookOpen === false) {
+        this.openBookContent(index)
+        this.isBookOpen = true
+      } else {
+        try {
+          this.closeBookContent(this.IndexOfOpenedBook)
+          this.openBookContent(index)
+          this.IndexOfOpenedBook = index
+        } catch (error) {
+          null
+        }
+      }
+    },
     openBookContent(index) {
       this.$emit("openBookContent");
       if (window.innerWidth <= 684) {
@@ -135,31 +163,13 @@ export default {
       this.$refs.amazon[index].style.visibility = "hidden";
       this.$refs.bookContent[index].style.visibility = "hidden";
     },
-    documentClick(click) {
-      try {
-        let IndexOfClicked = click.target.__vnode.props.value;
-        let book = this.$refs.bookBox[IndexOfClicked];
-        let bookCont = this.$refs.bookContent[IndexOfClicked];
-        let target = click.path[0];
-        if (!book.contains(target) && !bookCont.contains(target)) {
-          null
-        } else if (book.contains(target)) {
-          null
-        }
-      } catch (err) {
-        console.log(err);
-        for (let i = 0; i < this.state.books.items.length; i++) {
-          this.closeBookContent(i);
-        }
+    closeAllBooks() {
+      if (this.isBookOpen === true) {
+        this.closeBookContent(this.IndexOfOpenedBook);
+        this.isBookOpen = false
       }
-    },
-  },
-  created: function () {
-    document.addEventListener("click", this.documentClick);
-  },
-  unmounted: function () {
-    document.removeEventListener("click", this.documentClick);
-  },
+    }
+  }
 };
 </script>
 
