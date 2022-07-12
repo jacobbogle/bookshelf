@@ -17,13 +17,18 @@
         v-for="(book, index) in state.books.items"
         :key="index"
       >
-        <div :value="`${index}`" ref="bookBox" class="book-box">
+        <div
+          :value="`${index}`"
+          ref="bookBox"
+          class="book-box"
+          @click="openBookContent(index)"
+        >
           <img
             ref="bookImage"
             :value="`${index}`"
             class="book-image"
             :v-model="index"
-            :src="`${book.volumeInfo.imageLinks.thumbnail}`"
+            :src="imageTest(book)"
           />
         </div>
         <div
@@ -52,7 +57,7 @@
             <!-- button to add to database -->
             <button @click="postBook(index)">Save Book</button>
 
-            <p v-html="snippetGive(book.searchInfo.textSnippet)" :value="`${index}`"></p>
+            <p v-html="snippetGive(book)" :value="`${index}`"></p>
           </div>
         </div>
       </div>
@@ -70,18 +75,7 @@ export default {
   },
   data() {
     return {
-      isBookContentOpen: {
-        0: false,
-        1: false,
-        2: false,
-        3: false,
-        4: false,
-        5: false,
-        6: false,
-        7: false,
-        8: false,
-        9: false,
-      },
+
     };
   },
   methods: {
@@ -98,7 +92,7 @@ export default {
       let snippet = book.searchInfo.textSnippet
         return snippet;
       } catch (error) {
-        return "N/A";
+        return book.volumeInfo.description;
       }
     },
     numGive(num) {
@@ -112,9 +106,16 @@ export default {
         return "N/A";
       }
     },
+    imageTest(book) {
+      try {
+        let thumbnail = book.volumeInfo.imageLinks.thumbnail
+        return thumbnail
+      } catch (error) {
+        return "https://cdn.pixabay.com/photo/2018/01/04/15/51/404-error-3060993_1280.png"
+      }
+    },
     openBookContent(index) {
       this.$emit("openBookContent");
-      this.isBookContentOpen[index] = true;
       if (window.innerWidth <= 684) {
         this.$refs.bookContent[index].style.height = "390px";
       } else {
@@ -122,10 +123,8 @@ export default {
       }
       this.$refs.bookContent[index].style.visibility = "visible";
       this.$refs.amazon[index].style.visibility = "visible";
-      //this.$refs.bookContent.style.paddingLeft = '10px';
     },
     closeBookContent(index) {
-      this.isBookContentOpen[index] = false;
       this.$emit("closeBookContent");
       if (window.innerWidth <= 684) {
         this.$refs.bookContent[index].style.width = "256px";
@@ -133,7 +132,6 @@ export default {
       } else {
         this.$refs.bookContent[index].style.width = "0px";
       }
-      //this.$refs.bookContent.style.paddingLeft = '0px';
       this.$refs.amazon[index].style.visibility = "hidden";
       this.$refs.bookContent[index].style.visibility = "hidden";
     },
@@ -144,17 +142,13 @@ export default {
         let bookCont = this.$refs.bookContent[IndexOfClicked];
         let target = click.path[0];
         if (!book.contains(target) && !bookCont.contains(target)) {
-          this.closeBookContent(IndexOfClicked);
+          null
         } else if (book.contains(target)) {
-          if (this.isBookContentOpen[IndexOfClicked] === false) {
-            this.openBookContent(IndexOfClicked);
-          } else if (this.isBookContentOpen[IndexOfClicked] === true) {
-            this.closeBookContent(IndexOfClicked);
-          }
+          null
         }
       } catch (err) {
         console.log(err);
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < this.state.books.items.length; i++) {
           this.closeBookContent(i);
         }
       }
