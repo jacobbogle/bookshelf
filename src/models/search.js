@@ -34,6 +34,7 @@ const SearchBar = () => {
         })
         .then((data) => {
           state.value.books = data;
+          console.log(data);
         });
     } catch (err) {
       console.log(err);
@@ -45,7 +46,7 @@ const SearchBar = () => {
       image: state.value.books.items[index].volumeInfo.imageLinks.thumbnail,
       title: state.value.books.items[index].volumeInfo.title,
       rating: state.value.books.items[index].volumeInfo.averageRating,
-      author: (state.value.books.items[index].volumeInfo.authors).join(" "),
+      authors: state.value.books.items[index].volumeInfo.authors.join(" "),
       link: state.value.books.items[index].volumeInfo.infoLink,
       description: state.value.books.items[index].searchInfo.textSnippet,
     };
