@@ -20,7 +20,7 @@ const SearchBar = () => {
   function urlString() {
     let title = encodeURIComponent(state.value.searchTitle);
     let key = googleApiKey;
-    return "?q=" + title + "&key=" + key;
+    return "?q=" + title + "&maxResults=40" + "&key=" + key;
   }
 
   //returns a json file of related books from searchTitle

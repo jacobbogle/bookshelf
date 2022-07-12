@@ -17,7 +17,12 @@
         v-for="(book, index) in state.books.items"
         :key="index"
       >
-        <div :value="`${index}`" ref="bookBox" class="book-box">
+        <div
+          :value="`${index}`"
+          ref="bookBox"
+          class="book-box"
+          @click="openBookContent(index)"
+        >
           <img
             ref="bookImage"
             :value="`${index}`"
@@ -69,20 +74,20 @@ export default {
     return { state, searchByTitle, postBook };
   },
   data() {
-    return {
-      isBookContentOpen: {
-        0: false,
-        1: false,
-        2: false,
-        3: false,
-        4: false,
-        5: false,
-        6: false,
-        7: false,
-        8: false,
-        9: false,
-      },
-    };
+    // return {
+    //   isBookContentOpen: {
+    //     0: false,
+    //     1: false,
+    //     2: false,
+    //     3: false,
+    //     4: false,
+    //     5: false,
+    //     6: false,
+    //     7: false,
+    //     8: false,
+    //     9: false,
+    //   },
+    // };
   },
   methods: {
     textGive(text) {
@@ -114,7 +119,7 @@ export default {
     },
     openBookContent(index) {
       this.$emit("openBookContent");
-      this.isBookContentOpen[index] = true;
+      // this.isBookContentOpen[index] = true;
       if (window.innerWidth <= 684) {
         this.$refs.bookContent[index].style.height = "390px";
       } else {
@@ -125,7 +130,7 @@ export default {
       //this.$refs.bookContent.style.paddingLeft = '10px';
     },
     closeBookContent(index) {
-      this.isBookContentOpen[index] = false;
+      // this.isBookContentOpen[index] = false;
       this.$emit("closeBookContent");
       if (window.innerWidth <= 684) {
         this.$refs.bookContent[index].style.width = "256px";
@@ -144,17 +149,17 @@ export default {
         let bookCont = this.$refs.bookContent[IndexOfClicked];
         let target = click.path[0];
         if (!book.contains(target) && !bookCont.contains(target)) {
-          this.closeBookContent(IndexOfClicked);
+          // this.closeBookContent(IndexOfClicked);
         } else if (book.contains(target)) {
-          if (this.isBookContentOpen[IndexOfClicked] === false) {
-            this.openBookContent(IndexOfClicked);
-          } else if (this.isBookContentOpen[IndexOfClicked] === true) {
-            this.closeBookContent(IndexOfClicked);
-          }
+          // if (this.isBookContentOpen[IndexOfClicked] === false) {
+          // this.openBookContent(IndexOfClicked);
+          // } else if (this.isBookContentOpen[IndexOfClicked] === true) {
+          // this.closeBookContent(IndexOfClicked);
+          // }
         }
       } catch (err) {
         console.log(err);
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < this.state.books.items.length; i++) {
           this.closeBookContent(i);
         }
       }
