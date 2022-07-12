@@ -89,7 +89,7 @@ export default {
     },
     snippetGive(book) {
       try {
-      let snippet = book.searchInfo.textSnippet
+        let snippet = book.searchInfo.textSnippet;
         return snippet;
       } catch (error) {
         return book.volumeInfo.description;
