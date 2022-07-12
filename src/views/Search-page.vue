@@ -8,7 +8,7 @@
         @keyup.enter="searchByTitle()"
         v-model="state.searchTitle"
       />
-      <button v-on:click="searchByTitle() ">Search</button>
+      <button v-on:click="searchByTitle()">Search</button>
     </div>
     <br />
     <div id="bookCollection">
@@ -52,7 +52,7 @@
             <!-- button to add to database -->
             <button @click="postBook(index)">Save Book</button>
 
-            <p v-html="book.searchInfo.textSnippet" :value="`${index}`" ></p>
+            <p v-html="book.searchInfo.textSnippet" :value="`${index}`"></p>
           </div>
         </div>
       </div>
@@ -158,7 +158,7 @@ export default {
   unmounted: function () {
     document.removeEventListener("click", this.documentClick);
   },
-}
+};
 </script>
 
 <style scoped>
