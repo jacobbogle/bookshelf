@@ -8,21 +8,21 @@
         @keyup.enter="searchByTitle()"
         v-model="state.searchTitle"
       />
-      <button v-on:click="searchByTitle(), countLoop()">Search</button>
+      <button v-on:click="searchByTitle() ">Search</button>
     </div>
     <br />
-    <div id="bookCollection" @change="countLoop()">
+    <div id="bookCollection">
       <div
         class="book-recommend"
         v-for="(book, index) in state.books.items"
         :key="index"
-        @show="countLoop()"
       >
         <div :value="`${index}`" ref="bookBox" class="book-box">
           <img
             ref="bookImage"
             :value="`${index}`"
             class="book-image"
+            :v-model="index"
             :src="`${book.volumeInfo.imageLinks.thumbnail}`"
           />
         </div>
@@ -36,7 +36,7 @@
             <h2>{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
             <h3>Rating: {{ numGive(book.volumeInfo.averageRating) }}</h3>
-            <!-- Book Series Name -->
+            <!-- Book Rating -->
             <h4>By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
             <a
@@ -52,7 +52,7 @@
             <!-- button to add to database -->
             <button @click="postBook(index)">Save Book</button>
 
-            <p v-html="book.searchInfo.textSnippet" :value="`${index}`"></p>
+            <p v-html="book.searchInfo.textSnippet" :value="`${index}`" ></p>
           </div>
         </div>
       </div>
@@ -82,19 +82,9 @@ export default {
         8: false,
         9: false,
       },
-      forLoopCount: 0,
     };
   },
   methods: {
-    countLoop() {
-      console.log("work");
-      console.log(this.forLoopCount);
-      this.forLoopCount += 1;
-      if (this.forLoopCount === 10) {
-        this.bookImageSetter();
-        this.forLoopCount = 0;
-      }
-    },
     textGive(text) {
       try {
         let goodText = text.join(" ");
@@ -112,32 +102,6 @@ export default {
         }
       } catch (error) {
         return "N/A";
-      }
-    },
-    async bookImageSetter() {
-      try {
-        let response = await this.state.books;
-        console.log(response);
-        let newObject = [];
-        for (let i = 0; i < 10; i++) {
-          await fetch(String(response.items[i].selfLink))
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.volumeInfo.imageLinks.small === "undefined") {
-                null;
-              } else {
-                this.$refs.bookImage[i].target.attributes[1].value = String(
-                  data.volumeInfo.imageLinks.small
-                );
-              }
-            });
-        }
-        // for (let i = 0; i < 10; i++) {
-
-        // }
-        console.log(newObject);
-      } catch (err) {
-        console.log(err);
       }
     },
     openBookContent(index) {
@@ -194,15 +158,11 @@ export default {
   unmounted: function () {
     document.removeEventListener("click", this.documentClick);
   },
-};
+}
 </script>
 
 <style scoped>
 @import "../book-objects/style.css";
-
-.book-content {
-  visibility: visible;
-}
 
 #searchSection {
   display: flex;

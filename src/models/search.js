@@ -12,7 +12,6 @@ const SearchBar = () => {
     searchTitle: "",
     searchAuthor: "",
     searchISBN: "",
-    bookObject: {},
     books: {},
   });
   //makes the querystring and adds the needed api string for the GET of google books api
@@ -22,22 +21,6 @@ const SearchBar = () => {
     let title = encodeURIComponent(state.value.searchTitle);
     let key = googleApiKey;
     return "?q=" + title + "&key=" + key;
-  }
-
-  async function setBetterObject(response) {
-    try {
-      let newObject = [];
-      for (let i = 0; i < 10; i++) {
-        await fetch(String(response.items[i].selfLink))
-          .then((res) => res.json())
-          .then((data) => {
-            newObject.push(data);
-          });
-      }
-      state.value.bookObject = newObject;
-    } catch (err) {
-      console.log(err);
-    }
   }
 
   //returns a json file of related books from searchTitle
@@ -50,33 +33,21 @@ const SearchBar = () => {
           return response;
         })
         .then((data) => {
-          console.log(data);
           state.value.books = data;
         });
-      setBetterObject(state.value.books);
     } catch (err) {
       console.log(err);
     }
   };
 
   const postBook = async function (index) {
-    let book = state.value.books.items[index];
-    console.log("POSTING BOOK", book);
-    console.log(
-      "DESCRIPTION:",
-      state.value.books.items[index].searchInfo.textSnippet
-    );
     let newBook = {
-      image: String(
-        state.value.books.items[index].volumeInfo.imageLinks.thumbnail
-      ),
-      title: String(state.value.books.items[index].volumeInfo.title),
-      series: "",
-      author: String(state.value.books.items[index].volumeInfo.authors),
-      link: String(state.value.books.items[index].volumeInfo.infoLink),
-      description: String(
-        state.value.books.items[index].searchInfo.textSnippet
-      ),
+      image: state.value.books.items[index].volumeInfo.imageLinks.thumbnail,
+      title: state.value.books.items[index].volumeInfo.title,
+      rating: state.value.books.items[index].volumeInfo.averageRating,
+      author: (state.value.books.items[index].volumeInfo.authors).join(" "),
+      link: state.value.books.items[index].volumeInfo.infoLink,
+      description: state.value.books.items[index].searchInfo.textSnippet,
     };
     let response = await fetch("http://localhost:3000/books", {
       method: "POST",
