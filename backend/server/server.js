@@ -1,16 +1,23 @@
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "../../.env" });
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const setUpAuth = require("./auth");
+const setUpSession = require("./session");
 
 //Middle wear
 app.use(express.json());
 app.use(cors());
 
+setUpSession(app);
+setUpAuth(app);
+
 //Routes
-const booksRoute = require("./routes/bookRouter");
+const booksRoute = require("../routes/bookRouter");
+const usersRoute = require("../routes/userRouter");
 app.use("/books", booksRoute);
+app.use("/users", usersRoute);
 
 //Set up default mongoose connection
 const mongoDB = process.env.SERVER_URL;

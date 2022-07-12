@@ -52,7 +52,7 @@
             <!-- button to add to database -->
             <button @click="postBook(index)">Save Book</button>
 
-            <p v-html="snippetGive(book.searchInfo.textSnippet)" :value="`${index}`"></p>
+            <p v-html="snippetGive(book)" :value="`${index}`"></p>
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default {
     },
     snippetGive(book) {
       try {
-      let snippet = book.searchInfo.textSnippet
+        let snippet = book.searchInfo.textSnippet;
         return snippet;
       } catch (error) {
         return "N/A";
