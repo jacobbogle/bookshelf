@@ -8,8 +8,16 @@ const setUpSession = require("./session");
 
 //Middle wear
 app.use(express.json());
-app.use(cors());
 
+const corsOptions = {
+  origin: "http://localhost:3001",
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.header("origin"));
+  next();
+});
 setUpSession(app);
 setUpAuth(app);
 

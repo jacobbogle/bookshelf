@@ -2,7 +2,6 @@ const express = require("express");
 const bookModel = require("../schema/bookSchema");
 let router = express.Router();
 
-
 router.get("", async (req, res) => {
   let books;
   try {
