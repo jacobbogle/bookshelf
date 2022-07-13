@@ -2,8 +2,6 @@ const express = require("express");
 const userModel = require("../schema/userSchema");
 let router = express.Router();
 
-
-
 router.post("", async (req, res) => {
   try {
     let user = await userModel.create({
@@ -11,6 +9,7 @@ router.post("", async (req, res) => {
       fullname: req.body.fullname,
       password: req.body.password,
     });
+    console.log(user);
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json({
