@@ -1,11 +1,7 @@
 <template>
   <div id="wrapper">
     <h1>Register</h1>
-    <!-- <% if (messages.error) { %>
-    <%= messages.error %>
-    <% } %> -->
-    <!-- <form> -->
-    <div>
+    <div class="centered">
       <label for="name">Name</label>
       <input
         v-model="name"
@@ -15,8 +11,6 @@
         name="name"
         required
       />
-    </div>
-    <div>
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -26,8 +20,6 @@
         name="email"
         required
       />
-    </div>
-    <div>
       <label for="password">Password</label>
       <input
         v-model="password"
@@ -37,8 +29,8 @@
         name="password"
         required
       />
+      <button @click="registerFunction" type="submit">Register</button>
     </div>
-    <button @click="registerFunction" type="submit">Register</button>
     <!-- </form> -->
     <router-link id="link" to="/login"><span>Login</span></router-link>
   </div>
@@ -112,5 +104,12 @@ form {
 h1,
 label {
   color: white;
+}
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
 }
 </style>

@@ -2,34 +2,26 @@
   <div id="wrapper">
     <h1>Login</h1>
     <h2>{{ currentUser }}</h2>
-    <!-- <% if (messages.error) { %>
-    <%= messages.error %>
-    <% } %> -->
-    <!-- <form action="/login" method="POST"> -->
     <div class="centered">
-      <div>
-        <!-- <label for="email">Email</label> -->
-        <input
-          v-model="email"
-          placeholder="type here..."
-          type="text"
-          id="email"
-          name="email"
-          required
-        />
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input
-          v-model="password"
-          placeholder="type here..."
-          type="password"
-          id="password"
-          name="password"
-          required
-        />
-        <button @click="postSession()" type="submit">Login</button>
-      </div>
+      <label for="email">Email</label>
+      <input
+        v-model="email"
+        placeholder="type here..."
+        type="text"
+        id="email"
+        name="email"
+        required
+      />
+      <label for="password">Password</label>
+      <input
+        v-model="password"
+        placeholder="type here..."
+        type="password"
+        id="password"
+        name="password"
+        required
+      />
+      <button @click="postSession()" type="submit">Login</button>
     </div>
     <!-- </form> -->
     <router-link id="link" to="/register"><span>Register</span></router-link>
@@ -99,7 +91,7 @@ h2 {
   justify-content: center;
 }
 
-form {
+.centered {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -110,9 +102,5 @@ form {
 h1,
 label {
   color: white;
-}
-
-.centered {
-  text-align: center;
 }
 </style>
