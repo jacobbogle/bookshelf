@@ -24,7 +24,7 @@
           <div :value="`${index}`" class="text-content">
             <h2>{{ book.title }}</h2>
             <!-- Book Title -->
-            <h3>Rating: {{ numGive(book.rating) }}</h3>
+            <h3>Rating: {{book.rating }}</h3>
             <!-- Book Series Name -->
             <h4>By: {{ book.authors }}</h4>
             <!-- Author's Name -->
@@ -59,17 +59,6 @@ export default {
     };
   },
   methods: {
-    numGive(num) {
-      try {
-        if (num > 0) {
-          return num + " // 5";
-        } else {
-          return "N/A";
-        }
-      } catch (error) {
-        return "N/A";
-      }
-    },
     bookClickHandler(index) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
