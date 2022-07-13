@@ -40,14 +40,20 @@ const SearchBar = () => {
     }
   };
 
-  const postBook = async function (index) {
+  const postBook = async function (book) {
+    console.log({image: book.image,
+      title: book.title,
+      rating: book.rating,
+      authors: book.authors,
+      link: book.link,
+      description: book.description})
     let newBook = {
-      image: state.value.books.items[index].volumeInfo.imageLinks.thumbnail,
-      title: state.value.books.items[index].volumeInfo.title,
-      rating: state.value.books.items[index].volumeInfo.averageRating,
-      authors: state.value.books.items[index].volumeInfo.authors.join(" "),
-      link: state.value.books.items[index].volumeInfo.infoLink,
-      description: state.value.books.items[index].searchInfo.textSnippet,
+      image: book.image,
+      title: book.title,
+      rating: book.rating,
+      authors: book.authors,
+      link: book.link,
+      description: book.description
     };
     let response = await fetch("http://localhost:3000/books", {
       method: "POST",

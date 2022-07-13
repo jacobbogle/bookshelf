@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <h1>Login</h1>
-    <h2>{{ currentUser }}</h2>
+    <h2>GetUsernameFromSessionFunction</h2>
     <div class="centered">
       <label for="email">Email</label>
       <input
@@ -21,7 +21,7 @@
         name="password"
         required
       />
-      <button @click="postSession()" type="submit">Login</button>
+      <button @click="postSession(email, password)" type="submit">Login</button>
     </div>
     <!-- </form> -->
     <router-link id="link" to="/register"><span>Register</span></router-link>
@@ -29,43 +29,21 @@
 </template>
 
 <script>
+import Login from "../models/login";
 export default {
+  setup() {
+    const {state, postSession} = Login();
+    return {state, postSession};
+  },
   data() {
     return {
       email: "",
       password: "",
-      currentUser: "",
+      currentUser: ""
     };
   },
   methods: {
-    postSession: async function () {
-      let loginCredentials = {
-        username: this.email,
-        password: this.password,
-      };
-
-      let response = await fetch("http://localhost:3000/session", {
-        method: "POST",
-        body: JSON.stringify(loginCredentials),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      if (response.status == 201) {
-        console.log("SUCCESSFUL LOGIN ATTEMPT");
-        this.currentUser = loginCredentials.username;
-      } else if (response.status == 401) {
-        console.log("UNSUCCESSFUL LOGIN ATTEMPT");
-      } else {
-        console.log(
-          "Some other error in POST /session",
-          response.status,
-          response
-        );
-      }
-    },
+    
   },
 };
 </script>

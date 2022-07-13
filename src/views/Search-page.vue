@@ -18,46 +18,39 @@
         :key="index"
       >
         <div
-          :value="`${index}`"
           ref="bookBox"
           class="book-box"
           @click="bookClickHandler(index)"
         >
           <img
-            ref="bookImage"
-            :value="`${index}`"
+            ref="image"
             class="book-image"
-            :v-model="index"
             :src="imageTest(book)"
           />
         </div>
         <div
-          :value="`${index}`"
           style="visibility: hidden"
           ref="bookContent"
           class="book-content"
         >
-          <div :value="`${index}`" class="text-content">
-            <h2>{{ book.volumeInfo.title }}</h2>
+          <div class="text-content">
+            <h2 ref="title">{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
-            <h3>Rating: {{ numGive(book.volumeInfo.averageRating) }}</h3>
+            <h3 :value="book.volumeInfo.averageRating" ref="rating">Rating: {{ numGive(book.volumeInfo.averageRating) }}</h3>
             <!-- Book Rating -->
-            <h4>By: {{ textGive(book.volumeInfo.authors) }}</h4>
+            <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
             <a
-              :value="`${index}`"
-              ref="amazon"
+              ref="link"
               class="Amazon"
               :href="`${book.volumeInfo.infoLink}`"
               target="_blank"
               rel="noopener noreferrer"
               >Google Link</a
             ><!-- Product Link -->
-
+            <button @click="serveBook(index), postBook(this.bookObject)">Save Book</button>
             <!-- button to add to database -->
-            <button @click="postBook(index)">Save Book</button>
-
-            <p v-html="snippetGive(book)" :value="`${index}`"></p>
+            <p ref="description" v-html="snippetGive(book)" ></p>
           </div>
         </div>
       </div>
@@ -70,16 +63,32 @@ import Search from "../models/search";
 export default {
   setup() {
     const { state, searchByTitle, postBook } = Search();
-
     return { state, searchByTitle, postBook };
   },
   data() {
     return {
       isBookOpen: false,
       IndexOfOpenedBook: null,
+      bookObject: {
+        image: "",
+        title: "",
+        rating: null,
+        authors: "",
+        link: "",
+        description: "",
+      }
     };
   },
   methods: {
+    serveBook(index) {
+      this.bookObject.image = String(this.$refs.image[index].src)
+      this.bookObject.title = this.$refs.title[index].innerHTML
+      this.bookObject.rating = this.numGive(this.state.books.items[index].volumeInfo.averageRating)
+      this.bookObject.authors = this.textGive(this.state.books.items[index].volumeInfo.authors)
+      this.bookObject.link = this.$refs.link[index].href
+      this.bookObject.description = this.snippetGive(this.state.books.items[index])
+      console.log(this.bookObject)
+    },
     textGive(text) {
       try {
         let goodText = text.join(" ");
@@ -104,7 +113,7 @@ export default {
           return "N/A";
         }
       } catch (error) {
-        return "N/A";
+        return "N//A";
       }
     },
     imageTest(book) {
@@ -150,7 +159,6 @@ export default {
         this.$refs.bookContent[index].style.width = "256px";
       }
       this.$refs.bookContent[index].style.visibility = "visible";
-      this.$refs.amazon[index].style.visibility = "visible";
     },
     closeBookContent(index) {
       this.$emit("closeBookContent");
@@ -160,7 +168,6 @@ export default {
       } else {
         this.$refs.bookContent[index].style.width = "0px";
       }
-      this.$refs.amazon[index].style.visibility = "hidden";
       this.$refs.bookContent[index].style.visibility = "hidden";
     },
     closeAllBooks() {

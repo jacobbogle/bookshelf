@@ -29,7 +29,7 @@
         name="password"
         required
       />
-      <button @click="registerFunction" type="submit">Register</button>
+      <button @click="postUser(email, name, password)" type="submit">Register</button>
     </div>
     <!-- </form> -->
     <router-link id="link" to="/login"><span>Login</span></router-link>
@@ -37,7 +37,12 @@
 </template>
 
 <script>
+import Register from "../models/register";
 export default {
+  setup() {
+    const {postUser} = Register();
+    return {postUser};
+  },
   data() {
     return {
       name: "",
@@ -46,33 +51,7 @@ export default {
     };
   },
   methods: {
-    async registerFunction() {
-      let user = {
-        username: this.email,
-        fullname: this.name,
-        password: this.password,
-      };
 
-      console.log(user);
-
-      let response = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      let body = response.json();
-      console.log(body);
-      console.log(response.status);
-      if (response.status == 201) {
-        console.log("successful user created");
-      } else {
-        console.log("Some error in /POST users");
-      }
-    },
   },
 };
 </script>
