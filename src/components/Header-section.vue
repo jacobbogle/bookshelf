@@ -2,14 +2,17 @@
   <header>
     <Nav/>
     <h1><router-link to="/">Bookshelf</router-link></h1>
+    <h2><Acount id="acount" /></h2>
   </header>
 </template>
 
 <script>
+import Acount from "@/components/User-section.vue";
 import Nav from '@/components/Menu.vue'
 export default {
   components: {
-    Nav
+    Nav,
+    Acount
   }
 }
 </script>
@@ -32,6 +35,14 @@ a {
     font-family:'OCR A', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     padding: 10px 10px;
     transition: .4s ease-in-out;
+}
+
+#acount {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  right: 65px;
+  top: 26px;
 }
 
 </style>

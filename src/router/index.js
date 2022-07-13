@@ -3,6 +3,8 @@ import Home from "@/views/Home-page.vue";
 import Books from "@/views/Books-page.vue";
 import About from "@/views/About-page.vue";
 import Search from "@/views/Search-page.vue";
+import Login from "@/views/Login-page.vue"
+import Register from "@/views/Register-page.vue"
 
 
 
@@ -26,6 +28,16 @@ const routes = [
     path: "/search",
     name: "Search",
     component: Search,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
 ];
 

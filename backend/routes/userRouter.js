@@ -2,6 +2,8 @@ const express = require("express");
 const userModel = require("../schema/userSchema");
 let router = express.Router();
 
+
+
 router.post("", async (req, res) => {
   try {
     let user = await userModel.create({
