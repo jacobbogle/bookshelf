@@ -24,7 +24,7 @@
           <div :value="`${index}`" class="text-content">
             <h2>{{ book.title }}</h2>
             <!-- Book Title -->
-            <h3>Rating: {{book.rating }}</h3>
+            <h3>Rating: {{ book.rating }}</h3>
             <!-- Book Series Name -->
             <h4>By: {{ book.authors }}</h4>
             <!-- Author's Name -->
