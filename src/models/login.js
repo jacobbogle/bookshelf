@@ -1,4 +1,5 @@
 import { ref } from "vue";
+// import { getSession } from "./getSession";
 
 const Login = () => {
   const state = ref({
@@ -21,8 +22,10 @@ const Login = () => {
     });
 
     if (response.status == 201) {
-      state.value.currentUser = loginCredentials.username;
+      let data = await response.json();
+      state.value.currentUser = data.username;
       console.log("SUCCESSFUL LOGIN ATTEMPT");
+      // getSession();
     } else if (response.status == 401) {
       console.log("UNSUCCESSFUL LOGIN ATTEMPT");
     } else {

@@ -24,8 +24,10 @@ setUpAuth(app);
 //Routes
 const booksRoute = require("../routes/bookRouter");
 const usersRoute = require("../routes/userRouter");
+const bookshelvesRoute = require("../routes/bookshelvesRouter");
 app.use("/books", booksRoute);
 app.use("/users", usersRoute);
+app.use("/bookshelves", bookshelvesRoute);
 
 //Set up default mongoose connection
 const mongoDB = process.env.SERVER_URL;

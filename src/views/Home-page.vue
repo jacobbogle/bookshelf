@@ -15,9 +15,24 @@
 
 <script>
 import Book1 from "../book-objects/the-bone-witch.vue";
+import IsLoggedIn from "../models/getSession";
+
 export default {
+  setup() {
+    const { state, getSession } = IsLoggedIn();
+    return { state, getSession };
+  },
   components: {
     Book1,
+  },
+  data() {
+    return {
+      userName: "",
+    };
+  },
+  created: function () {
+    this.getSession();
+    this.userName = this.state.currentUser;
   },
 };
 </script>

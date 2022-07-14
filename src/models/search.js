@@ -41,26 +41,29 @@ const SearchBar = () => {
   };
 
   const postBook = async function (book) {
-    console.log({image: book.image,
+    console.log({
+      image: book.image,
       title: book.title,
       rating: book.rating,
       authors: book.authors,
       link: book.link,
-      description: book.description})
+      description: book.description,
+    });
     let newBook = {
       image: book.image,
       title: book.title,
       rating: book.rating,
       authors: book.authors,
       link: book.link,
-      description: book.description
+      description: book.description,
     };
-    let response = await fetch("http://localhost:3000/books", {
+    let response = await fetch("http://localhost:3000/bookshelves", {
       method: "POST",
       body: JSON.stringify(newBook),
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
     let data = await response.json();
     console.log(data);

@@ -30,21 +30,20 @@
 
 <script>
 import Login from "../models/login";
+
 export default {
   setup() {
-    const {state, postSession} = Login();
-    return {state, postSession};
+    const { state, postSession } = Login();
+    return { state, postSession };
   },
   data() {
     return {
       email: "",
       password: "",
-      currentUser: ""
+      currentUser: "",
     };
   },
-  methods: {
-    
-  },
+  methods: {},
 };
 </script>
 
