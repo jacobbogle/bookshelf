@@ -25,7 +25,6 @@ export default {
       background-image: linear-gradient(to bottom right, 
     rgb(14, 14, 27), rgb(39, 37, 58));
     font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    height: 100vh;
 }
 
 .wrapper {

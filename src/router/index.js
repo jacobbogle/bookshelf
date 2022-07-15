@@ -5,6 +5,7 @@ import About from "@/views/About-page.vue";
 import Search from "@/views/Search-page.vue";
 import Login from "@/views/Login-page.vue"
 import Register from "@/views/Register-page.vue"
+import Scanner from "@/views/Scanner-page.vue";
 
 
 
@@ -38,6 +39,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/scanner",
+    name: "Scanner",
+    component: Scanner,
   },
 ];
 

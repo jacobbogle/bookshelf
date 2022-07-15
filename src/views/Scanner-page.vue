@@ -1,23 +1,15 @@
 <template>
-  <div id="wrapper" @dblclick="closeAllBooks()">
-    <h1>Search Page</h1>
-    <div ref="test" id="searchSection">  
-      <input
-        type="text"
-        placeholder="Search"
-        @keyup.enter="searchByTitle(),closeAllBooks(), searchReset()"
-        v-model="state.searchTitle"
-      />
-        <button v-on:click="searchByTitle()">Search</button>
-        <a id="scanner">
-          <img @click="toScanner()" src="https://static.thenounproject.com/png/473299-200.png" alt="scanner">
-        </a>
-    </div>
-    <br />
-    <div id="bookCollection" >
+  <div id="wrapper">
+    <StreamBarcodeReader
+      v-show="bookSearched === false"
+      @decode="(isbn) => onDecode(isbn)"
+      @loaded="() => onLoaded()"
+    ></StreamBarcodeReader>
+    <button v-show="bookSearched === true" @click="bookSearched = false">Scan Again</button>
+    <div id="bookCollection" v-show="bookSearched === true">
       <div
         class="book-recommend"
-        v-for="(book, index) in state.books.items"
+        v-for="(book, index) in state.scannedBooks.items"
         :key="index"
       >
         <div
@@ -62,14 +54,20 @@
 </template>
 
 <script>
-import Search from "../models/search";
+import StreamBarcodeReader from "../components/Scanner-section.vue";
+import Search from "@/models/search"
+import Scanner from "@/models/scanner";
 export default {
+  name: "HelloWorld",
   setup() {
-    const { state, searchByTitle, postBook } = Search();
-    return { state, searchByTitle, postBook };
-  },
+    const { state, searchByISBN } = Scanner();
+    const { postBook } = Search();
+    return { state, searchByISBN, postBook };
+  },  
   data() {
     return {
+      id: null,
+      bookSearched: false,
       isBookOpen: false,
       IndexOfOpenedBook: null,
       bookObject: {
@@ -82,9 +80,28 @@ export default {
       }
     };
   },
+  components: {
+    StreamBarcodeReader,
+  },
+  props: {
+    msg: String,
+  },
   methods: {
-    toScanner() {
-      this.$router.push({ path: '/scanner' })
+    onDecode(isbn) {
+      console.log(isbn);
+      this.state.searchISBN = isbn
+      this.bookSearched = true
+      this.searchByISBN()
+      this.id = isbn
+      if (this.id) clearTimeout(this.id);
+      this.id = setTimeout(() => {
+        if (this.id === isbn) {
+          this.id = null;
+        }
+      }, 5000);
+    },
+    onLoaded() {
+      console.log("load");
     },
     serveBook(index) {
       this.bookObject.image = String(this.$refs.image[index].src)
@@ -129,10 +146,6 @@ export default {
       } catch (error) {
         return "https://cdn.pixabay.com/photo/2018/01/04/15/51/404-error-3060993_1280.png"
       }
-    },
-    searchReset() {
-      this.isBookOpen = false
-      this.IndexOfOpenedBook = null
     },
     bookClickHandler(index) {
       this.$emit("openBookContent");
@@ -183,28 +196,10 @@ export default {
       }
     }
   },
-  created() {
-    
-  },
 };
 </script>
-
 <style scoped>
 @import "../book-objects/style.css";
-
-#searchSection {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-#wrapper {
-  grid-column: 1/-1;
-  grid-row: 2/3;
-}
-
 #bookCollection {
   display: flex;
   flex-direction: row;
@@ -218,19 +213,9 @@ export default {
   margin: 0.5rem;
 }
 
-h1 {
+#wrapper {
+  grid-column: 1/-1;
+  grid-row: 2/3;
   color: white;
-}
-
-#scanner {
-
-  width: 35px;
-  background-color: white;
-  cursor: pointer;
-}
-
-#scanner img {
-  width: inherit;
-  height: inherit;
 }
 </style>
