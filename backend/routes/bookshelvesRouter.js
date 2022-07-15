@@ -13,22 +13,31 @@ router.post("", async (req, res) => {
   }
   let book;
   try {
-    book = await bookModel.create({
-      image: req.body.image,
-      title: req.body.title,
-      rating: req.body.rating,
-      authors: req.body.authors,
-      link: req.body.link,
-      description: req.body.description,
+    let testBookInDatabase = await bookModel.findOne({
       isbn: req.body.isbn,
     });
+    if (!testBookInDatabase) {
+      book = await bookModel.create({
+        image: req.body.image,
+        title: req.body.title,
+        rating: req.body.rating,
+        authors: req.body.authors,
+        link: req.body.link,
+        description: req.body.description,
+        isbn: req.body.isbn,
+      });
+    } else {
+      book = testBookInDatabase;
+    }
+
     console.log("book id: ", book._id);
   } catch (err) {
-    res.status(500).json({
-      message: "could not create book",
-      error: err,
-    });
-    return;
+    console.log("book in database already");
+    // res.status(500).json({
+    //   message: "could not create book, possibly already in database",
+    //   error: err,
+    // });
+    // return;
   }
   let userID = req.user.id;
   try {
