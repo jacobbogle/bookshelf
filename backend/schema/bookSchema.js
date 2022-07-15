@@ -19,6 +19,9 @@ const bookSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  user_id: {
+    type: String,
+  },
 });
 
 const bookModel = mongoose.model("book", bookSchema);

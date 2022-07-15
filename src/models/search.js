@@ -6,12 +6,10 @@ const googleApiKey = api["API_KEY"];
 const googleBooksURL = "https://www.googleapis.com/books/v1";
 
 const SearchBar = () => {
-
   const state = ref({
     searchTitle: "",
     books: {},
   });
-
 
   //makes the querystring and adds the needed api string for the GET of google books api
   //example : [?q=<searchTitle>&key=<googleApiKey>]
@@ -46,14 +44,15 @@ const SearchBar = () => {
       rating: book.rating,
       authors: book.authors,
       link: book.link,
-      description: book.description
+      description: book.description,
     };
-    let response = await fetch("http://localhost:3000/books", {
+    let response = await fetch("http://localhost:3000/bookshelves", {
       method: "POST",
       body: JSON.stringify(newBook),
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
     let data = await response.json();
     console.log(data);

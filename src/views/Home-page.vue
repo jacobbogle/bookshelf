@@ -1,33 +1,56 @@
 <template>
-<div class="topBox"> 
-        <iframe width="622" height="350" src="https://www.youtube.com/embed/jnBM1Zp_bCU?autoplay=1&loop=1&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <Book1/>
-    </div>
+  <div class="topBox">
+    <iframe
+      width="622"
+      height="350"
+      src="https://www.youtube.com/embed/jnBM1Zp_bCU?autoplay=1&loop=1&mute=1"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+    <Book1 />
+  </div>
 </template>
 
 <script>
-import Book1 from '../book-objects/the-bone-witch.vue'
+import Book1 from "../book-objects/the-bone-witch.vue";
+import IsLoggedIn from "../models/getSession";
+
 export default {
-  components: {
-    Book1
+  setup() {
+    const { state, getSession } = IsLoggedIn();
+    return { state, getSession };
   },
-}
+  components: {
+    Book1,
+  },
+  data() {
+    return {
+      userName: "",
+    };
+  },
+  created: function () {
+    this.getSession();
+    this.userName = this.state.currentUser;
+  },
+};
 </script>
 
 <style scoped>
 * {
   border-radius: 10px;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 
 .topBox {
-    grid-column: 2/8;
-    grid-row: 2/3;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5rem;
+  grid-column: 2/8;
+  grid-row: 2/3;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
 }
 
 iframe {
@@ -36,22 +59,20 @@ iframe {
 
 @media only screen and (max-width: 1260px) {
   .topBox {
-      flex-direction: column;
+    flex-direction: column;
   }
-
 }
 
 @media only screen and (max-width: 684px) {
-  
-  iframe{
-      width: 100%;
-      margin: 0;
-      margin-bottom: 1rem;
+  iframe {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 1rem;
   }
 
   .topBox {
-      grid-column: 1 / -1;
-      margin-top: 1rem;
+    grid-column: 1 / -1;
+    margin-top: 1rem;
   }
 }
 </style>

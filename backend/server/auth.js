@@ -46,7 +46,9 @@ const setUpAuth = function (app) {
       return;
     }
     console.log(req.user);
-    res.status(200).json({ message: "authenticated" });
+    res
+      .status(200)
+      .json({ message: "authenticated", username: req.user.username });
   });
 };
 

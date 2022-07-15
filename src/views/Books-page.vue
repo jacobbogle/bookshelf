@@ -6,13 +6,17 @@
         v-for="(book, index) in state.books"
         :key="index"
       >
-        <div :value="`${index}`" ref="bookBox" class="book-box" @click="bookClickHandler(index)">
+        <div
+          :value="`${index}`"
+          ref="bookBox"
+          class="book-box"
+          @click="bookClickHandler(index)"
+        >
           <img
             ref="bookImage"
             :value="`${index}`"
             class="book-image"
             :src="`${book.image}`"
-            
           />
         </div>
         <div
@@ -62,23 +66,26 @@ export default {
     bookClickHandler(index) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
-        this.openBookContent(index)
-        this.IndexOfOpenedBook = index
-        this.isBookOpen = true
-        this.IndexOfOpenedBook = index
+        this.openBookContent(index);
+        this.IndexOfOpenedBook = index;
+        this.isBookOpen = true;
+        this.IndexOfOpenedBook = index;
       } else if (this.IndexOfOpenedBook === index && this.isBookOpen === true) {
-        this.closeBookContent(index)
-        this.isBookOpen = false
-      } else if (this.IndexOfOpenedBook === index && this.isBookOpen === false) {
-        this.openBookContent(index)
-        this.isBookOpen = true
+        this.closeBookContent(index);
+        this.isBookOpen = false;
+      } else if (
+        this.IndexOfOpenedBook === index &&
+        this.isBookOpen === false
+      ) {
+        this.openBookContent(index);
+        this.isBookOpen = true;
       } else {
         try {
-          this.closeBookContent(this.IndexOfOpenedBook)
-          this.openBookContent(index)
-          this.IndexOfOpenedBook = index
+          this.closeBookContent(this.IndexOfOpenedBook);
+          this.openBookContent(index);
+          this.IndexOfOpenedBook = index;
         } catch (error) {
-          null
+          null;
         }
       }
     },
@@ -106,9 +113,9 @@ export default {
     closeAllBooks() {
       if (this.isBookOpen === true) {
         this.closeBookContent(this.IndexOfOpenedBook);
-        this.isBookOpen = false
+        this.isBookOpen = false;
       }
-    }
+    },
   },
   created: function () {
     this.getBooks();
