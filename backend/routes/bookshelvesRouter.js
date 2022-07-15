@@ -31,19 +31,17 @@ router.post("", async (req, res) => {
   let userID = req.user.id;
   try {
     let bookshelfobject = await BookShelf.findOne({ user_id: userID });
-    if (bookshelfobject) {
+    if (!bookshelfobject) {
       let bookshelftest = await BookShelf.create({
         user_id: userID,
         books: [],
       });
-      console.log(bookshelftest);
+      console.log("bookshelf TEST: ", bookshelftest);
     }
     let bookshelf = await BookShelf.findOneAndUpdate(
       { user_id: userID },
       {
-        $push: {
-          books: book,
-        },
+        $push: { books: book },
       },
       { new: true }
     );
