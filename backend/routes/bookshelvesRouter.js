@@ -57,4 +57,23 @@ router.post("", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  let id = req.params.id;
+  if (!req.user) {
+    res.status(401).json({ message: "unauthenticated" });
+    return;
+  }
+
+  let bookshelf;
+  try {
+    bookshelf = await BookShelf.findOne({ user_id: id });
+    console.log(bookshelf);
+    res.status(200).json({ bookshelf });
+  } catch (err) {
+    res.status(500).json({
+      message: "failed to get bookshelf from id",
+    });
+  }
+});
+
 module.exports = router;
