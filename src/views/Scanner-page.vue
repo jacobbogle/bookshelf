@@ -5,33 +5,25 @@
       @decode="(isbn) => onDecode(isbn)"
       @loaded="() => onLoaded()"
     ></StreamBarcodeReader>
-    <button v-show="bookSearched === true" @click="bookSearched = false">Scan Again</button>
+    <button v-show="bookSearched === true" @click="bookSearched = false">
+      Scan Again
+    </button>
     <div id="bookCollection" v-show="bookSearched === true">
       <div
         class="book-recommend"
         v-for="(book, index) in state.scannedBooks.items"
         :key="index"
       >
-        <div
-          ref="bookBox"
-          class="book-box"
-          @click="bookClickHandler(index)"
-        >
-          <img
-            ref="image"
-            class="book-image"
-            :src="imageTest(book)"
-          />
+        <div ref="bookBox" class="book-box" @click="bookClickHandler(index)">
+          <img ref="image" class="book-image" :src="imageTest(book)" />
         </div>
-        <div
-          style="visibility: hidden"
-          ref="bookContent"
-          class="book-content"
-        >
+        <div style="visibility: hidden" ref="bookContent" class="book-content">
           <div class="text-content">
             <h2 ref="title">{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
-            <h3 :value="book.volumeInfo.averageRating" ref="rating">Rating: {{ numGive(book.volumeInfo.averageRating) }}</h3>
+            <h3 :value="book.volumeInfo.averageRating" ref="rating">
+              Rating: {{ numGive(book.volumeInfo.averageRating) }}
+            </h3>
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
@@ -43,9 +35,11 @@
               rel="noopener noreferrer"
               >Google Link</a
             ><!-- Product Link -->
-            <button @click="serveBook(index), postBook(this.bookObject)">Save Book</button>
+            <button @click="serveBook(index), postBook(this.bookObject)">
+              Save Book
+            </button>
             <!-- button to add to database -->
-            <p ref="description" v-html="snippetGive(book)" ></p>
+            <p ref="description" v-html="snippetGive(book)"></p>
           </div>
         </div>
       </div>
@@ -55,7 +49,7 @@
 
 <script>
 import StreamBarcodeReader from "../components/Scanner-section.vue";
-import Search from "@/models/search"
+import Search from "@/models/search";
 import Scanner from "@/models/scanner";
 export default {
   name: "HelloWorld",
@@ -63,7 +57,7 @@ export default {
     const { state, searchByISBN } = Scanner();
     const { postBook } = Search();
     return { state, searchByISBN, postBook };
-  },  
+  },
   data() {
     return {
       id: null,
@@ -77,7 +71,7 @@ export default {
         authors: "",
         link: "",
         description: "",
-      }
+      },
     };
   },
   components: {
@@ -89,10 +83,10 @@ export default {
   methods: {
     onDecode(isbn) {
       console.log(isbn);
-      this.state.searchISBN = isbn
-      this.bookSearched = true
-      this.searchByISBN()
-      this.id = isbn
+      this.state.searchISBN = isbn;
+      this.bookSearched = true;
+      this.searchByISBN();
+      this.id = isbn;
       if (this.id) clearTimeout(this.id);
       this.id = setTimeout(() => {
         if (this.id === isbn) {
@@ -104,13 +98,19 @@ export default {
       console.log("load");
     },
     serveBook(index) {
-      this.bookObject.image = String(this.$refs.image[index].src)
-      this.bookObject.title = this.$refs.title[index].innerHTML
-      this.bookObject.rating = this.numGive(this.state.books.items[index].volumeInfo.averageRating)
-      this.bookObject.authors = this.textGive(this.state.books.items[index].volumeInfo.authors)
-      this.bookObject.link = this.$refs.link[index].href
-      this.bookObject.description = this.snippetGive(this.state.books.items[index])
-      console.log(this.bookObject)
+      this.bookObject.image = String(this.$refs.image[index].src);
+      this.bookObject.title = this.$refs.title[index].innerHTML;
+      this.bookObject.rating = this.numGive(
+        this.state.scannedBooks.items[index].volumeInfo.averageRating
+      );
+      this.bookObject.authors = this.textGive(
+        this.state.scannedBooks.items[index].volumeInfo.authors
+      );
+      this.bookObject.link = this.$refs.link[index].href;
+      this.bookObject.description = this.snippetGive(
+        this.state.scannedBooks.items[index]
+      );
+      console.log(this.bookObject);
     },
     textGive(text) {
       try {
@@ -141,32 +141,35 @@ export default {
     },
     imageTest(book) {
       try {
-        let thumbnail = book.volumeInfo.imageLinks.thumbnail
-        return thumbnail
+        let thumbnail = book.volumeInfo.imageLinks.thumbnail;
+        return thumbnail;
       } catch (error) {
-        return "https://cdn.pixabay.com/photo/2018/01/04/15/51/404-error-3060993_1280.png"
+        return "https://cdn.pixabay.com/photo/2018/01/04/15/51/404-error-3060993_1280.png";
       }
     },
     bookClickHandler(index) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
-        this.openBookContent(index)
-        this.IndexOfOpenedBook = index
-        this.isBookOpen = true
-        this.IndexOfOpenedBook = index
+        this.openBookContent(index);
+        this.IndexOfOpenedBook = index;
+        this.isBookOpen = true;
+        this.IndexOfOpenedBook = index;
       } else if (this.IndexOfOpenedBook === index && this.isBookOpen === true) {
-        this.closeBookContent(index)
-        this.isBookOpen = false
-      } else if (this.IndexOfOpenedBook === index && this.isBookOpen === false) {
-        this.openBookContent(index)
-        this.isBookOpen = true
+        this.closeBookContent(index);
+        this.isBookOpen = false;
+      } else if (
+        this.IndexOfOpenedBook === index &&
+        this.isBookOpen === false
+      ) {
+        this.openBookContent(index);
+        this.isBookOpen = true;
       } else {
         try {
-          this.closeBookContent(this.IndexOfOpenedBook)
-          this.openBookContent(index)
-          this.IndexOfOpenedBook = index
+          this.closeBookContent(this.IndexOfOpenedBook);
+          this.openBookContent(index);
+          this.IndexOfOpenedBook = index;
         } catch (error) {
-          null
+          null;
         }
       }
     },
@@ -192,9 +195,9 @@ export default {
     closeAllBooks() {
       if (this.isBookOpen === true) {
         this.closeBookContent(this.IndexOfOpenedBook);
-        this.isBookOpen = false
+        this.isBookOpen = false;
       }
-    }
+    },
   },
 };
 </script>

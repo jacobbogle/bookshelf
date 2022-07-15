@@ -1,45 +1,39 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
     <h1>Search Page</h1>
-    <div ref="test" id="searchSection">  
+    <div ref="test" id="searchSection">
       <input
         type="text"
         placeholder="Search"
-        @keyup.enter="searchByTitle(),closeAllBooks(), searchReset()"
+        @keyup.enter="searchByTitle(), closeAllBooks(), searchReset()"
         v-model="state.searchTitle"
       />
-        <button v-on:click="searchByTitle()">Search</button>
-        <a id="scanner">
-          <img @click="toScanner()" src="https://static.thenounproject.com/png/473299-200.png" alt="scanner">
-        </a>
+      <button v-on:click="searchByTitle()">Search</button>
+      <a id="scanner">
+        <img
+          @click="toScanner()"
+          src="https://static.thenounproject.com/png/473299-200.png"
+          alt="scanner"
+        />
+      </a>
     </div>
     <br />
-    <div id="bookCollection" >
+    <div id="bookCollection">
       <div
         class="book-recommend"
         v-for="(book, index) in state.books.items"
         :key="index"
       >
-        <div
-          ref="bookBox"
-          class="book-box"
-          @click="bookClickHandler(index)"
-        >
-          <img
-            ref="image"
-            class="book-image"
-            :src="imageTest(book)"
-          />
+        <div ref="bookBox" class="book-box" @click="bookClickHandler(index)">
+          <img ref="image" class="book-image" :src="imageTest(book)" />
         </div>
-        <div
-          style="visibility: hidden"
-          ref="bookContent"
-          class="book-content"
-        >
+        <div style="visibility: hidden" ref="bookContent" class="book-content">
           <div class="text-content">
             <h2 ref="title">{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
-            <h3 :value="book.volumeInfo.averageRating" ref="rating">Rating: {{ numGive(book.volumeInfo.averageRating) }}</h3>
+            <h3 :value="book.volumeInfo.averageRating" ref="rating">
+              Rating: {{ numGive(book.volumeInfo.averageRating) }}
+            </h3>
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
@@ -51,9 +45,11 @@
               rel="noopener noreferrer"
               >Google Link</a
             ><!-- Product Link -->
-            <button @click="serveBook(index), postBook(this.bookObject)">Save Book</button>
+            <button @click="serveBook(index), postBook(this.bookObject)">
+              Save Book
+            </button>
             <!-- button to add to database -->
-            <p ref="description" v-html="snippetGive(book)" ></p>
+            <p ref="description" v-html="snippetGive(book)"></p>
           </div>
         </div>
       </div>
@@ -79,21 +75,27 @@ export default {
         authors: "",
         link: "",
         description: "",
-      }
+      },
     };
   },
   methods: {
     toScanner() {
-      this.$router.push({ path: '/scanner' })
+      this.$router.push({ path: "/scanner" });
     },
     serveBook(index) {
-      this.bookObject.image = String(this.$refs.image[index].src)
-      this.bookObject.title = this.$refs.title[index].innerHTML
-      this.bookObject.rating = this.numGive(this.state.books.items[index].volumeInfo.averageRating)
-      this.bookObject.authors = this.textGive(this.state.books.items[index].volumeInfo.authors)
-      this.bookObject.link = this.$refs.link[index].href
-      this.bookObject.description = this.snippetGive(this.state.books.items[index])
-      console.log(this.bookObject)
+      this.bookObject.image = String(this.$refs.image[index].src);
+      this.bookObject.title = this.$refs.title[index].innerHTML;
+      this.bookObject.rating = this.numGive(
+        this.state.books.items[index].volumeInfo.averageRating
+      );
+      this.bookObject.authors = this.textGive(
+        this.state.books.items[index].volumeInfo.authors
+      );
+      this.bookObject.link = this.$refs.link[index].href;
+      this.bookObject.description = this.snippetGive(
+        this.state.books.items[index]
+      );
+      console.log(this.bookObject);
     },
     textGive(text) {
       try {
@@ -105,10 +107,10 @@ export default {
     },
     snippetGive(book) {
       try {
-        let snippet = book.searchInfo.textSnippet;
+        let snippet = book.volumeInfo.description;
         return snippet;
       } catch (error) {
-        return book.volumeInfo.description;
+        return book.searchInfo.textSnippet;
       }
     },
     numGive(num) {
@@ -124,36 +126,39 @@ export default {
     },
     imageTest(book) {
       try {
-        let thumbnail = book.volumeInfo.imageLinks.thumbnail
-        return thumbnail
+        let thumbnail = book.volumeInfo.imageLinks.thumbnail;
+        return thumbnail;
       } catch (error) {
-        return "https://cdn.pixabay.com/photo/2018/01/04/15/51/404-error-3060993_1280.png"
+        return "https://cdn.pixabay.com/photo/2018/01/04/15/51/404-error-3060993_1280.png";
       }
     },
     searchReset() {
-      this.isBookOpen = false
-      this.IndexOfOpenedBook = null
+      this.isBookOpen = false;
+      this.IndexOfOpenedBook = null;
     },
     bookClickHandler(index) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
-        this.openBookContent(index)
-        this.IndexOfOpenedBook = index
-        this.isBookOpen = true
-        this.IndexOfOpenedBook = index
+        this.openBookContent(index);
+        this.IndexOfOpenedBook = index;
+        this.isBookOpen = true;
+        this.IndexOfOpenedBook = index;
       } else if (this.IndexOfOpenedBook === index && this.isBookOpen === true) {
-        this.closeBookContent(index)
-        this.isBookOpen = false
-      } else if (this.IndexOfOpenedBook === index && this.isBookOpen === false) {
-        this.openBookContent(index)
-        this.isBookOpen = true
+        this.closeBookContent(index);
+        this.isBookOpen = false;
+      } else if (
+        this.IndexOfOpenedBook === index &&
+        this.isBookOpen === false
+      ) {
+        this.openBookContent(index);
+        this.isBookOpen = true;
       } else {
         try {
-          this.closeBookContent(this.IndexOfOpenedBook)
-          this.openBookContent(index)
-          this.IndexOfOpenedBook = index
+          this.closeBookContent(this.IndexOfOpenedBook);
+          this.openBookContent(index);
+          this.IndexOfOpenedBook = index;
         } catch (error) {
-          null
+          null;
         }
       }
     },
@@ -179,13 +184,11 @@ export default {
     closeAllBooks() {
       if (this.isBookOpen === true) {
         this.closeBookContent(this.IndexOfOpenedBook);
-        this.isBookOpen = false
+        this.isBookOpen = false;
       }
-    }
+    },
   },
-  created() {
-    
-  },
+  created() {},
 };
 </script>
 
@@ -223,7 +226,6 @@ h1 {
 }
 
 #scanner {
-
   width: 35px;
   background-color: white;
   cursor: pointer;
