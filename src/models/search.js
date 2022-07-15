@@ -31,6 +31,7 @@ const SearchBar = () => {
         })
         .then((data) => {
           state.value.books = data;
+          console.log(data);
         });
     } catch (err) {
       console.log(err);
@@ -45,7 +46,9 @@ const SearchBar = () => {
       authors: book.authors,
       link: book.link,
       description: book.description,
+      isbn: book.isbn,
     };
+    console.log("newBook: ", newBook);
     let response = await fetch("http://localhost:3000/bookshelves", {
       method: "POST",
       body: JSON.stringify(newBook),

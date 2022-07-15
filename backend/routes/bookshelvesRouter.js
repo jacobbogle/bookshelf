@@ -20,7 +20,9 @@ router.post("", async (req, res) => {
       authors: req.body.authors,
       link: req.body.link,
       description: req.body.description,
+      isbn: req.body.isbn,
     });
+    console.log("book id: ", book._id);
   } catch (err) {
     res.status(500).json({
       message: "could not create book",
@@ -41,7 +43,7 @@ router.post("", async (req, res) => {
     let bookshelf = await BookShelf.findOneAndUpdate(
       { user_id: userID },
       {
-        $push: { books: book },
+        $push: { books: book._id },
       },
       { new: true }
     );
@@ -86,8 +88,14 @@ router.get("", async (req, res) => {
   let bookshelf;
   try {
     bookshelf = await BookShelf.findOne({ user_id: id });
-    console.log("bookshelf: ", bookshelf);
-    res.status(200).json({ bookshelf });
+    let listOfBooks = [];
+    for (book in bookshelf.books) {
+      currentBook = await bookModel.findOne({
+        _id: bookshelf.books[book].toString(),
+      });
+      listOfBooks.push(currentBook);
+    }
+    res.status(200).json({ listOfBooks });
   } catch (err) {
     res.status(500).json({
       message: "failed to get bookshelf from id",

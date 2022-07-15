@@ -75,6 +75,7 @@ export default {
         authors: "",
         link: "",
         description: "",
+        isbn: "",
       },
     };
   },
@@ -95,7 +96,24 @@ export default {
       this.bookObject.description = this.snippetGive(
         this.state.books.items[index]
       );
-      console.log(this.bookObject);
+      this.bookObject.isbn = this.isbnGive(
+        this.state.books.items[index].volumeInfo.industryIdentifiers
+      );
+    },
+
+    isbnGive(text) {
+      try {
+        for (const i in text) {
+          console.log(text[i].identifier);
+          if (text[i].type == "ISBN_13") {
+            console.log(text[i].identifier);
+            return text[i].identifier;
+          }
+        }
+      } catch (error) {
+        console.log("error");
+        return this.bookObject.link;
+      }
     },
     textGive(text) {
       try {

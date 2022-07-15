@@ -14,8 +14,8 @@ const BookShelf = () => {
       credentials: "include",
     });
     let data = await response.json();
-    state.value.books = data.bookshelf.books;
-    console.log(data);
+    state.value.books = data.listOfBooks;
+    console.log("data", data);
   };
 
   return {

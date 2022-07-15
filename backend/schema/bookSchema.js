@@ -22,6 +22,9 @@ const bookSchema = new mongoose.Schema({
   user_id: {
     type: String,
   },
+  isbn: {
+    type: String,
+  },
 });
 
 const bookModel = mongoose.model("book", bookSchema);
