@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Book1 from "../book-objects/the-bone-witch.vue";
-import IsLoggedIn from "../models/getSession";
+import Book1 from "../golobalBookInfo/the-bone-witch.vue";
+import IsLoggedIn from "../middleware/getSession";
 
 export default {
   setup() {

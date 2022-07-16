@@ -8,7 +8,7 @@
 
 <script>
 import Acount from "@/components/User-section.vue";
-import Nav from '@/components/Menu.vue'
+import Nav from '@/components/Nav-section.vue'
 export default {
   components: {
     Nav,

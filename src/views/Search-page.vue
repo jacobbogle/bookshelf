@@ -45,7 +45,7 @@
               rel="noopener noreferrer"
               >Google Link</a
             ><!-- Product Link -->
-            <button @click="serveBook(index), postBook(this.bookObject)">
+            <button @click="serveBook(index), postBook(bookObject)">
               Save Book
             </button>
             <!-- button to add to database -->
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import Search from "../models/search";
+import Search from "../middleware/search";
 export default {
   setup() {
     const { state, searchByTitle, postBook } = Search();
@@ -100,18 +100,14 @@ export default {
         this.state.books.items[index].volumeInfo.industryIdentifiers
       );
     },
-
     isbnGive(text) {
       try {
         for (const i in text) {
-          console.log(text[i].identifier);
           if (text[i].type == "ISBN_13") {
-            console.log(text[i].identifier);
             return text[i].identifier;
           }
         }
       } catch (error) {
-        console.log("error");
         return this.bookObject.link;
       }
     },
@@ -211,7 +207,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../book-objects/style.css";
+@import "../golobalBookInfo/style.css";
 
 #searchSection {
   display: flex;

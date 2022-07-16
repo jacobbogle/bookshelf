@@ -35,7 +35,7 @@
               rel="noopener noreferrer"
               >Google Link</a
             ><!-- Product Link -->
-            <button @click="serveBook(index), postBook(this.bookObject)">
+            <button @click="serveBook(index), postBook(bookObject)">
               Save Book
             </button>
             <!-- button to add to database -->
@@ -49,8 +49,8 @@
 
 <script>
 import StreamBarcodeReader from "../components/Scanner-section.vue";
-import Search from "@/models/search";
-import Scanner from "@/models/scanner";
+import Search from "@/middleware/search";
+import Scanner from "@/middleware/scanner";
 export default {
   name: "HelloWorld",
   setup() {
@@ -71,14 +71,12 @@ export default {
         authors: "",
         link: "",
         description: "",
+        isbn: "",
       },
     };
   },
   components: {
     StreamBarcodeReader,
-  },
-  props: {
-    msg: String,
   },
   methods: {
     onDecode(isbn) {
@@ -110,7 +108,20 @@ export default {
       this.bookObject.description = this.snippetGive(
         this.state.scannedBooks.items[index]
       );
-      console.log(this.bookObject);
+      this.bookObject.isbn = this.isbnGive(
+        this.state.scannedBooks.items[index].volumeInfo.industryIdentifiers
+      );
+    },
+    isbnGive(text) {
+      try {
+        for (const i in text) {
+          if (text[i].type == "ISBN_13") {
+            return text[i].identifier;
+          }
+        }
+      } catch (error) {
+        return this.bookObject.link;
+      }
     },
     textGive(text) {
       try {
@@ -122,10 +133,10 @@ export default {
     },
     snippetGive(book) {
       try {
-        let snippet = book.searchInfo.textSnippet;
+        let snippet = book.volumeInfo.description;
         return snippet;
       } catch (error) {
-        return book.volumeInfo.description;
+        return book.searchInfo.textSnippet;
       }
     },
     numGive(num) {
@@ -202,7 +213,7 @@ export default {
 };
 </script>
 <style scoped>
-@import "../book-objects/style.css";
+@import "../golobalBookInfo/style.css";
 #bookCollection {
   display: flex;
   flex-direction: row;

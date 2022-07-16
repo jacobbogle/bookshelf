@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <h1>Register</h1>
-    <div class="centered">
+    <form class="centered">
       <label for="name">Name</label>
       <input
         v-model="name"
@@ -29,15 +29,15 @@
         name="password"
         required
       />
-      <button @click="postUser(email, name, password)" type="submit">Register</button>
-    </div>
+      <button @click="postUser(email, name, password), this.$router.push({path: '/login'})" type="submit">Register</button>
+    </form>
     <!-- </form> -->
     <router-link id="link" to="/login"><span>Login</span></router-link>
   </div>
 </template>
 
 <script>
-import Register from "../models/register";
+import Register from "../middleware/register";
 export default {
   setup() {
     const {postUser} = Register();

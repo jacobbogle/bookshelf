@@ -6,6 +6,7 @@ api.config.json
 
 # local env files
 .env
+.env.*
 .env.*.local
 
 # Log files

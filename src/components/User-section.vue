@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import IsLoggedIn from "../models/getSession";
+import IsLoggedIn from "../middleware/getSession";
 
 export default {
   setup() {

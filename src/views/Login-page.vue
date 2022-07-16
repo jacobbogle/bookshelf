@@ -2,7 +2,7 @@
   <div id="wrapper">
     <h1>Login</h1>
     <h2>GetUsernameFromSessionFunction</h2>
-    <div class="centered">
+    <form class="centered">
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -22,14 +22,13 @@
         required
       />
       <button @click="postSession(email, password)" type="submit">Login</button>
-    </div>
-    <!-- </form> -->
+    </form>
     <router-link id="link" to="/register"><span>Register</span></router-link>
   </div>
 </template>
 
 <script>
-import Login from "../models/login";
+import Login from "../middleware/login";
 
 export default {
   setup() {

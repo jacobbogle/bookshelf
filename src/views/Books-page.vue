@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import BookShelf from "../models/books";
+import BookShelf from "../middleware/books";
 export default {
   setup() {
     const { state, getBooks } = BookShelf();
@@ -124,7 +124,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../book-objects/style.css";
+@import "../golobalBookInfo/style.css";
 
 #getBooks {
   align-self: center;
