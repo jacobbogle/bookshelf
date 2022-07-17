@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <router-link v-if="state.loggedIn === false" to="/login"><a>Sign In</a></router-link>
+    <router-link v-if="state.currentUser.length === 0" to="/login"><a>Sign In</a></router-link>
     <a v-else >Sign Out</a>
     <p>{{ state.currentUser }}</p>
   </div>
