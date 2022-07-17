@@ -1,7 +1,6 @@
 <template>
   <div id="wrapper">
     <h1>Login</h1>
-    <h2> somefunction </h2>
     <form class="centered">
       <label for="username">Username</label>
       <input
@@ -21,10 +20,12 @@
         name="password"
         required
       />
-      <button @click="loginRout()" type="submit">Login</button>
+      <button @click="loginFunc()" type="submit">Sign In</button>
     </form>
+    <br>
+    <p>Don't have an acount?</p>
     <router-link id="link" to="/register">
-      <span>Register</span>
+      Sign Up
     </router-link>
     <!-- <a href="http://localhost:3000/auth/google">Google Sign In</a> -->
   </div>
@@ -42,13 +43,11 @@ export default {
     return {
       username: "",
       password: "",
-      currentUser: "",
     };
   },
   methods: {
-    async loginRout() {
-      await this.postSession(this.username, this.password)
-
+    loginFunc() {
+      this.postSession(this.username, this.password)
     },
   }
 }
@@ -86,5 +85,16 @@ h2 {
 h1,
 label {
   color: white;
+}
+
+p {
+  text-align: center;
+  cursor: default;
+}
+
+a, p {
+  font-weight: 700;
+  color: rgb(201, 201, 201);
+  text-decoration: none;
 }
 </style>

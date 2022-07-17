@@ -1,9 +1,6 @@
-// import { ref } from "vue";
+
 
 const Login = () => {
-  // const state = ref({
-  //   currentUser: "",
-  // });
 
   const postSession = async function (username, password) {
     try {
@@ -22,9 +19,7 @@ const Login = () => {
       });
       console.log("SUCCESSFUL LOGIN ATTEMPT")
       if (response.status == 201) {
-        //let data = await response.json();
         console.log("SUCCESSFUL LOGIN ATTEMPT");
-        // getSession();
       } else if (response.status == 401) {
         console.log("UNSUCCESSFUL LOGIN ATTEMPT");
       }

@@ -2,10 +2,6 @@ import { ref } from "vue";
 
 const BookShelf = () => {
   const state = ref({
-    searchTitle: "",
-    searchAuthor: "",
-    searchISBN: "",
-    bookObject: {},
     books: {},
   });
 

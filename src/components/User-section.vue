@@ -1,7 +1,8 @@
 <template>
-  <div id="wraper">
-    <p style="color: white">username</p>
-    <router-link to="/login"><span>Acount</span></router-link>
+  <div id="wrapper">
+    <router-link v-if="state.loggedIn === false" to="/login"><a>Sign In</a></router-link>
+    <a v-else >Sign Out</a>
+    <p>{{ state.currentUser }}</p>
   </div>
 </template>
 
@@ -18,15 +19,18 @@ export default {
 
     };
   },
-  mounted() {
-    this.getSession();
+  async mounted() {
+    await this.getSession();
   },
 }
 </script>
 
 <style scoped>
-span {
-  font-weight: 700;
+a {
+  cursor: pointer;
+}
+
+a, p {
   color: rgb(201, 201, 201);
   text-decoration: none;
 }

@@ -57,7 +57,7 @@ const setUpAuth = function (app) {
     res.status(201).json({
       message: "successfully create session",
       username: req.user.username,
-      email: req.user.email,
+      //email: req.user.email,
     });
   });
 

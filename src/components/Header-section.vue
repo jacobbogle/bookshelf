@@ -39,9 +39,7 @@ a {
 
 #acount {
   position: absolute;
-  width: 36px;
-  height: 30px;
-  right: 65px;
+  right: 20px;
   top: 26px;
 }
 

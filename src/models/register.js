@@ -1,13 +1,5 @@
-//import { ref } from "vue";
-
-
 
 const Register = () => {
-    // const state = ref({
-        
-    //   });
-
-
     const postUser = async function (email, name, password) {
         let user = {
             email: email,
@@ -24,6 +16,7 @@ const Register = () => {
         })
         if (response.status == 201) {
             console.log("successful user created");
+            this.$router.push({ path: "/login", replace: true });
         } else {
             console.log("Some error in /POST users");
         }

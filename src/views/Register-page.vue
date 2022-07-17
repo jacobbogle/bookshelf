@@ -29,10 +29,12 @@
         name="password"
         required
       />
-      <button @click="postUser(email, username, password)" type="submit">Register</button>
+      <button @click="userRegister()" type="submit">Register</button>
     </form>
-    <!-- </form> -->
-    <router-link id="link" to="/login"><span>Login</span></router-link>
+    <br>
+    <router-link id="link" to="/login">
+      <a>Login</a>
+    </router-link>
   </div>
 </template>
 
@@ -51,7 +53,9 @@ export default {
     };
   },
   methods: {
-
+    userRegister() {
+      this.postUser(this.email, this.username, this.password)
+    }
   },
 };
 </script>
@@ -78,6 +82,12 @@ form {
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
+}
+
+a {
+  font-weight: 700;
+  color: rgb(201, 201, 201);
+  text-decoration: none;
 }
 
 h1,
