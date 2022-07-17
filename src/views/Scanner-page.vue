@@ -49,8 +49,8 @@
 
 <script>
 import StreamBarcodeReader from "../components/Scanner-section.vue";
-import Search from "@/middleware/search";
-import Scanner from "@/middleware/scanner";
+import Search from "@/models/search";
+import Scanner from "@/models/scanner";
 export default {
   name: "HelloWorld",
   setup() {
@@ -213,7 +213,7 @@ export default {
 };
 </script>
 <style scoped>
-@import "../golobalBookInfo/style.css";
+@import "../book-data/style.css";
 #bookCollection {
   display: flex;
   flex-direction: row;

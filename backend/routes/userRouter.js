@@ -1,20 +1,16 @@
 const express = require("express");
 const { User } = require("../schema/userSchema");
 let router = express.Router();
+const bcrypt =require('bcrypt')
 
-// const corsOptions = {
-//   origin: "http://localhost:3001",
-//   credentials: true,
-// };
-// router.use(cors(corsOptions));
 
 router.post("", async (req, res) => {
-  console.log("body: ", req.body);
   try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
     let user = await User.create({
       username: req.body.username,
-      fullname: req.body.fullname,
-      password: req.body.password,
+      email: req.body.email,
+      password: hashedPassword
     });
     res.status(201).json(user);
   } catch (err) {

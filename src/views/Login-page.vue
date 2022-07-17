@@ -1,15 +1,15 @@
 <template>
   <div id="wrapper">
     <h1>Login</h1>
-    <h2>GetUsernameFromSessionFunction</h2>
+    <h2> somefunction </h2>
     <form class="centered">
-      <label for="email">Email</label>
+      <label for="username">Username</label>
       <input
-        v-model="email"
+        v-model="username"
         placeholder="type here..."
         type="text"
-        id="email"
-        name="email"
+        id="username"
+        name="name"
         required
       />
       <label for="password">Password</label>
@@ -21,14 +21,17 @@
         name="password"
         required
       />
-      <button @click="postSession(email, password)" type="submit">Login</button>
+      <button @click="loginRout()" type="submit">Login</button>
     </form>
-    <router-link id="link" to="/register"><span>Register</span></router-link>
+    <router-link id="link" to="/register">
+      <span>Register</span>
+    </router-link>
+    <!-- <a href="http://localhost:3000/auth/google">Google Sign In</a> -->
   </div>
 </template>
 
 <script>
-import Login from "../middleware/login";
+import Login from "../models/login";
 
 export default {
   setup() {
@@ -37,13 +40,18 @@ export default {
   },
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
       currentUser: "",
     };
   },
-  methods: {},
-};
+  methods: {
+    async loginRout() {
+      await this.postSession(this.username, this.password)
+
+    },
+  }
+}
 </script>
 
 <style scoped>

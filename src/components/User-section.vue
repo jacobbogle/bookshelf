@@ -1,28 +1,27 @@
 <template>
   <div id="wraper">
-    <p style="color: white">{{ state.currentUser }}</p>
-    <router-link to="/register"><span>Acount</span></router-link>
+    <p style="color: white">username</p>
+    <router-link to="/login"><span>Acount</span></router-link>
   </div>
 </template>
 
 <script>
-import IsLoggedIn from "../middleware/getSession";
+import User from "../models/user";
 
 export default {
   setup() {
-    const { state, getSession } = IsLoggedIn();
+    const { state, getSession } = User();
     return { state, getSession };
   },
   data() {
     return {
-      userName: "",
+
     };
   },
-  created: function () {
+  mounted() {
     this.getSession();
-    this.userName = this.state.currentUser;
   },
-};
+}
 </script>
 
 <style scoped>

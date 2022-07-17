@@ -10,7 +10,7 @@ const setUpSession = require("./session");
 app.use(express.json());
 
 const corsOptions = {
-  origin: "http://localhost:3001",
+  origin: "http://localhost:8080",
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -18,8 +18,10 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", req.header("origin"));
   next();
 });
+
 setUpSession(app);
 setUpAuth(app);
+
 
 //Routes
 const booksRoute = require("../routes/bookRouter");

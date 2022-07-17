@@ -2,12 +2,12 @@
   <div id="wrapper">
     <h1>Register</h1>
     <form class="centered">
-      <label for="name">Name</label>
+      <label for="username">Username</label>
       <input
-        v-model="name"
+        v-model="username"
         placeholder="type here..."
         type="text"
-        id="name"
+        id="username"
         name="name"
         required
       />
@@ -15,7 +15,7 @@
       <input
         v-model="email"
         placeholder="type here..."
-        type="text"
+        type="email"
         id="email"
         name="email"
         required
@@ -29,7 +29,7 @@
         name="password"
         required
       />
-      <button @click="postUser(email, name, password), this.$router.push({path: '/login'})" type="submit">Register</button>
+      <button @click="postUser(email, username, password)" type="submit">Register</button>
     </form>
     <!-- </form> -->
     <router-link id="link" to="/login"><span>Login</span></router-link>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Register from "../middleware/register";
+import Register from "../models/register";
 export default {
   setup() {
     const {postUser} = Register();
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      name: "",
+      username: "",
       email: "",
       password: "",
     };

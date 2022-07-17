@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import Search from "../middleware/search";
+import Search from "../models/search";
 export default {
   setup() {
     const { state, searchByTitle, postBook } = Search();
@@ -207,7 +207,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../golobalBookInfo/style.css";
+@import "../book-data/style.css";
 
 #searchSection {
   display: flex;

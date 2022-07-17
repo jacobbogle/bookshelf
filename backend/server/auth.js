@@ -1,22 +1,43 @@
+//might need to change env setup when its actualy running
+require("dotenv").config({ path: "../../.env" });
 const passport = require("passport");
-const LocalStrategy = require("passport-local");
+const LocalStrategy = require("passport-local").Strategy;
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { User } = require("../schema/userSchema");
+const bcrypt =require('bcrypt')
 
+//google
+// passport.use(new GoogleStrategy({
+//   clientID: process.env.GOOGLE_CLIENT_ID,
+//   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//   callbackURL: process.env.GOOGLE_AUTH_REDIRECT_URL,
+//   passReqToCallback: true,
+// },
+// function(accessToken, refreshToken, profile, cb) {
+//   User.findOrCreate({ googleId: profile.id }, function (err, user) {
+//     return cb(err, user);
+//   });
+// }
+// ));
+
+//local
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     let user;
     try {
-      user = await User.findOne({ username: username, password: password });
-      if (!user) {
-        return done(null, false);
+      user = await User.findOne({ username: username });
+      if (await bcrypt.compare(password, user.password)) {
+        return done(null, user);
+      } else {
+        return done(null, false)
       }
-      return done(null, user);
     } catch (err) {
       return done(err);
     }
   })
 );
 
+//runs in server
 const setUpAuth = function (app) {
   app.use(passport.initialize());
   app.use(passport.authenticate("session"));
@@ -25,7 +46,7 @@ const setUpAuth = function (app) {
     cb(null, {
       id: user._id,
       username: user.username,
-      fullname: user.fullname,
+      email: user.email,
     });
   });
   passport.deserializeUser(function (user, cb) {
@@ -36,7 +57,7 @@ const setUpAuth = function (app) {
     res.status(201).json({
       message: "successfully create session",
       username: req.user.username,
-      fullname: req.user.fullname,
+      email: req.user.email,
     });
   });
 
@@ -45,11 +66,22 @@ const setUpAuth = function (app) {
       res.status(401).json({ message: "unauthenticated" });
       return;
     }
-    console.log(req.user);
     res
       .status(200)
       .json({ message: "authenticated", username: req.user.username });
   });
+
+  //google
+//   app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['email', 'profile'] }));
+
+//   app.get('/auth/google/callback', 
+//     passport.authenticate('google', { failureRedirect: '/login' }),
+//     function(req, res) {
+//       // Successful authentication, redirect home.
+//       res.redirect('/books');
+//     });
 };
+
 
 module.exports = setUpAuth;

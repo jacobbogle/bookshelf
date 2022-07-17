@@ -9,31 +9,30 @@
       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
     ></iframe>
-    <Book1 />
+
   </div>
 </template>
 
 <script>
-import Book1 from "../golobalBookInfo/the-bone-witch.vue";
-import IsLoggedIn from "../middleware/getSession";
+//import IsLoggedIn from "../models/getSession";
 
 export default {
-  setup() {
-    const { state, getSession } = IsLoggedIn();
-    return { state, getSession };
-  },
+  // setup() {
+  //   const { state, getSession } = IsLoggedIn();
+  //   return { state, getSession };
+  // },
   components: {
-    Book1,
+
   },
   data() {
     return {
-      userName: "",
+      //userName: "",
     };
   },
-  created: function () {
-    this.getSession();
-    this.userName = this.state.currentUser;
-  },
+  // created: function () {
+  //   this.getSession();
+  //   this.userName = this.state.currentUser;
+  // },
 };
 </script>
 

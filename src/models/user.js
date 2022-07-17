@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-const IsLoggedIn = () => {
+const User = () => {
   const state = ref({
     currentUser: "",
   });
@@ -11,9 +11,6 @@ const IsLoggedIn = () => {
     });
     if (response.status == 200) {
       console.log("LOGGED IN");
-      let data = await response.json();
-      console.log(data);
-      state.value.currentUser = data.username;
     } else if (response.status == 401) {
       console.log("NOT LOGGED IN");
       let data = await response.json();
@@ -29,4 +26,4 @@ const IsLoggedIn = () => {
   };
 };
 
-export default IsLoggedIn;
+export default User;
