@@ -37,3 +37,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### dev notes
+1.	add to api file
+2.	add a .env.local file
