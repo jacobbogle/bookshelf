@@ -2,10 +2,17 @@ const express = require("express");
 let router = express.Router();
 
 router.get("", (req, res) => {
-  req.session.destroy();
-  res.send(200).json({
-    message: "successfully logged out",
-  });
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(400).send("Unable to log out");
+      } else {
+        res.send("Logout successful");
+      }
+    });
+  } else {
+    res.end();
+  }
 });
 
 module.exports = router;

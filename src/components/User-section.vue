@@ -28,6 +28,7 @@ export default {
         if (response.status == 200) {
           console.log("successful logout");
         }
+        this.getSession();
       } catch (err) {
         console.log("some error", err);
       }

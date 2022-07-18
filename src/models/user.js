@@ -12,12 +12,14 @@ const User = () => {
     if (response.status == 200) {
       console.log("LOGGED IN");
       let data = await response.json();
-      state.value.currentUser = data.username
+      state.value.currentUser = data.username;
       this.$router.push({ path: "/", replace: true });
     } else if (response.status == 401) {
+      state.value.currentUser = "";
       console.log("NOT LOGGED IN");
       this.$router.push({ path: "/login", replace: true });
     } else {
+      state.value.currentUser = "";
       console.log("SOME ERROR IN GET /session", response.status, response);
     }
   };
