@@ -95,6 +95,21 @@ router.get("", async (req, res) => {
   }
 });
 
+router.get("/:user_id", async (req, res) => {
+  let userID = req.params.user_id;
+
+  let bookshelf;
+  try {
+    bookshelf = await BookShelf.findOne({
+      user_id: userID,
+    });
+  } catch (err) {
+    res.status(404).json({ message: "bookshelf by id not found", error: err });
+    return;
+  }
+  res.status(200).json(bookshelf);
+});
+
 router.delete("/:book_id", async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
