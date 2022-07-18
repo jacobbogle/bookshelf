@@ -29,7 +29,7 @@ router.post("", async (req, res) => {
     } else if (testBookInDatabase) {
       book = testBookInDatabase;
     }
-  console.log("book id: " + book._id);
+    console.log("book id: " + book._id);
   } catch (err) {
     console.log("book in database already");
   }
@@ -43,9 +43,9 @@ router.post("", async (req, res) => {
       });
       console.log("bookshelf TEST: ", bookshelftest);
     } else if (bookshelfObject) {
-      console.log(bookshelfObject.books)
+      console.log(bookshelfObject.books);
       if (bookshelfObject.books.includes(book._id)) {
-        console.log("you already have this book in your bookshelf")
+        console.log("you already have this book in your bookshelf");
       } else {
         let bookshelf = await BookShelf.findOneAndUpdate(
           { user_id: userID },
@@ -57,7 +57,7 @@ router.post("", async (req, res) => {
         res.status(200).json({
           message: bookshelf,
         });
-        console.log("added: " + book._id)
+        console.log("added: " + book._id);
       }
     }
   } catch (err) {
@@ -69,7 +69,6 @@ router.post("", async (req, res) => {
   }
 });
 
-
 router.get("", async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
@@ -80,6 +79,8 @@ router.get("", async (req, res) => {
   try {
     bookshelf = await BookShelf.findOne({ user_id: id });
     let listOfBooks = [];
+    let book;
+    let currentBook;
     for (book in bookshelf.books) {
       currentBook = await bookModel.findOne({
         _id: bookshelf.books[book].toString(),

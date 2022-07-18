@@ -22,14 +22,15 @@ app.use(function (req, res, next) {
 setUpSession(app);
 setUpAuth(app);
 
-
 //Routes
 const booksRoute = require("../routes/bookRouter");
 const usersRoute = require("../routes/userRouter");
 const bookshelvesRoute = require("../routes/bookshelvesRouter");
+const logOutRoute = require("../routes/logOutRouter");
 app.use("/books", booksRoute);
 app.use("/users", usersRoute);
 app.use("/bookshelves", bookshelvesRoute);
+app.use("/logout", logOutRoute);
 
 //Set up default mongoose connection
 const mongoDB = process.env.SERVER_URL;
