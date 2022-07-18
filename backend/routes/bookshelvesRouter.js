@@ -94,4 +94,54 @@ router.get("", async (req, res) => {
     });
   }
 });
+
+router.delete("/:book_id", async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({ message: "unauthenticated" });
+    return;
+  }
+
+  let bookshelf;
+  try {
+    bookshelf = await BookShelf.findOne({ user_id: req.user.id });
+  } catch (err) {
+    res.status(500).json({ message: "couldn't find bookshelf", error: err });
+    return;
+  }
+
+  let book;
+  let index;
+  try {
+    for (let i in bookshelf.books) {
+      if (bookshelf.books[i] == req.params.book_id) {
+        book = bookshelf.books[i];
+        index = i;
+      }
+    }
+    console.log(book, index);
+  } catch (err) {
+    res.status(500).json({ message: "couldn't find book", error: err });
+    return;
+  }
+  try {
+    let newbookshelf;
+    newbookshelf = await BookShelf.findOneAndUpdate(
+      { user_id: req.user.id },
+      {
+        $pull: {
+          books: book,
+        },
+      }
+    );
+    console.log("newbookshelf, ", newbookshelf);
+  } catch (err) {
+    res.status(500).json({
+      message: "error deleting book",
+      error: err,
+    });
+    return;
+  }
+  res.status(200).json(book + index);
+});
+
 module.exports = router;

@@ -41,6 +41,7 @@
               rel="noopener noreferrer"
               >Google Link</a
             ><!-- Product Link -->
+            <a @click="deleteBook(book._id)"> DELETE BOOK</a>
             <p v-html="book.description" :value="`${index}`"></p>
           </div>
         </div>
@@ -53,8 +54,8 @@
 import BookShelf from "../models/books";
 export default {
   setup() {
-    const { state, getBooks } = BookShelf();
-    return { state, getBooks };
+    const { state, getBooks, deleteBook } = BookShelf();
+    return { state, getBooks, deleteBook };
   },
   data() {
     return {

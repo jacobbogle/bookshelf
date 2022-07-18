@@ -14,9 +14,21 @@ const BookShelf = () => {
     console.log("data", data);
   };
 
+  const deleteBook = async function (bookID) {
+    console.log(bookID);
+    let response = await fetch(`http://localhost:3000/bookshelves/${bookID}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    let data = await response.json();
+    console.log("data: ", data);
+    this.getBooks();
+  };
+
   return {
     state,
     getBooks,
+    deleteBook,
   };
 };
 
