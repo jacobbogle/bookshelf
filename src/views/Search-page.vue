@@ -102,11 +102,15 @@ export default {
     },
     isbnGive(text) {
       try {
+        let isbn;
         for (const i in text) {
           if (text[i].type == "ISBN_13") {
             return text[i].identifier;
+          } else if (text[i].type == "ISBN_10") {
+            isbn = text[i].identifier;
           }
         }
+        return isbn;
       } catch (error) {
         return this.bookObject.link;
       }
