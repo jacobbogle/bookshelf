@@ -1,5 +1,5 @@
 const express = require("express");
-const  User  = require("../schema/user-schema");
+const User = require("../schema/user-schema");
 let router = express.Router();
 const bcrypt = require("bcrypt");
 
@@ -24,8 +24,39 @@ router.post("", async (req, res) => {
 router.get("", async (req, res) => {
   let listOfUsers;
   try {
-    listOfUsers = await User.find({}, { password: 0, email: 0, fullname: 0 });
+    listOfUsers = await User.find(
+      {},
+      {
+        password: 0,
+        email: 0,
+        fullname: 0,
+        shared_id: 0,
+        public: 0,
+        friends: 0,
+      }
+    );
     res.status(200).json(listOfUsers);
+  } catch (err) {
+    res.status(500).json({ message: "could not get users" });
+  }
+});
+
+router.get("/:name", async (req, res) => {
+  let userName = req.params.name;
+  let user;
+  try {
+    user = await User.find(
+      { username: userName },
+      {
+        password: 0,
+        email: 0,
+        fullname: 0,
+        shared_id: 0,
+        friends: 0,
+        google_id: 0,
+      }
+    );
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ message: "could not get users" });
   }

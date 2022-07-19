@@ -7,6 +7,10 @@ const bookShelfSchema = new mongoose.Schema({
   user_id: {
     type: String,
   },
+  public: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const BookShelf = mongoose.model("BookShelf", bookShelfSchema);

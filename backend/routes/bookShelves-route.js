@@ -1,5 +1,6 @@
 const express = require("express");
 const bookModel = require("../schema/book-schema");
+const User = require("../schema/user-schema");
 const { BookShelf } = require("../schema/bookShelf-schema");
 
 let router = express.Router();
@@ -68,8 +69,38 @@ router.post("", async (req, res) => {
     });
   }
 });
+router.get("/public", async (req, res) => {
+  let listOfUsersAndBooks = {};
+  let listOfShelves;
+  try {
+    listOfShelves = await BookShelf.find({ public: true });
+    console.log(listOfShelves);
+    let currentBook;
+    for (const shelf in listOfShelves) {
+      let listOfBooks = [];
+      for (const book in listOfShelves[shelf].books) {
+        currentBook = await bookModel.findOne({
+          _id: listOfShelves[shelf].books[book],
+        });
+        listOfBooks.push(currentBook);
+      }
+      let username = await User.findOne({ _id: listOfShelves[shelf].user_id });
 
-router.get("", async (req, res) => {
+      listOfUsersAndBooks[username.username] = listOfBooks;
+    }
+
+    console.log(listOfUsersAndBooks);
+
+    res.status(200).json(listOfUsersAndBooks);
+  } catch (err) {
+    res.status(500).json({
+      message: "error getting public shelves",
+      error: err,
+    });
+  }
+});
+
+router.get("/books", async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
     return;
@@ -88,6 +119,23 @@ router.get("", async (req, res) => {
       listOfBooks.push(currentBook);
     }
     res.status(200).json({ listOfBooks });
+  } catch (err) {
+    res.status(500).json({
+      message: "failed to get bookshelf from id",
+    });
+  }
+});
+
+router.get("", async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({ message: "unauthenticated" });
+    return;
+  }
+  let id = req.user.id;
+  let bookshelf;
+  try {
+    bookshelf = await BookShelf.findOne({ user_id: id });
+    res.status(200).json({ bookshelf });
   } catch (err) {
     res.status(500).json({
       message: "failed to get bookshelf from id",
@@ -157,6 +205,31 @@ router.delete("/:book_id", async (req, res) => {
     return;
   }
   res.status(200).json(book + index);
+});
+
+router.patch("", async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({
+      message: "unathenticated",
+    });
+    return;
+  }
+  let id = req.user.id;
+
+  let bookshelf;
+  try {
+    bookshelf = await BookShelf.findOneAndUpdate({ user_id: id }, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(bookshelf);
+  } catch (err) {
+    res.status(500).json({
+      message: "error updating shelf",
+      error: err,
+    });
+    return;
+  }
 });
 
 module.exports = router;

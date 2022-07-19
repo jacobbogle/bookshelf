@@ -10,6 +10,7 @@
       allowfullscreen
     ></iframe>
 
+    <button @click="getPublicBookShelves">ASDF</button>
   </div>
 </template>
 
@@ -21,13 +22,18 @@ export default {
   //   const { state, getSession } = IsLoggedIn();
   //   return { state, getSession };
   // },
-  components: {
-
-  },
+  components: {},
   data() {
     return {
       //userName: "",
     };
+  },
+  methods: {
+    async getPublicBookShelves() {
+      let response = await fetch("http://localhost:3000/bookshelves/public");
+      let data = await response.json();
+      console.log(data);
+    },
   },
   // created: function () {
   //   this.getSession();

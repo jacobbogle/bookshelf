@@ -1,5 +1,6 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
+    <h1>Public : {{ state.bookshelf.public }}</h1>
     <div id="bookCollection">
       <div
         class="book-recommend"
@@ -54,8 +55,8 @@
 import BookShelf from "../models/books";
 export default {
   setup() {
-    const { state, getBooks, deleteBook } = BookShelf();
-    return { state, getBooks, deleteBook };
+    const { state, getBooks, deleteBook, getBookshelf } = BookShelf();
+    return { state, getBooks, deleteBook, getBookshelf };
   },
   data() {
     return {
@@ -120,6 +121,7 @@ export default {
   },
   created: function () {
     this.getBooks();
+    this.getBookshelf();
   },
 };
 </script>

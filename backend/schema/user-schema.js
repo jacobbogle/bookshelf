@@ -21,9 +21,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  shared_id: {
-    type: [String],
-    default: "",
+
+  followers: {
+    type: {},
+    default: {},
+  },
+
+  following: {
+    type: {},
+    default: {},
   },
 });
 
