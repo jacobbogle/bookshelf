@@ -2,13 +2,13 @@
   <div id="wrapper">
     <h1>Login</h1>
     <form class="centered">
-      <label for="username">Username</label>
+      <label for="email">Email</label>
       <input
-        v-model="username"
+        v-model="email"
         placeholder="type here..."
         type="text"
-        id="username"
-        name="name"
+        id="email"
+        name="email"
         required
       />
       <label for="password">Password</label>
@@ -41,13 +41,13 @@ export default {
   },
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
     };
   },
   methods: {
     loginFunc() {
-      this.postSession(this.username, this.password)
+      this.postSession(this.email, this.password)
     },
   }
 }

@@ -22,10 +22,10 @@ const bcrypt =require('bcrypt')
 
 //local
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
+  new LocalStrategy(async (email, password, done) => {
     let user;
     try {
-      user = await User.findOne({ username: username });
+      user = await User.findOne({ email: email });
       if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
       } else {
