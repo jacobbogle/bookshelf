@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <h1>Login</h1>
+    <h1>Hello</h1>
     <form class="centered">
       <label for="email">Email</label>
       <input
@@ -27,7 +27,11 @@
     <router-link id="link" to="/register">
       Sign Up
     </router-link>
-    <!-- <a href="http://localhost:3000/auth/google">Google Sign In</a> -->
+    <button  onclick="
+    window.open(
+      'http://localhost:3000/auth/google', 'newwindow',
+      'width=500,height=600'
+    );">Google Sign In</button>
   </div>
 </template>
 
@@ -48,6 +52,19 @@ export default {
   methods: {
     loginFunc() {
       this.postSession(this.email, this.password)
+    },
+    async google() {
+      try {
+        let response = await fetch("http://localhost:3000/auth/google").then((res) => {
+          let data = res.json();
+          console.log(data)})
+        if (response.status == 200) {
+          console.log("successful logout");
+        }
+        this.getSession();
+      } catch (err) {
+        console.log("some error", err);
+      }
     },
   }
 }

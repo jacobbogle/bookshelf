@@ -1,5 +1,5 @@
 const express = require("express");
-const bookModel = require("../schema/bookSchema");
+const bookModel = require("../schema/book-schema");
 let router = express.Router();
 
 router.get("", async (req, res) => {

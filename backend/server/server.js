@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const setUpAuth = require("./auth");
 const setUpSession = require("./session");
-
+// app.use(express.static("public"))
 //Middle wear
 app.use(express.json());
 
@@ -23,10 +23,10 @@ setUpSession(app);
 setUpAuth(app);
 
 //Routes
-const booksRoute = require("../routes/bookRouter");
-const usersRoute = require("../routes/userRouter");
-const bookshelvesRoute = require("../routes/bookshelvesRouter");
-const logOutRoute = require("../routes/logOutRouter");
+const booksRoute = require("../routes/book-route");
+const usersRoute = require("../routes/user-route");
+const bookshelvesRoute = require("../routes/bookShelves-route");
+const logOutRoute = require("../routes/logOut-route");
 app.use("/books", booksRoute);
 app.use("/users", usersRoute);
 app.use("/bookshelves", bookshelvesRoute);
