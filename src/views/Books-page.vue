@@ -1,6 +1,7 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
     <h1>Public : {{ state.bookshelf.public }}</h1>
+    <button @click="patchBookShelfPublic()">Patch Public</button>
     <div id="bookCollection">
       <div
         class="book-recommend"
@@ -117,6 +118,27 @@ export default {
         this.closeBookContent(this.IndexOfOpenedBook);
         this.isBookOpen = false;
       }
+    },
+
+    async patchBookShelfPublic() {
+      let requestBody = {};
+      if (this.state.bookshelf.public == true) {
+        requestBody["public"] = false;
+      } else {
+        requestBody["public"] = true;
+      }
+      let response = await fetch("http://localhost:3000/bookshelves", {
+        credentials: "include",
+        method: "PATCH",
+        body: JSON.stringify(requestBody),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      let data = await response.json();
+      console.log(data);
+      this.getBookshelf();
     },
   },
   created: function () {
