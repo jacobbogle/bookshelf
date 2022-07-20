@@ -27,21 +27,19 @@
     <router-link id="link" to="/register">
       Sign Up
     </router-link>
-    <button  onclick="
-    window.open(
-      'http://localhost:3000/auth/google', 'newwindow',
-      'width=500,height=600'
-    );">Google Sign In</button>
+    <button @click="google()" >Google Sign In</button>
   </div>
 </template>
 
 <script>
 import Login from "../models/login";
+import User from "../models/user"
 
 export default {
   setup() {
     const { state, postSession } = Login();
-    return { state, postSession };
+    const { getSession } = User();
+    return { state, postSession, getSession };
   },
   data() {
     return {
@@ -54,19 +52,11 @@ export default {
       this.postSession(this.email, this.password)
     },
     async google() {
-      try {
-        let response = await fetch("http://localhost:3000/auth/google").then((res) => {
-          let data = res.json();
-          console.log(data)})
-        if (response.status == 200) {
-          console.log("successful logout");
-        }
-        this.getSession();
-      } catch (err) {
-        console.log("some error", err);
-      }
+      await window.open('http://localhost:3000/auth/google', 'newwindow','width=500,height=600')
+      this.getSession()
+      this.$router.go()
     },
-  }
+  },
 }
 </script>
 
