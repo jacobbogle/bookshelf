@@ -1,44 +1,31 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
+    <h1>Public Shelves</h1>
     <div class="user-shelf">
-      <div 
-        v-for="(shelves, index) in this.books"
-        :key="index"
-      > 
-      <span>{{ Object(index) }}</span>
-      <div id="bookCollection">
-          <div class="book-recommend"
-          v-for="(book, index) in shelves"
-          :key="index"
+      <div v-for="(shelves, i) in this.books" :key="i">
+        <span>{{ Object(i) }}</span>
+        <div id="bookCollection">
+          <div
+            class="book-recommend"
+            v-for="(book, index) in shelves"
+            :key="index"
           >
-            <div 
-              :value="`${index}`"
-              ref="bookBox"
-              class="book-box"
-              @click="bookClickHandler(index)"
-            >
-              <img
-                ref="bookImage"
-                :value="`${index}`"
-                class="book-image"
-                :src="`${book.image}`"
-              />
+            <div class="book-box" @click="bookClickHandler(index, i)">
+              <img class="book-image" :src="`${book.image}`" />
             </div>
             <div
-              :value="`${index}`"
               style="visibility: hidden"
-              ref="bookContent"
+              :ref="i + 'bookContent'"
               class="book-content"
             >
-              <div :value="`${index}`" class="text-content">
-                <h2 ref="title" :value="`${index}`">{{ book.title }}</h2>
+              <div class="text-content">
+                <h2 ref="title">{{ book.title }}</h2>
                 <!-- Book Title -->
-                <h3 ref="rating" :value="`${index}`">Rating: {{ book.rating }}</h3>
+                <h3 ref="rating">Rating: {{ book.rating }}</h3>
                 <!-- Book Series Name -->
-                <h4 ref="authors" :value="`${index}`">By: {{ book.authors }}</h4>
+                <h4 ref="authors">By: {{ book.authors }}</h4>
                 <!-- Author's Name -->
                 <a
-                  :value="`${index}`"
                   ref="link"
                   class="Amazon"
                   :href="`${book.link}`"
@@ -47,8 +34,8 @@
                   >Google Link</a
                 ><!-- Product Link -->
                 <a @click="serveBook(index), postBook(bookObject)"> Add Book</a>
-                <p ref="description" v-html="book.description" :value="`${index}`"></p>
-                <p ref="isbn" :value="`${index}`">{{ book.isbn }}</p>
+                <p ref="description" v-html="book.description"></p>
+                <p ref="isbn">{{ book.isbn }}</p>
               </div>
             </div>
           </div>
@@ -78,7 +65,7 @@ export default {
         description: "",
         isbn: "",
       },
-      books: {}
+      books: {},
     };
   },
   methods: {
@@ -86,11 +73,9 @@ export default {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
       this.books = data;
-      console.log(this.books)
+      console.log("this.books, ", this.books);
     },
-    getUsername() {
-
-    },
+    getUsername() {},
     reset() {
       this.isBookOpen = false;
       this.IndexOfOpenedBook = null;
@@ -105,50 +90,51 @@ export default {
       this.bookObject.description = this.$ref.description[index];
       this.bookObject.isbn = this.$ref.isbn[index].innerHTML;
     },
-    bookClickHandler(index) {
+    bookClickHandler(index, i) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
-        this.openBookContent(index);
+        this.openBookContent(index, i);
         this.IndexOfOpenedBook = index;
         this.isBookOpen = true;
         this.IndexOfOpenedBook = index;
       } else if (this.IndexOfOpenedBook === index && this.isBookOpen === true) {
-        this.closeBookContent(index);
+        this.closeBookContent(index, i);
         this.isBookOpen = false;
       } else if (
         this.IndexOfOpenedBook === index &&
         this.isBookOpen === false
       ) {
-        this.openBookContent(index);
+        this.openBookContent(index, i);
         this.isBookOpen = true;
       } else {
         try {
-          this.closeBookContent(this.IndexOfOpenedBook);
-          this.openBookContent(index);
+          this.closeBookContent(this.IndexOfOpenedBook, i);
+          this.openBookContent(index, i);
           this.IndexOfOpenedBook = index;
         } catch (error) {
           null;
         }
       }
     },
-    openBookContent(index) {
+    openBookContent(index, i) {
       this.$emit("openBookContent");
       if (window.innerWidth <= 684) {
-        this.$refs.bookContent[index].style.height = "390px";
+        this.$refs[i + "bookContent"][index].style.height = "390px";
       } else {
-        this.$refs.bookContent[index].style.width = "256px";
+        this.$refs[i + "bookContent"][index].style.width = "256px";
       }
-      this.$refs.bookContent[index].style.visibility = "visible";
+      this.$refs[i + "bookContent"][index].style.visibility = "visible";
+      console.log(this.$refs.bookContent);
     },
-    closeBookContent(index) {
+    closeBookContent(index, i) {
       this.$emit("closeBookContent");
       if (window.innerWidth <= 684) {
-        this.$refs.bookContent[index].style.width = "256px";
-        this.$refs.bookContent[index].style.height = "0px";
+        this.$refs[i + "bookContent"][index].style.width = "256px";
+        this.$refs[i + "bookContent"][index].style.height = "0px";
       } else {
-        this.$refs.bookContent[index].style.width = "0px";
+        this.$refs[i + "bookContent"][index].style.width = "0px";
       }
-      this.$refs.bookContent[index].style.visibility = "hidden";
+      this.$refs[i + "bookContent"][index].style.visibility = "hidden";
     },
     closeAllBooks() {
       if (this.isBookOpen === true) {
@@ -158,10 +144,10 @@ export default {
     },
   },
   created() {
-    this.reset()
-    this.getPublicBookShelves()
-  }
-}
+    this.reset();
+    this.getPublicBookShelves();
+  },
+};
 </script>
 
 <style scoped>
@@ -227,17 +213,15 @@ span {
   font-size: 3rem;
   display: flex;
   align-items: center;
-  justify-content:flex-start;
+  justify-content: flex-start;
   color: rgb(201, 201, 201);
-  font-family:'OCR A', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
+  font-family: "OCR A", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 @media only screen and (max-width: 1260px) {
-
 }
 
 @media only screen and (max-width: 684px) {
-
 }
 </style>
