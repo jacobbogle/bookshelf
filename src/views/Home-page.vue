@@ -33,7 +33,7 @@
                   rel="noopener noreferrer"
                   >Google Link</a
                 ><!-- Product Link -->
-                <a @click="serveBook(index), postBook(bookObject)"> Add Book</a>
+                <a @click="postBook(book)"> Add Book</a>
                 <p ref="description" v-html="book.description"></p>
                 <p ref="isbn">{{ book.isbn }}</p>
               </div>
