@@ -180,7 +180,7 @@ export default {
   /* flex-wrap: wrap; */
   /* justify-content: center;
   align-items: center; */
-  height: 420px;
+  height: 425px;
   overflow: hidden;
   padding-bottom: 1rem;
 }
@@ -196,17 +196,16 @@ export default {
 #bookCollection::-webkit-scrollbar {
   width: 15px;
   height: 18px;
-  
 }
 
 #bookCollection::-webkit-scrollbar-thumb {
   height: 6px;
-  border: 2px solid rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0);
   background-clip: padding-box;
   background-image: linear-gradient(
     to bottom right,
-    rgb(74, 74, 113),
-    rgb(48, 43, 90)
+    rgb(52, 52, 105),
+    rgb(28, 40, 96)
   );
   border-radius: 10px;
   box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.18),
