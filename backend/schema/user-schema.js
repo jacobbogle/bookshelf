@@ -22,13 +22,13 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
-  followers: {
-    type: {},
-    default: {},
-  },
-
-  following: {
-    type: {},
+  // username:int for friends
+  // username:1 a request was made to you
+  // username:2 you made a request to them
+  // username:3 you are friends
+  friends: {
+    type: Object,
+    required: true,
     default: {},
   },
 });
