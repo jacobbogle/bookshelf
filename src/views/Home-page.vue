@@ -1,7 +1,6 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
     <h1>Public Shelves</h1>
-    <button @click="test()">Test this stupid function</button>
     <div class="user-shelf">
       <div v-for="(list, obj) in this.books" :key="obj">
         <div v-for="(shelf, user) in list" :key="user">
@@ -140,17 +139,6 @@ export default {
         this.closeBookContent(this.IndexOfOpenedBook);
         this.isBookOpen = false;
       }
-    },
-    async test() {
-      let response = await fetch(
-        "http://localhost:3000/friends/send/62d995130c074f9078210285",
-        {
-          credentials: "include",
-          method: "PATCH",
-        }
-      );
-      let data = await response.json();
-      console.log(data);
     },
   },
   created() {
