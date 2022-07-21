@@ -93,9 +93,7 @@ export default {
         this.state.books[index].volumeInfo.authors
       );
       this.bookObject.link = this.$refs.link[index].href;
-      this.bookObject.description = this.snippetGive(
-        this.state.books[index]
-      );
+      this.bookObject.description = this.snippetGive(this.state.books[index]);
       this.bookObject.isbn = this.isbnGive(
         this.state.books[index].volumeInfo.industryIdentifiers
       );
