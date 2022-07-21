@@ -30,9 +30,7 @@ router.post("", async (req, res) => {
     } else if (testBookInDatabase) {
       book = testBookInDatabase;
     }
-    console.log("book id: " + book._id);
   } catch (err) {
-    console.log("book in database already");
   }
   let userID = req.user.id;
   try {
@@ -42,9 +40,7 @@ router.post("", async (req, res) => {
         user_id: userID,
         books: [book._id],
       });
-      console.log("bookshelf TEST: ", bookshelftest);
     } else if (bookshelfObject) {
-      console.log(bookshelfObject.books);
       if (bookshelfObject.books.includes(book._id)) {
         console.log("you already have this book in your bookshelf");
       } else {
@@ -58,26 +54,35 @@ router.post("", async (req, res) => {
         res.status(200).json({
           message: bookshelf,
         });
-        console.log("added: " + book._id);
       }
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       message: "could not create bookshelf or add",
       error: err,
     });
   }
 });
+
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array
+}
+
+
 router.get("/public", async (req, res) => {
-  let listOfUsersAndBooks = {};
+  let listOfUsersAndBooks = [];
   let listOfShelves;
   try {
     listOfShelves = await BookShelf.find({ public: true });
-    console.log(listOfShelves);
     let currentBook;
     for (const shelf in listOfShelves) {
       let listOfBooks = [];
+      let object = {}
       for (const book in listOfShelves[shelf].books) {
         currentBook = await bookModel.findOne({
           _id: listOfShelves[shelf].books[book],
@@ -85,12 +90,9 @@ router.get("/public", async (req, res) => {
         listOfBooks.push(currentBook);
       }
       let username = await User.findOne({ _id: listOfShelves[shelf].user_id });
-
-      listOfUsersAndBooks[username.username] = listOfBooks;
+      object[username.username] = shuffle(listOfBooks)
+      listOfUsersAndBooks.push(object)
     }
-
-    console.log(listOfUsersAndBooks);
-
     res.status(200).json(listOfUsersAndBooks);
   } catch (err) {
     res.status(500).json({
@@ -126,6 +128,7 @@ router.get("/books", async (req, res) => {
   }
 });
 
+
 router.get("", async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
@@ -143,9 +146,9 @@ router.get("", async (req, res) => {
   }
 });
 
+
 router.get("/:user_id", async (req, res) => {
   let userID = req.params.user_id;
-
   let bookshelf;
   try {
     bookshelf = await BookShelf.findOne({
@@ -158,12 +161,13 @@ router.get("/:user_id", async (req, res) => {
   res.status(200).json(bookshelf);
 });
 
+
+
 router.delete("/:book_id", async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
     return;
   }
-
   let bookshelf;
   try {
     bookshelf = await BookShelf.findOne({ user_id: req.user.id });
@@ -171,7 +175,6 @@ router.delete("/:book_id", async (req, res) => {
     res.status(500).json({ message: "couldn't find bookshelf", error: err });
     return;
   }
-
   let book;
   let index;
   try {
@@ -181,7 +184,6 @@ router.delete("/:book_id", async (req, res) => {
         index = i;
       }
     }
-    console.log(book, index);
   } catch (err) {
     res.status(500).json({ message: "couldn't find book", error: err });
     return;
@@ -196,7 +198,6 @@ router.delete("/:book_id", async (req, res) => {
         },
       }
     );
-    console.log("newbookshelf, ", newbookshelf);
   } catch (err) {
     res.status(500).json({
       message: "error deleting book",
@@ -206,6 +207,7 @@ router.delete("/:book_id", async (req, res) => {
   }
   res.status(200).json(book + index);
 });
+
 
 router.patch("", async (req, res) => {
   if (!req.user) {

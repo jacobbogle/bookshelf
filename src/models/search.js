@@ -30,13 +30,22 @@ const SearchBar = () => {
           return response;
         })
         .then((data) => {
-          state.value.books = data;
-          console.log(data);
+          state.value.books = shuffle(data.items)
+          console.log(state.value.books);
         });
     } catch (err) {
       console.log(err);
     }
   };
+
+  //shuffle
+  const shuffle = function (array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array
+  }
 
   const postBook = async function (book) {
     let newBook = {
@@ -65,6 +74,7 @@ const SearchBar = () => {
     state,
     searchByTitle,
     postBook,
+    shuffle
   };
 };
 
