@@ -10,6 +10,7 @@ router.post("", async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
+      friends: [],
     });
     res.status(201).json(user);
   } catch (err) {

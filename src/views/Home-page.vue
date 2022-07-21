@@ -1,6 +1,7 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
     <h1>Public Shelves</h1>
+    <button @click="test()">Test this stupid function</button>
     <div class="user-shelf">
       <div v-for="(list, obj) in this.books" :key="obj">
         <div v-for="(shelf, user) in list" :key="user">
@@ -11,7 +12,10 @@
               v-for="(book, index) in shelf"
               :key="index"
             >
-              <div class="book-box" @click="bookClickHandler(`${index + user}`)">
+              <div
+                class="book-box"
+                @click="bookClickHandler(`${index + user}`)"
+              >
                 <img class="book-image" :src="`${book.image}`" />
               </div>
               <div
@@ -84,24 +88,27 @@ export default {
     bookClickHandler(Nindex) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != Nindex && this.isBookOpen === true) {
-        console.log("if")
+        console.log("if");
         this.openBookContent(Nindex);
-        this.closeBookContent(this.IndexOfOpenedBook)
+        this.closeBookContent(this.IndexOfOpenedBook);
         this.isBookOpen = true;
         this.IndexOfOpenedBook = Nindex;
-      } else if (this.IndexOfOpenedBook === Nindex && this.isBookOpen === true) {
-        console.log("else-if")
+      } else if (
+        this.IndexOfOpenedBook === Nindex &&
+        this.isBookOpen === true
+      ) {
+        console.log("else-if");
         this.closeBookContent(Nindex);
         this.isBookOpen = false;
       } else if (
         this.IndexOfOpenedBook === Nindex &&
         this.isBookOpen === false
       ) {
-        console.log("else-if: 2")
+        console.log("else-if: 2");
         this.openBookContent(Nindex);
         this.isBookOpen = true;
       } else {
-        console.log("else")
+        console.log("else");
         this.openBookContent(Nindex);
         this.IndexOfOpenedBook = Nindex;
         this.isBookOpen = true;
@@ -133,6 +140,17 @@ export default {
         this.closeBookContent(this.IndexOfOpenedBook);
         this.isBookOpen = false;
       }
+    },
+    async test() {
+      let response = await fetch(
+        "http://localhost:3000/friends/send/62d995130c074f9078210285",
+        {
+          credentials: "include",
+          method: "PATCH",
+        }
+      );
+      let data = await response.json();
+      console.log(data);
     },
   },
   created() {

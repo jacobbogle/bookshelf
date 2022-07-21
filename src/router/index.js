@@ -3,14 +3,14 @@ import Home from "@/views/Home-page.vue";
 import Books from "@/views/Books-page.vue";
 import About from "@/views/About-page.vue";
 import Search from "@/views/Search-page.vue";
-import Login from "@/views/Login-page.vue"
-import Register from "@/views/Register-page.vue"
+import Login from "@/views/Login-page.vue";
+import Register from "@/views/Register-page.vue";
 import Scanner from "@/views/Scanner-page.vue";
-
-
+import Friends from "@/views/Friends-page.vue";
 
 const routes = [
-  {//we are kind of linking everything together here to use esle where.
+  {
+    //we are kind of linking everything together here to use esle where.
     path: "/", // Used to link to App.vue.
     name: "Home", // dont know yet.
     component: Home, // links the top imports, linking everything to everything else.
@@ -44,6 +44,11 @@ const routes = [
     path: "/scanner",
     name: "Scanner",
     component: Scanner,
+  },
+  {
+    path: "/friends",
+    name: "Friends",
+    component: Friends,
   },
 ];
 

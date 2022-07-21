@@ -27,9 +27,7 @@ const userSchema = new mongoose.Schema({
   // username:2 you made a request to them
   // username:3 you are friends
   friends: {
-    type: Object,
-    required: true,
-    default: {},
+    type: [mongoose.Schema.Types.Mixed],
   },
 });
 

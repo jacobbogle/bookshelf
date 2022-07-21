@@ -31,6 +31,7 @@ router.post("", async (req, res) => {
       book = testBookInDatabase;
     }
   } catch (err) {
+    console.log(err);
   }
   let userID = req.user.id;
   try {
@@ -64,15 +65,13 @@ router.post("", async (req, res) => {
   }
 });
 
-
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  return array
+  return array;
 }
-
 
 router.get("/public", async (req, res) => {
   let listOfUsersAndBooks = [];
@@ -82,7 +81,7 @@ router.get("/public", async (req, res) => {
     let currentBook;
     for (const shelf in listOfShelves) {
       let listOfBooks = [];
-      let object = {}
+      let object = {};
       for (const book in listOfShelves[shelf].books) {
         currentBook = await bookModel.findOne({
           _id: listOfShelves[shelf].books[book],
@@ -90,8 +89,8 @@ router.get("/public", async (req, res) => {
         listOfBooks.push(currentBook);
       }
       let username = await User.findOne({ _id: listOfShelves[shelf].user_id });
-      object[username.username] = shuffle(listOfBooks)
-      listOfUsersAndBooks.push(object)
+      object[username.username] = shuffle(listOfBooks);
+      listOfUsersAndBooks.push(object);
     }
     res.status(200).json(listOfUsersAndBooks);
   } catch (err) {
@@ -128,7 +127,6 @@ router.get("/books", async (req, res) => {
   }
 });
 
-
 router.get("", async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
@@ -146,7 +144,6 @@ router.get("", async (req, res) => {
   }
 });
 
-
 router.get("/:user_id", async (req, res) => {
   let userID = req.params.user_id;
   let bookshelf;
@@ -160,8 +157,6 @@ router.get("/:user_id", async (req, res) => {
   }
   res.status(200).json(bookshelf);
 });
-
-
 
 router.delete("/:book_id", async (req, res) => {
   if (!req.user) {
@@ -207,7 +202,6 @@ router.delete("/:book_id", async (req, res) => {
   }
   res.status(200).json(book + index);
 });
-
 
 router.patch("", async (req, res) => {
   if (!req.user) {
