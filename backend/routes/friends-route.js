@@ -105,4 +105,79 @@ router.patch("/send/:id", async (req, res) => {
 
 // confirm request
 
+router.patch("/accept/:id", async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({
+      message: "not logged in",
+    });
+    return;
+  }
+  let possibleFriendID = req.params.id;
+
+  let possibleFriend = {};
+  let currentUser = {};
+
+  try {
+    possibleFriend = await User.findOne({
+      _id: possibleFriendID,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "could not find possible friend",
+      error: err,
+    });
+    return;
+  }
+
+  try {
+    currentUser = await User.findOne({
+      _id: req.user.id,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "could not find you",
+      error: err,
+    });
+    return;
+  }
+
+  try {
+    await User.findOneAndUpdate(
+      { _id: possibleFriendID, "friends.name": currentUser.username },
+      {
+        $set: {
+          "friends.$.value": 3,
+        },
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "could not update possibleFriends stats",
+      error: err,
+    });
+    return;
+  }
+
+  try {
+    await User.findOneAndUpdate(
+      { _id: currentUser.id, "friends.name": possibleFriend.username },
+      {
+        $set: {
+          "friends.$.value": 3,
+        },
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "could not update currentUsers status",
+      error: err,
+    });
+    return;
+  }
+
+  res.status(201).json(possibleFriend);
+});
+
 module.exports = router;
