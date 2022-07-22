@@ -103,4 +103,6 @@ router.patch("/send/:id", async (req, res) => {
   res.status(201).json(requestingUser);
 });
 
+// confirm request
+
 module.exports = router;
