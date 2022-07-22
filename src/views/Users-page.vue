@@ -1,7 +1,8 @@
 <template>
   <div id="wrapper">
     <h1>Users</h1>
-    <div v-for="(user, index) in users" :key="index">
+    <input type="text" placeholder="search" v-model="searchInput" />
+    <div v-for="(user, index) in filteredUsers" :key="index">
       <h2 @click="getUsersBookshelf(user._id)">
         {{ user.username }}
       </h2>
@@ -16,6 +17,7 @@ export default {
   data() {
     return {
       users: [],
+      searchInput: "",
     };
   },
   methods: {
@@ -51,6 +53,21 @@ export default {
 
       let data = await response.json();
       console.log("sendFriendRequest: ", data);
+    },
+  },
+  computed: {
+    filteredUsers: function () {
+      var usersArray = [...this.users];
+      var searchString = this.searchInput;
+
+      searchString = searchString.trim().toLowerCase();
+
+      usersArray = usersArray.filter((user) => {
+        if (user.username.toLowerCase().indexOf(searchString) != -1) {
+          return user;
+        }
+      });
+      return usersArray;
     },
   },
   created() {

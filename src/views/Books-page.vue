@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <h1>Public : {{ state.bookshelf.public }}</h1>
-    <button @click="patchBookShelfPublic()">Patch Public</button>
+    <button @click="patchBookShelfPublic()">Make Public</button>
     <div id="bookCollection">
       <div
         class="book-recommend"
@@ -158,6 +158,10 @@ export default {
 #wrapper {
   grid-column: 1/-1;
   grid-row: 2/3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #bookCollection {
