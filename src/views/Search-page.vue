@@ -5,7 +5,7 @@
       <input
         type="text"
         placeholder="Search"
-        @keyup.enter="searchByTitle(), closeAllBooks(), searchReset()"
+        @keyup.enter=" closeAllBooks(), searchByTitle(), searchReset()"
         v-model="state.searchTitle"
       />
       <button v-on:click="searchByTitle()">Search</button>

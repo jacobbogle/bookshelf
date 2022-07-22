@@ -86,10 +86,6 @@ const setUpAuth = function (app) {
       .json({ message: "authenticated", username: req.user.username });
   });
 
-  app.delete("/session", (req, res) => {
-    req.session.destroy()
-  });
-
   //google
   app.get("/auth/google", passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/books','email','profile']}));
 
