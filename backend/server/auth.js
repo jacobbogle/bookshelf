@@ -100,7 +100,7 @@ const setUpAuth = function (app) {
         return;
       }
       res.status(200).json({ message: "authenticated" });
-      //need a way to close pop up window and refresh main page or redirect to home
+      console.log(res)
     }
   );
 };

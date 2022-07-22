@@ -5,7 +5,7 @@
       <input
         type="text"
         placeholder="Search"
-        @keyup.enter="searchByTitle(), closeAllBooks(), searchReset()"
+        @keyup.enter=" closeAllBooks(), searchByTitle(), searchReset()"
         v-model="state.searchTitle"
       />
       <button v-on:click="searchByTitle()">Search</button>
@@ -21,7 +21,7 @@
     <div id="bookCollection">
       <div
         class="book-recommend"
-        v-for="(book, index) in state.books.items"
+        v-for="(book, index) in state.books"
         :key="index"
       >
         <div ref="bookBox" class="book-box" @click="bookClickHandler(index)">
@@ -87,17 +87,17 @@ export default {
       this.bookObject.image = String(this.$refs.image[index].src);
       this.bookObject.title = this.$refs.title[index].innerHTML;
       this.bookObject.rating = this.numGive(
-        this.state.books.items[index].volumeInfo.averageRating
+        this.state.books[index].volumeInfo.averageRating
       );
       this.bookObject.authors = this.textGive(
-        this.state.books.items[index].volumeInfo.authors
+        this.state.books[index].volumeInfo.authors
       );
       this.bookObject.link = this.$refs.link[index].href;
       this.bookObject.description = this.snippetGive(
-        this.state.books.items[index]
+        this.state.books[index]
       );
       this.bookObject.isbn = this.isbnGive(
-        this.state.books.items[index].volumeInfo.industryIdentifiers
+        this.state.books[index].volumeInfo.industryIdentifiers
       );
     },
     isbnGive(text) {

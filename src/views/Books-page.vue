@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper" @dblclick="closeAllBooks()">
+  <div id="wrapper">
     <h1>Public : {{ state.bookshelf.public }}</h1>
     <button @click="patchBookShelfPublic()">Patch Public</button>
     <div id="bookCollection">

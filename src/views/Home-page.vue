@@ -2,40 +2,42 @@
   <div id="wrapper" @dblclick="closeAllBooks()">
     <h1>Public Shelves</h1>
     <div class="user-shelf">
-      <div v-for="(shelves, i) in this.books" :key="i">
-        <span>{{ Object(i) }}</span>
-        <div id="bookCollection">
-          <div
-            class="book-recommend"
-            v-for="(book, index) in shelves"
-            :key="index"
-          >
-            <div class="book-box" @click="bookClickHandler(index, i)">
-              <img class="book-image" :src="`${book.image}`" />
-            </div>
+      <div v-for="(list, obj) in this.books" :key="obj">
+        <div v-for="(shelf, user) in list" :key="user">
+          <span>{{ Object(user) }}</span>
+          <div id="bookCollection">
             <div
-              style="visibility: hidden"
-              :ref="i + 'bookContent'"
-              class="book-content"
+              class="book-recommend"
+              v-for="(book, index) in shelf"
+              :key="index"
             >
-              <div class="text-content">
-                <h2 ref="title">{{ book.title }}</h2>
-                <!-- Book Title -->
-                <h3 ref="rating">Rating: {{ book.rating }}</h3>
-                <!-- Book Series Name -->
-                <h4 ref="authors">By: {{ book.authors }}</h4>
-                <!-- Author's Name -->
-                <a
-                  ref="link"
-                  class="Amazon"
-                  :href="`${book.link}`"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Google Link</a
-                ><!-- Product Link -->
-                <a @click="postBook(book)"> Add Book</a>
-                <p ref="description" v-html="book.description"></p>
-                <p ref="isbn">{{ book.isbn }}</p>
+              <div class="book-box" @click="bookClickHandler(`${index + user}`)">
+                <img class="book-image" :src="`${book.image}`" />
+              </div>
+              <div
+                style="visibility: hidden"
+                :ref="`${index + user}`"
+                class="book-content"
+              >
+                <div class="text-content">
+                  <h2 ref="title">{{ book.title }}</h2>
+                  <!-- Book Title -->
+                  <h3 ref="rating">Rating: {{ book.rating }}</h3>
+                  <!-- Book Series Name -->
+                  <h4 ref="authors">By: {{ book.authors }}</h4>
+                  <!-- Author's Name -->
+                  <a
+                    ref="link"
+                    class="Amazon"
+                    :href="`${book.link}`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Google Link</a
+                  ><!-- Product Link -->
+                  <a @click="postBook(book)"> Add Book</a>
+                  <p ref="description" v-html="book.description"></p>
+                  <p ref="isbn">{{ book.isbn }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -49,8 +51,8 @@
 import Search from "../models/search";
 export default {
   setup() {
-    const { postBook } = Search();
-    return { postBook };
+    const { postBook, shuffle } = Search();
+    return { postBook, shuffle };
   },
   data() {
     return {
@@ -72,69 +74,59 @@ export default {
     async getPublicBookShelves() {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
-      this.books = data;
-      console.log("this.books, ", this.books);
+      this.books = this.shuffle(data);
     },
     getUsername() {},
     reset() {
       this.isBookOpen = false;
-      this.IndexOfOpenedBook = null;
+      this.IndexOfOpenedBook = "";
     },
-    serveBook(index) {
-      //this is not working
-      this.bookObject.image = String(this.$refs.image[index].src);
-      this.bookObject.title = this.$refs.title[index].innerHTML;
-      this.bookObject.rating = this.$ref.rating[index].innerHTML;
-      this.bookObject.authors = this.$ref.authors[index].innerHTML;
-      this.bookObject.link = this.$refs.link[index].href;
-      this.bookObject.description = this.$ref.description[index];
-      this.bookObject.isbn = this.$ref.isbn[index].innerHTML;
-    },
-    bookClickHandler(index, i) {
+    bookClickHandler(Nindex) {
       this.$emit("openBookContent");
-      if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
-        this.openBookContent(index, i);
-        this.IndexOfOpenedBook = index;
+      if (this.IndexOfOpenedBook != Nindex && this.isBookOpen === true) {
+        console.log("if")
+        this.openBookContent(Nindex);
+        this.closeBookContent(this.IndexOfOpenedBook)
         this.isBookOpen = true;
-        this.IndexOfOpenedBook = index;
-      } else if (this.IndexOfOpenedBook === index && this.isBookOpen === true) {
-        this.closeBookContent(index, i);
+        this.IndexOfOpenedBook = Nindex;
+      } else if (this.IndexOfOpenedBook === Nindex && this.isBookOpen === true) {
+        console.log("else-if")
+        this.closeBookContent(Nindex);
         this.isBookOpen = false;
       } else if (
-        this.IndexOfOpenedBook === index &&
+        this.IndexOfOpenedBook === Nindex &&
         this.isBookOpen === false
       ) {
-        this.openBookContent(index, i);
+        console.log("else-if: 2")
+        this.openBookContent(Nindex);
         this.isBookOpen = true;
       } else {
-        try {
-          this.closeBookContent(this.IndexOfOpenedBook, i);
-          this.openBookContent(index, i);
-          this.IndexOfOpenedBook = index;
-        } catch (error) {
-          null;
-        }
+        console.log("else")
+        this.openBookContent(Nindex);
+        this.IndexOfOpenedBook = Nindex;
+        this.isBookOpen = true;
       }
     },
-    openBookContent(index, i) {
+    openBookContent(Nindex) {
       this.$emit("openBookContent");
+      // console.log(`${index + user}`)
+      // console.log(this.$refs[Nindex][0])
       if (window.innerWidth <= 684) {
-        this.$refs[i + "bookContent"][index].style.height = "390px";
+        this.$refs[Nindex][0].style.height = "390px";
       } else {
-        this.$refs[i + "bookContent"][index].style.width = "256px";
+        this.$refs[Nindex][0].style.width = "256px";
       }
-      this.$refs[i + "bookContent"][index].style.visibility = "visible";
-      console.log(this.$refs.bookContent);
+      this.$refs[Nindex][0].style.visibility = "visible";
     },
-    closeBookContent(index, i) {
+    closeBookContent(Nindex) {
       this.$emit("closeBookContent");
       if (window.innerWidth <= 684) {
-        this.$refs[i + "bookContent"][index].style.width = "256px";
-        this.$refs[i + "bookContent"][index].style.height = "0px";
+        this.$refs[Nindex][0].style.width = "256px";
+        this.$refs[Nindex][0].style.height = "0px";
       } else {
-        this.$refs[i + "bookContent"][index].style.width = "0px";
+        this.$refs[Nindex][0].style.width = "0px";
       }
-      this.$refs[i + "bookContent"][index].style.visibility = "hidden";
+      this.$refs[Nindex][0].style.visibility = "hidden";
     },
     closeAllBooks() {
       if (this.isBookOpen === true) {
