@@ -114,7 +114,8 @@ export default {
 
 h1 {
   border-bottom: 1px solid white;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
+  margin-top: 50px;
 }
 
 h2 {
