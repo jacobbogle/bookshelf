@@ -15,4 +15,14 @@ router.get("", async (req, res) => {
   }
 });
 
+router.get("/:isbn", async (req, res) => {
+  let book;
+  try {
+    book = await bookModel.findOne({ isbn: req.params.isbn });
+  } catch (err) {
+    res.status(404).json({ message: "couldn't find book" });
+  }
+  res.status(200).json(book);
+});
+
 module.exports = router;
