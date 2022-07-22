@@ -13,6 +13,9 @@
           <router-link @click="closeMenu" to="/search"
             ><span>Search</span></router-link
           >
+          <router-link @click="closeMenu" to="/users"
+            ><span>Users</span></router-link
+          >
           <router-link @click="closeMenu" to="/friends"
             ><span>Friends</span></router-link
           >

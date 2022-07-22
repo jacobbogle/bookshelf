@@ -7,6 +7,7 @@ import Login from "@/views/Login-page.vue";
 import Register from "@/views/Register-page.vue";
 import Scanner from "@/views/Scanner-page.vue";
 import Friends from "@/views/Friends-page.vue";
+import Users from "@/views/Users-page.vue";
 
 const routes = [
   {
@@ -49,6 +50,11 @@ const routes = [
     path: "/friends",
     name: "Friends",
     component: Friends,
+  },
+  {
+    path: "/users",
+    name: "Users",
+    component: Users,
   },
 ];
 
