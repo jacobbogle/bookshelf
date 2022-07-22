@@ -2,12 +2,16 @@
   <div id="wrapper">
     <h1 v-if="friendsExist">Friends</h1>
     <div v-for="(friend, index) in friends" :key="index">
-      <h2 v-if="friend.value == 3">{{ friend.name }}</h2>
+      <router-link id="name" v-if="friend.value == 3" to="/friendsBookshelf">{{
+        friend.name
+      }}</router-link>
     </div>
 
     <h1 v-if="receivedsExist">Received Friend Requests</h1>
     <div v-for="(friend, index) in friends" :key="index">
-      <h2 v-if="friend.value == 1">{{ friend.name }}</h2>
+      <h2 v-if="friend.value == 1">
+        {{ friend.name }}
+      </h2>
       <button v-if="friend.value == 1" @click="acceptFriendRequest(friend.id)">
         Add Friend
       </button>
@@ -121,6 +125,11 @@ h1 {
 h2 {
   color: white;
   text-align: center;
+}
+
+#name {
+  color: white;
+  font-size: 1.5rem;
 }
 
 button {

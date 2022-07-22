@@ -8,6 +8,7 @@ import Register from "@/views/Register-page.vue";
 import Scanner from "@/views/Scanner-page.vue";
 import Friends from "@/views/Friends-page.vue";
 import Users from "@/views/Users-page.vue";
+import FriendsBookshelf from "@/views/FriendsBookshelf-page.vue";
 
 const routes = [
   {
@@ -55,6 +56,11 @@ const routes = [
     path: "/users",
     name: "Users",
     component: Users,
+  },
+  {
+    path: "/friendsBookshelf",
+    name: "FriendsBookshelf",
+    component: FriendsBookshelf,
   },
 ];
 
