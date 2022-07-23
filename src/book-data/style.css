@@ -1,18 +1,18 @@
-*:not(html) {
+.book-box img, .book-box, .book-content {
   border-radius: 10px;
   user-select: none;
 }
 
-b {
+.book-content p {
   margin: 0px;
 }
 
-p {
+.book-content p {
   padding: 0px;
   font-size: medium;
 }
 
-img {
+.book-box img {
   -webkit-user-drag: none;
   width: 236px;
   height: 370px;

@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <h1>Hello</h1>
-    <form class="centered">
+    <!-- <form class="centered">
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -21,7 +21,29 @@
         required
       />
       <button @click="loginFunc()" type="submit">Sign In</button>
-    </form>
+    </form> -->
+    <w-card >
+      <w-form>
+
+        <w-input
+          label="Email"
+          :model="email"
+          :validators="[validators.required]">
+        </w-input>
+
+        <w-input
+          class="mt3"
+          :model="password"
+          label="Password"
+          :validators="[validators.required]">
+        </w-input>
+
+        <div class="text-right mt6">
+          <w-button @click="loginFunc()" type="submit">Sign In</w-button>
+        </div>
+      </w-form>
+    </w-card>
+
     <br>
     <p>Don't have an acount?</p>
     <router-link id="link" to="/register">
@@ -45,7 +67,10 @@ export default {
     return {
       email: "",
       password: "",
-    };
+      validators: {
+        required: value => !!value || 'This field is required'
+      }
+    }
   },
   methods: {
     loginFunc() {
@@ -59,6 +84,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 #wrapper {
   grid-column: 1/-1;
   grid-row: 2/3;

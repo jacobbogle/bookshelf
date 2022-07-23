@@ -1,9 +1,9 @@
 <template>
-  <div class="wrapper">
+  <w-app>
     <Header />
     <router-view />
     <Footer />
-  </div>
+  </w-app>
 </template>
 
 <script>
@@ -22,13 +22,11 @@ export default {
 
 
 #app {
-    margin: 0;
-      background-image: linear-gradient(to bottom right, 
-    rgb(14, 14, 27), rgb(39, 37, 58));
-    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-image: linear-gradient(to bottom right, rgb(14, 14, 27), rgb(39, 37, 58));
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.wrapper {
+w-app {
   display: grid;
   grid-template-columns: 100px 1fr repeat(4, minmax(auto, 280px)) 1fr 100px;
 }
