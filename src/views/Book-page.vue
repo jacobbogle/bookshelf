@@ -45,10 +45,11 @@ import Book from "../models/book";
 export default {
   setup() {
     const { postBook } = Search();
-    const { state } = Book();
-    return { state, postBook };
+    const { state, callBook } = Book();
+    return { state, postBook, callBook };
   },
   mounted() {
+    this.callBook()
     console.log(this.state.book)
   },
 }

@@ -10,9 +10,14 @@ const Book = () => {
     state.value.book = bookObj;
     console.log(state.value.book)
   }
+
+  const callBook = function () {
+    return state.value.book
+  }
   return {
     state,
     setBook,
+    callBook
   };
 };
 
