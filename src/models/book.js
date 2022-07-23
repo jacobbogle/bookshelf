@@ -1,26 +1,19 @@
 import { ref } from "vue";
 
-const BookShelf = () => {
+const Book = () => {
   const state = ref({
-    books: {},
-    reviews: {}
+    book: {},
   });
 
-  const setBook = async function (bookObj) {
-    state.value.books = bookObj;
-    let response = await fetch("http://localhost:3000/bookshelves/books", {
-      credentials: "include",
-    });
-    let data = await response.json();
-    state.value.reviews = data;
-    console.log("reviews", data);
-  };
-
-
+  const setBook = function (bookObj) {
+    console.log(bookObj)
+    state.value.book = bookObj;
+    console.log(state.value.book)
+  }
   return {
     state,
     setBook,
   };
 };
 
-export default BookShelf;
+export default Book;

@@ -48,6 +48,7 @@
             <button @click="serveBook(index), postBook(bookObject)">
               Save Book
             </button>
+            <router-link @click="serveBook(index), setBook(bookObject)" to="/book"><span>View</span></router-link>
             <!-- button to add to database -->
             <p ref="description" v-html="snippetGive(book)"></p>
           </div>
@@ -59,13 +60,16 @@
 
 <script>
 import Search from "../models/search";
+import Book from "../models/book";
 export default {
   setup() {
     const { state, searchByTitle, postBook } = Search();
-    return { state, searchByTitle, postBook };
+    const { setBook } = Book();
+    return { state, searchByTitle, postBook, setBook };
   },
   data() {
     return {
+      preview: false,
       isBookOpen: false,
       IndexOfOpenedBook: null,
       bookObject: {
@@ -80,6 +84,9 @@ export default {
     };
   },
   methods: {
+    toBook() {
+      this.$router.push({ path: "/book" })
+    },
     toScanner() {
       this.$router.push({ path: "/scanner" });
     },
@@ -206,7 +213,6 @@ export default {
       }
     },
   },
-  created() {},
 };
 </script>
 

@@ -32,6 +32,7 @@ export default {
       } catch (err) {
         console.log("some error", err);
       }
+      this.state.currentUser = ""
     },
   },
 

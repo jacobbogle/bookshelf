@@ -6,6 +6,7 @@ import Search from "@/views/Search-page.vue";
 import Login from "@/views/Login-page.vue"
 import Register from "@/views/Register-page.vue"
 import Scanner from "@/views/Scanner-page.vue";
+import Book from "@/views/Book-page.vue"
 
 
 
@@ -44,6 +45,11 @@ const routes = [
     path: "/scanner",
     name: "Scanner",
     component: Scanner,
+  },
+  {
+    path: "/book",
+    name: "Book",
+    component: Book,
   },
 ];
 
