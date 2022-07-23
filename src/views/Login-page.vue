@@ -28,14 +28,16 @@
         <w-input
           label="Email"
           :model="email"
-          :validators="[validators.required]">
+          :validators="[validators.required]"
+          round
+          bg-white>
         </w-input>
 
         <w-input
-          class="mt3"
           :model="password"
           label="Password"
-          :validators="[validators.required]">
+          :validators="[validators.required]"
+          round>
         </w-input>
 
         <div class="text-right mt6">
