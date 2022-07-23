@@ -53,8 +53,6 @@ export default {
     },
     async google() {
       await window.open('http://localhost:3000/auth/google', 'newwindow','width=500,height=600')
-      this.getSession()
-      this.$router.go()
     },
   },
 }

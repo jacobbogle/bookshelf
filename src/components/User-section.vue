@@ -33,6 +33,7 @@ export default {
         console.log("some error", err);
       }
       this.state.currentUser = ""
+      this.getsession()
     },
   },
 

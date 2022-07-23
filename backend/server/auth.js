@@ -91,12 +91,7 @@ const setUpAuth = function (app) {
 
   app.get('/auth/google/callback', 
     passport.authenticate('google', {failureRedirect: '/'}), (req, res) => {
-      if (!req.user) {
-        res.status(401).json({ message: "unauthenticated" });
-        return;
-      }
-      res.status(200).json({ message: "authenticated" });
-      console.log(res)
+      res.redirect('/session')
     }
   );
 };
