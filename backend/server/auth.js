@@ -95,8 +95,7 @@ const setUpAuth = function (app) {
         res.status(401).json({ message: "unauthenticated" });
         return;
       }
-      res.status(200).json({ message: "authenticated" });
-      console.log(res)
+      res.status(200).json({ message: "Authenticated! Close this window and refresh the webpage" });
     }
   );
 };
