@@ -115,23 +115,12 @@ export default {
     },
     openBookContent(Nindex) {
       this.$emit("openBookContent");
-      // console.log(`${index + user}`)
-      // console.log(this.$refs[Nindex][0])
-      if (window.innerWidth <= 684) {
-        this.$refs[Nindex][0].style.height = "390px";
-      } else {
-        this.$refs[Nindex][0].style.width = "256px";
-      }
+      this.$refs[Nindex][0].style.width = "256px";
       this.$refs[Nindex][0].style.visibility = "visible";
     },
     closeBookContent(Nindex) {
       this.$emit("closeBookContent");
-      if (window.innerWidth <= 684) {
-        this.$refs[Nindex][0].style.width = "256px";
-        this.$refs[Nindex][0].style.height = "0px";
-      } else {
-        this.$refs[Nindex][0].style.width = "0px";
-      }
+      this.$refs[Nindex][0].style.width = "0px";
       this.$refs[Nindex][0].style.visibility = "hidden";
     },
     closeAllBooks() {
@@ -161,9 +150,6 @@ export default {
   grid-row: 2/3;
   display: flex;
   flex-direction: row;
-  /* flex-wrap: wrap; */
-  /* justify-content: center;
-  align-items: center; */
   height: 425px;
   overflow: hidden;
   padding-bottom: 1rem;
@@ -217,9 +203,14 @@ span {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-@media only screen and (max-width: 1260px) {
-}
-
 @media only screen and (max-width: 684px) {
+  .book-recommend {
+    flex-direction: row;
+  }
+
+  .book-content {
+    height: 390px;
+    width: 0px;
+  }
 }
 </style>
