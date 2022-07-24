@@ -1,15 +1,22 @@
 <template>
   <div id="wrapper">
-    <h1>Friend's Bookshelf</h1>
+    <h1>
+      <span>{{ name.username }}</span
+      >'s Bookshelf
+    </h1>
+    <h2>name</h2>
   </div>
 </template>
 
 <script>
+import name from "@/views/Friends-page";
 export default {
   setup() {},
 
   data() {
-    return {};
+    return {
+      name,
+    };
   },
   methods: {
     // async getBookshelf(id) {

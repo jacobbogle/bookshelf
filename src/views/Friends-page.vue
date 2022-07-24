@@ -2,9 +2,13 @@
   <div id="wrapper">
     <h1 v-if="friendsExist">Friends</h1>
     <div v-for="(friend, index) in friends" :key="index">
-      <router-link id="name" v-if="friend.value == 3" to="/friendsBookshelf">{{
-        friend.name
-      }}</router-link>
+      <router-link
+        id="name"
+        @click="username = friend.name"
+        v-if="friend.value == 3"
+        to="/friendsBookshelf"
+        >{{ friend.name }}</router-link
+      >
     </div>
 
     <h1 v-if="receivedsExist">Received Friend Requests</h1>
@@ -28,6 +32,7 @@
 </template>
 <script>
 export default {
+  username: "cow",
   setup() {},
 
   data() {
