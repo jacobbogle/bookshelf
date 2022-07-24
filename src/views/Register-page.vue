@@ -1,40 +1,80 @@
 <template>
   <div id="wrapper">
     <h1>Register</h1>
-    <form class="centered">
-      <label for="username">Username</label>
-      <input
-        v-model="username"
-        placeholder="type here..."
-        type="text"
-        id="username"
-        name="name"
-        required
-      />
-      <label for="email">Email</label>
-      <input
-        v-model="email"
-        placeholder="type here..."
-        type="email"
-        id="email"
-        name="email"
-        required
-      />
-      <label for="password">Password</label>
-      <input
-        v-model="password"
-        placeholder="type here..."
-        type="password"
-        id="password"
-        name="password"
-        required
-      />
-      <button @click="userRegister()" type="submit">Register</button>
-    </form>
+    <w-card content-class="pa0">
+      <div class="message-box">
+        <w-transition-fade>
+          <w-alert
+            v-if="state.responseStatus === 201"
+            success
+            no-border
+            class="my0 text-light">
+            Setting up your accout!
+          </w-alert>
+
+          <w-alert
+            v-else-if="state.responseStatus === 500"
+            error
+            no-border
+            class="my0 text-light">
+          That email or username is already taken. try again...
+          </w-alert>
+        </w-transition-fade>
+      </div>
+
+      <w-form class="centered">
+
+        <w-input
+          label="Username"
+          v-model="username"
+          inner-icon-left="mdi mdi-account"
+          class="mb3"
+          type="text"
+          bg-color="blue-light5"
+          :validators="[validators.required]"
+          name="name"
+          required
+          outline
+          shadow
+        />
+
+        <w-input
+          class="mb3"
+          label="Email"
+          v-model="email"
+          type="text"
+          name="email"
+          bg-color="blue-light5"
+          :validators="[validators.required]"
+          required
+          inner-icon-left="mdi mdi-email"
+          outline
+          shadow
+        />
+
+        <w-input
+          v-model="password"
+          class="mb3"
+          label="Password"
+          :validators="[validators.required]"
+          name="password"
+          :type="isPassword ? 'password' : 'text'"
+          :inner-icon-right="isPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
+          @click:inner-icon-right="isPassword = !isPassword"
+          bg-color="blue-light5"
+          required
+          outline
+          shadow
+        />
+
+      </w-form>
+    </w-card>
     <br>
-    <router-link id="link" to="/login">
-      <a>Login</a>
-    </router-link>
+    <w-flex column align-center justify-center class="mt4">
+      <w-button @click="userRegister()" type="submit">Register</w-button>
+      <br>
+      <w-button @click="this.$router.go({path: '/login'})">Login</w-button>
+    </w-flex>
   </div>
 </template>
 
@@ -42,14 +82,18 @@
 import Register from "../models/register";
 export default {
   setup() {
-    const {postUser} = Register();
-    return {postUser};
+    const {state, postUser} = Register();
+    return {state, postUser};
   },
   data() {
     return {
       username: "",
       email: "",
       password: "",
+      isPassword: true,
+      validators: {
+      required: value => !!value || 'This field is required',
+      }
     };
   },
   methods: {
@@ -76,22 +120,8 @@ h1 {
   justify-content: center;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5rem;
-}
 
-a {
-  font-weight: 700;
-  color: rgb(201, 201, 201);
-  text-decoration: none;
-}
-
-h1,
-label {
+h1 {
   color: white;
 }
 .centered {

@@ -1,34 +1,77 @@
 <template>
-  <div id="wrapper">
-    <h1>Hello</h1>
-    <form class="centered">
-      <label for="email">Email</label>
-      <input
-        v-model="email"
-        placeholder="type here..."
-        type="text"
-        id="email"
-        name="email"
-        required
-      />
-      <label for="password">Password</label>
-      <input
-        v-model="password"
-        placeholder="type here..."
-        type="password"
-        id="password"
-        name="password"
-        required
-      />
-      <button @click="loginFunc()" type="submit">Sign In</button>
-    </form>
-    <br>
-    <p>Don't have an acount?</p>
-    <router-link id="link" to="/register">
-      Sign Up
-    </router-link>
-    <button @click="google()" >Google Sign In</button>
+  <div id="wrapper" class="mt7">
+    <w-card content-class="pa0" >
+
+      <div class="message-box">
+        <w-transition-fade>
+          <w-alert
+            v-if="state.responseStatus === 201"
+            success
+            no-border
+            class="my0 text-light">
+            Trying to sign you in!
+          </w-alert>
+
+          <w-alert
+            v-else-if="state.responseStatus === 401" 
+            error
+            no-border
+            class="my0 text-light">
+          Wrong Password</w-alert>
+
+          <w-alert
+            v-else-if="state.responseStatus === 500"
+            error
+            no-border
+            class="my0 text-light">
+          Hmmm... Something went wrong. Try again.
+          </w-alert>
+        </w-transition-fade>
+      </div>
+
+      <w-form class="centered">
+
+        <w-input
+          class="mb3"
+          label="Email"
+          v-model="email"
+          type="text"
+          id="email"
+          name="email"
+          required
+          inner-icon-left="mdi mdi-email"
+          bg-color="blue-light5"
+          :validators="[validators.required]"
+          outline
+          shadow
+        />
+
+        <w-input
+          class="mb3"
+          label="Password"
+          v-model="password"
+          id="password"
+          name="password"
+          :validators="[validators.required]"
+          required
+          :type="isPassword ? 'password' : 'text'"
+          :inner-icon-right="isPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
+          @click:inner-icon-right="isPassword = !isPassword"
+          bg-color="blue-light5"
+        />
+      </w-form>
+    </w-card>
+    <w-flex column align-center justify-center class="mt4">
+      <w-button @click="loginFunc()" type="submit">Sign In</w-button>
+      <br>
+      <w-button @click="google()" >Google Sign In</w-button>
+      <br>
+      <p>Don't have an acount?</p>
+      <br>
+      <w-button @click="this.$router.push({ path: '/register'})">Sign Up</w-button>
+    </w-flex>
   </div>
+    
 </template>
 
 <script>
@@ -45,11 +88,16 @@ export default {
     return {
       email: "",
       password: "",
+      isPassword: true,
+      validators: {
+      required: value => !!value || 'This field is required',
+      }
     };
   },
   methods: {
-    loginFunc() {
-      this.postSession(this.email, this.password)
+    async loginFunc() {
+      await this.postSession(this.email, this.password)
+      await this.getSession
     },
     async google() {
       await window.open('http://localhost:3000/auth/google', 'newwindow','width=500,height=600')
@@ -59,6 +107,11 @@ export default {
 </script>
 
 <style scoped>
+.mdi-email::before {
+  color: #2196f3 !important
+}
+
+
 #wrapper {
   grid-column: 1/-1;
   grid-row: 2/3;
@@ -79,19 +132,6 @@ h2 {
   justify-content: center;
 }
 
-.centered {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5rem;
-}
-
-h1,
-label {
-  color: white;
-}
-
 p {
   text-align: center;
   cursor: default;
@@ -102,4 +142,5 @@ a, p {
   color: rgb(201, 201, 201);
   text-decoration: none;
 }
+
 </style>
