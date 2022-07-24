@@ -1,24 +1,28 @@
 <template>
   <div id="wrapper">
-    <h1>
-      <span>{{ name.username }}</span
-      >'s Bookshelf
-    </h1>
+    <h1><span></span>'s Bookshelf</h1>
     <h2>name</h2>
   </div>
 </template>
 
 <script>
-import name from "@/views/Friends-page";
+import router from "../router";
 export default {
+  name: "FriendsBookshelf",
   setup() {},
 
   data() {
     return {
-      name,
+      id: "",
     };
   },
+  created() {
+    this.id = this.$route.params.id;
+  },
   methods: {
+    navigate() {
+      router.go(-1);
+    },
     // async getBookshelf(id) {
     //   let response = await fetch(`http://localhost:3000/bookshelves/${id}`, {
     //     credentials: "include",
@@ -26,9 +30,6 @@ export default {
     //   let data = await response.json();
     //   console.log(data);
     // },
-  },
-  created() {
-    // this.getBookshelf(id);
   },
 };
 </script>

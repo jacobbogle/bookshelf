@@ -4,9 +4,8 @@
     <div v-for="(friend, index) in friends" :key="index">
       <router-link
         id="name"
-        @click="username = friend.name"
         v-if="friend.value == 3"
-        to="/friendsBookshelf"
+        :to="{ name: 'FriendsBookshelf', params: { id: friend.id } }"
         >{{ friend.name }}</router-link
       >
     </div>
@@ -32,7 +31,6 @@
 </template>
 <script>
 export default {
-  username: "cow",
   setup() {},
 
   data() {

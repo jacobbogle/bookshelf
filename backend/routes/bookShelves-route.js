@@ -127,6 +127,32 @@ router.get("/books", async (req, res) => {
   }
 });
 
+router.get("/books/:id", async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({ message: "unauthenticated" });
+    return;
+  }
+  let id = req.params.id;
+  let bookshelf;
+  try {
+    bookshelf = await BookShelf.findOne({ user_id: id });
+    let listOfBooks = [];
+    let book;
+    let currentBook;
+    for (book in bookshelf.books) {
+      currentBook = await bookModel.findOne({
+        _id: bookshelf.books[book].toString(),
+      });
+      listOfBooks.push(currentBook);
+    }
+    res.status(200).json({ listOfBooks });
+  } catch (err) {
+    res.status(500).json({
+      message: "failed to get bookshelf from id",
+    });
+  }
+});
+
 router.get("", async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
