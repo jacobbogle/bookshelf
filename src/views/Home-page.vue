@@ -5,7 +5,7 @@
       <div v-for="(list, obj) in this.books" :key="obj">
         <div v-for="(shelf, user) in list" :key="user">
           <span>{{ Object(user) }}</span>
-          <div id="bookCollection">
+          <div class="bookCollection">
             <div
               class="book-recommend"
               v-for="(book, index) in shelf"
@@ -145,7 +145,7 @@ export default {
   grid-row: 2/3;
 }
 
-#bookCollection {
+.bookCollection {
   grid-column: 1/-1;
   grid-row: 2/3;
   display: flex;
@@ -155,20 +155,20 @@ export default {
   padding-bottom: 1rem;
 }
 
-#bookCollection > * {
+.bookCollection > * {
   margin: 0.5rem;
 }
 
-#bookCollection:hover {
+.bookCollection:hover {
   overflow-x: scroll;
 }
 
-#bookCollection::-webkit-scrollbar {
+.bookCollection::-webkit-scrollbar {
   width: 15px;
   height: 18px;
 }
 
-#bookCollection::-webkit-scrollbar-thumb {
+.bookCollection::-webkit-scrollbar-thumb {
   height: 6px;
   border: 1px solid rgba(0, 0, 0, 0);
   background-clip: padding-box;
@@ -182,13 +182,13 @@ export default {
     inset 1px 1px 0px rgba(0, 0, 0, 0.18);
 }
 
-#bookCollection::-webkit-scrollbar-button {
+.bookCollection::-webkit-scrollbar-button {
   display: none;
   width: 0;
   height: 0;
 }
 
-#bookCollection::-webkit-scrollbar-corner {
+.bookCollection::-webkit-scrollbar-corner {
   background-color: transparent;
 }
 
@@ -209,7 +209,7 @@ span {
   }
 
   .book-content {
-    height: 390px;
+    height: 370px;
     width: 0px;
   }
 }

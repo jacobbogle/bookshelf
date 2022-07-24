@@ -3,17 +3,19 @@ import { ref } from "vue";
 const User = () => {
   const state = ref({
     currentUser: "",
+    showName: false
   });
 
   const getSession = async function () {
     let response = await fetch("http://localhost:3000/session", {
       credentials: "include",
     });
-    if (response.status == 200) {
+
+    if (response.status == 201) {
       console.log("LOGGED IN");
       let data = await response.json();
       state.value.currentUser = data.username;
-      this.$router.push({ path: "/", replace: true });
+      this.$router.push({ path: "/", replace: true })
     } else if (response.status == 401) {
       state.value.currentUser = "";
       console.log("NOT LOGGED IN");

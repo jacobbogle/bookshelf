@@ -9,6 +9,7 @@
     "start": "concurrently \"npm run serve\" \" cd backend/server && nodemon server.js\" "
   },
   "dependencies": {
+    "@mdi/font": "^7.0.96",
     "@zxing/library": "^0.19.1",
     "bcrypt": "^5.0.1",
     "concurrently": "^7.2.2",
@@ -34,8 +35,6 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "nodemon": "^2.0.18",
-    "pug": "^3.0.2",
-    "pug-plain-loader": "^1.1.0",
     "sass": "^1.54.0",
     "sass-loader": "^10.3.1"
   },

@@ -39,7 +39,7 @@ export default {
   async mounted() {
     await this.getSession();
   },
-};
+}
 </script>
 
 <style scoped>

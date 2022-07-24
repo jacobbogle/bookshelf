@@ -82,7 +82,7 @@ const setUpAuth = function (app) {
       return;
     }
     res
-      .status(200)
+      .status(201)
       .json({ message: "authenticated", username: req.user.username });
   });
 
