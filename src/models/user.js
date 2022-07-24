@@ -3,7 +3,6 @@ import { ref } from "vue";
 const User = () => {
   const state = ref({
     currentUser: "",
-    showName: false
   });
 
   const getSession = async function () {

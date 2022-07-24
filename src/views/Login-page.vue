@@ -17,7 +17,7 @@
             error
             no-border
             class="my0 text-light">
-          >Wrong Password</w-alert>
+          Wrong Password</w-alert>
 
           <w-alert
             v-else-if="form.submitted === false"
@@ -79,7 +79,7 @@
           </w-button>
 
           <w-button
-          @click="loginFunc()"
+            @click="loginFunc()"
             type="submit"
             :disabled="form.valid === false"
             :loading="form.submitted === true && !form.sent"

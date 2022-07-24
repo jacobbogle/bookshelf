@@ -36,8 +36,8 @@ export default {
     },
   },
 
-  async mounted() {
-    await this.getSession();
+  mounted() {
+    this.getSession();
   },
 }
 </script>
