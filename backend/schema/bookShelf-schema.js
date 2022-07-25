@@ -1,5 +1,21 @@
 const mongoose = require("mongoose");
 
+const postSchema = mongoose.Schema(
+  {
+    user_id: {
+      type: String,
+    },
+    body: {
+      Type: String,
+      default: "",
+    },
+    bookshelf_id: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
+
 const bookShelfSchema = new mongoose.Schema({
   books: {
     type: [String],
@@ -11,8 +27,14 @@ const bookShelfSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  posts: {
+    type: [postSchema],
+    required: false,
+    default: [],
+  },
 });
 
 const BookShelf = mongoose.model("BookShelf", bookShelfSchema);
+const Post = mongoose.model("Post", postSchema);
 
-module.exports = { BookShelf };
+module.exports = { BookShelf, Post };

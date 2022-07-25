@@ -40,7 +40,9 @@ router.post("", async (req, res) => {
       let bookshelftest = await BookShelf.create({
         user_id: userID,
         books: [book._id],
+        posts: [],
       });
+      console.log(bookshelftest);
     } else if (bookshelfObject) {
       if (bookshelfObject.books.includes(book._id)) {
         console.log("you already have this book in your bookshelf");
@@ -219,6 +221,7 @@ router.delete("/:book_id", async (req, res) => {
         },
       }
     );
+    console.log(newbookshelf);
   } catch (err) {
     res.status(500).json({
       message: "error deleting book",

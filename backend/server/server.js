@@ -28,11 +28,13 @@ const usersRoute = require("../routes/user-route");
 const bookshelvesRoute = require("../routes/bookShelves-route");
 const logOutRoute = require("../routes/logOut-route");
 const friendsRoute = require("../routes/friends-route");
+const postRoute = require("../routes/post-route");
 app.use("/books", booksRoute);
 app.use("/users", usersRoute);
 app.use("/bookshelves", bookshelvesRoute);
 app.use("/logout", logOutRoute);
 app.use("/friends", friendsRoute);
+app.use("/posts", postRoute);
 
 //Set up default mongoose connection
 const mongoDB = process.env.SERVER_URL;
