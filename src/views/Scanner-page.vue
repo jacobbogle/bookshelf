@@ -1,6 +1,7 @@
 <template>
   <div id="wrapper">
     <StreamBarcodeReader
+      ref="scannerCam"
       v-show="bookSearched === false"
       @decode="(isbn) => onDecode(isbn)"
       @loaded="() => onLoaded()"
@@ -23,25 +24,23 @@
           <div class="text-content">
             <h2 ref="title">{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
-            <h3 :value="book.volumeInfo.averageRating" ref="rating">
-              Rating: {{ numGive(book.volumeInfo.averageRating) }}
-            </h3>
+            <w-rating :model-value="numGive(book.volumeInfo.averageRating)" ref="rating"></w-rating>
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
             <div class="book-buttons">
-              <button
+              <w-button
                 ref="link"
                 class="Amazon"
-                :href="`${book.volumeInfo.infoLink}`"
+                @click="openLink(book.volumeInfo.infoLink)"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Google <w-icon>mdi mdi-link</w-icon></button
+                Google <w-icon>mdi mdi-link</w-icon></w-button
               ><!-- Product Link -->
-              <button @click="serveBook(index), postBook(bookObject)">
+              <w-button @click="serveBook(index), postBook(bookObject)">
                 Save Book <w-icon>mdi mdi-plus</w-icon>
-              </button>
+              </w-button>
             </div>
             <!-- button to add to database -->
             <p ref="description" v-html="snippetGive(book)"></p>
@@ -84,6 +83,9 @@ export default {
     StreamBarcodeReader,
   },
   methods: {
+    openLink(link) {
+      window.open(link)
+    },
     onDecode(isbn) {
       console.log(isbn);
       this.state.searchISBN = isbn;

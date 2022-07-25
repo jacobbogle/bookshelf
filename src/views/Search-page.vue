@@ -37,25 +37,24 @@
           <div class="text-content">
             <h2 ref="title">{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
-            <h3 :value="book.volumeInfo.averageRating" ref="rating">
-              Rating: {{ numGive(book.volumeInfo.averageRating) }}
-            </h3>
+            <w-rating :model-value="numGive(book.volumeInfo.averageRating)" ref="rating">
+            </w-rating>
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
             <div class="book-buttons">
-              <button
+              <w-button
                 ref="link"
-                class="Amazon"
-                :href="`${book.volumeInfo.infoLink}`"
+                class="Amazon mr3"
+                @click="openLink(book.volumeInfo.infoLink)"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Google <w-icon>mdi mdi-link</w-icon></button
+                Google <w-icon>mdi mdi-link</w-icon></w-button
               ><!-- Product Link -->
-              <button @click="serveBook(index), postBook(bookObject)">
+              <w-button @click="serveBook(index), postBook(bookObject)">
                 Save Book <w-icon>mdi mdi-plus</w-icon>
-              </button>
+              </w-button>
             </div>
             <!-- button to add to database -->
             <p ref="description" v-html="snippetGive(book)"></p>
@@ -89,6 +88,9 @@ export default {
     };
   },
   methods: {
+    openLink(link) {
+      window.open(link)
+    },
     toScanner() {
       this.$router.push({ path: "/scanner" });
     },
@@ -141,9 +143,9 @@ export default {
     numGive(num) {
       try {
         if (num > 0) {
-          return num + " // 5";
+          return num;
         } else {
-          return "N/A";
+          return 0;
         }
       } catch (error) {
         return "N//A";
@@ -251,9 +253,6 @@ export default {
   max-width: 500px;
 }
 
-h1 {
-  color: white;
-}
 
 #scanner {
   width: 35px;
@@ -261,21 +260,13 @@ h1 {
   cursor: pointer;
 }
 
+#scanner:hover {
+  background-color: white;
+}
+
 #scanner img {
   width: inherit;
   height: inherit;
 }
-.book-buttons {
-  display: flex;
-  justify-content: space-evenly;
-}
 
-.book-buttons button {
-  background-color: #3f51b5;
-  color: white;
-  border-radius: 0;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-}
 </style>

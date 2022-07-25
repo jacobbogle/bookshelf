@@ -29,25 +29,26 @@
           <div :value="`${index}`" class="text-content">
             <h2>{{ book.title }}</h2>
             <!-- Book Title -->
-            <h3>Rating: {{ book.rating }}</h3>
+            <w-rating :model-value="book.rating" ref="rating"></w-rating>
             <!-- Book Series Name -->
             <h4>By: {{ book.authors }}</h4>
             <!-- Author's Name -->
-            <div class="book-buttons">
-              <button
+            <w-flex justify-start>
+              <w-button
                 :value="`${index}`"
                 ref="amazon"
-                class="Amazon"
-                :href="`${book.link}`"
+                class="Amazon mr3"
+                @click="openLink(book.link)"
                 target="_blank"
                 rel="noopener noreferrer"
+
               >
-                Google <w-icon>mdi mdi-link</w-icon></button
+                Google <w-icon>mdi mdi-link</w-icon></w-button
               ><!-- Product Link -->
-              <button @click="postBook(book)">
+              <w-button @click="postBook(book)">
                 Save Book<w-icon>mdi mdi-plus</w-icon>
-              </button>
-            </div>
+              </w-button>
+            </w-flex>
             <p v-html="book.description" :value="`${index}`"></p>
           </div>
         </div>
@@ -73,12 +74,13 @@
           </w-button>
         </w-flex>
       </div>
-      <h1>Add A Comment</h1>
+      <h1>Add a Comment</h1>
       <w-input
         bg-color="secondary"
         type="text"
-        placeholder="Leave A Comment"
+        label="Leave A Comment"
         v-model="postInput"
+
       />
       <w-button @click="postPosts()">Add Comment</w-button>
     </div>
@@ -114,6 +116,9 @@ export default {
     this.getSession();
   },
   methods: {
+    openLink(link) {
+      window.open(link)
+    },
     async postPosts() {
       let newPost = {
         comment: this.postInput,
@@ -190,7 +195,7 @@ export default {
         this.$refs.bookContent[index].style.width = "256px";
       }
       this.$refs.bookContent[index].style.visibility = "visible";
-      this.$refs.amazon[index].style.visibility = "visible";
+      // this.$refs.amazon[index].style.visibility = "visible";
     },
     closeBookContent(index) {
       this.$emit("closeBookContent");
@@ -200,7 +205,7 @@ export default {
       } else {
         this.$refs.bookContent[index].style.width = "0px";
       }
-      this.$refs.amazon[index].style.visibility = "hidden";
+      // this.$refs.amazon[index].style.visibility = "hidden";
       this.$refs.bookContent[index].style.visibility = "hidden";
     },
     closeAllBooks() {
@@ -249,13 +254,17 @@ export default {
 
 h1 {
   margin-top: 50px;
+  color: rgb(201, 201, 201);
 }
+
 #comments p {
   color: white;
 }
+
 i {
   color: #c9c9c9;
 }
+
 #getbooks {
   align-self: center;
 }
@@ -294,17 +303,17 @@ i {
   min-width: 500px;
   max-width: 500px;
 }
-.book-buttons {
+/* .book-buttons {
   display: flex;
   justify-content: space-evenly;
-}
+} */
 
-.book-buttons button {
+/* .book-buttons button {
   background-color: #3f51b5;
   color: white;
   border-radius: 0;
   border: none;
   padding: 5px;
   cursor: pointer;
-}
+} */
 </style>

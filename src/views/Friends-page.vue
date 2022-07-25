@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <h1 class="mb8" v-if="friendsExist">Friends</h1>
+    <h1 class="mb2 mt12" v-if="friendsExist">Friends Bookshelf</h1>
     <div v-for="(friend, index) in friends" :key="index">
       <router-link
         id="name"
@@ -9,14 +9,14 @@
           name: 'FriendsBookshelf',
           params: { name: friend.name, id: friend.id },
         }"
-        ><span>{{ friend.name }}</span></router-link
+        ><w-button class="mt2" xl>{{ friend.name }}</w-button></router-link
       >
     </div>
 
-    <h1 v-if="receivedsExist">Received Friend Requests</h1>
-    <div v-for="(friend, index) in friends" :key="index">
-      <h2 class="mt8 mb8" v-if="friend.value == 1">
-        {{ friend.name }}
+    <h1 class="mt12" v-if="receivedsExist">Received Friend Requests</h1>
+    <div  v-for="(friend, index) in friends" :key="index">
+      <h2 class="mt8 mb2 secondary" color="" v-if="friend.value == 1">
+        <w-card bg-color="secondary" color="primary" >{{ friend.name }}</w-card>
       </h2>
       <w-button
         class="mr4"
@@ -32,9 +32,11 @@
       </w-button>
     </div>
 
-    <h1 class="mt8 mb8" v-if="sentsExist">Sent Friend Requests</h1>
+    <h1 class="mt12" v-if="sentsExist">Sent Friend Requests</h1>
     <div v-for="(friend, index) in friends" :key="index">
-      <h2 v-if="friend.value == 2">{{ friend.name }}</h2>
+      <h2 class="mb1">
+        <w-card bg-color="secondary" color="primary" v-if="friend.value == 2">{{ friend.name }}</w-card>
+      </h2>
     </div>
   </div>
 </template>
@@ -129,25 +131,16 @@ export default {
 }
 
 h1 {
-  margin-bottom: 10px;
-  margin-top: 50px;
+  color: rgb(201, 201, 201);
 }
 
-span {
-  color: #bdbdbd !important;
-  font-weight: bold;
-}
+
 h2 {
-  color: #bdbdbd;
   text-align: center;
 }
 
 #name {
   color: white;
   font-size: 1.5rem;
-}
-
-button {
-  margin-bottom: 50px;
 }
 </style>

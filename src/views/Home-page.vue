@@ -4,7 +4,7 @@
     <div class="user-shelf">
       <div v-for="(list, obj) in this.books" :key="obj">
         <div v-for="(shelf, user) in list" :key="user">
-          <span>{{ Object(user) }}</span>
+          <span class="ml10">{{ Object(user) }}</span>
           <div id="bookCollection">
             <div
               class="book-recommend"
@@ -25,26 +25,25 @@
                 <div class="text-content">
                   <h2 ref="title">{{ book.title }}</h2>
                   <!-- Book Title -->
-                  <h3 ref="rating">Rating: {{ book.rating }}</h3>
+                  <w-rating :model-value="book.rating" ref="rating"></w-rating>
                   <!-- Book Series Name -->
                   <h4 ref="authors">By: {{ book.authors }}</h4>
                   <!-- Author's Name -->
                   <div class="book-buttons">
-                    <button
+                    <w-button
                       ref="link"
                       class="Amazon"
-                      :href="`${book.link}`"
+                      @click="openLink(book.link)"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Google <w-icon>mdi mdi-link</w-icon></button
+                      Google <w-icon>mdi mdi-link</w-icon></w-button
                     ><!-- Product Link -->
-                    <button @click="postBook(book)">
+                    <w-button @click="postBook(book)">
                       Save Book<w-icon>mdi mdi-plus</w-icon>
-                    </button>
+                    </w-button>
                   </div>
                   <p ref="description" v-html="book.description"></p>
-                  <p ref="isbn">{{ book.isbn }}</p>
                 </div>
               </div>
             </div>
@@ -79,6 +78,9 @@ export default {
     };
   },
   methods: {
+    openLink(link) {
+      window.open(link)
+    },
     async getPublicBookShelves() {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
@@ -160,7 +162,7 @@ h1 {
   grid-row: 2/3;
   display: flex;
   flex-direction: row;
-  height: 425px;
+  height: 450px;
   overflow: hidden;
   padding-bottom: 1rem;
 }
@@ -217,14 +219,6 @@ span {
   justify-content: space-evenly;
 }
 
-.book-buttons button {
-  background-color: #3f51b5;
-  color: white;
-  border-radius: 0;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-}
 
 @media only screen and (max-width: 684px) {
   .book-recommend {
