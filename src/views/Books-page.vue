@@ -53,7 +53,7 @@
     <h1>Comments</h1>
     <div>
       <div id="comments" v-for="(post, i) in state.bookshelf.posts" :key="i">
-        <!-- <i>{{ bookshelf.posts[i].user.username }}:&nbsp; </i> -->
+        <i>{{ state.bookshelf.posts[i].username }}:&nbsp; </i>
         <p>{{ state.bookshelf.posts[i].comment }}</p>
         <!-- TODO DELETE POSTS ON FRONT END ALSO CHECK TO IF ABLE TO DELETE FIRST -->
         <!-- v-if="checkIfDeleteable(post)" -->

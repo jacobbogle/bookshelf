@@ -11,6 +11,9 @@ const postSchema = mongoose.Schema({
   bookshelf_id: {
     type: String,
   },
+  username: {
+    type: String,
+  },
 });
 
 const bookShelfSchema = new mongoose.Schema({

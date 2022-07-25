@@ -1,4 +1,5 @@
 const express = require("express");
+const User = require("../schema/user-schema");
 const { BookShelf } = require("../schema/bookShelf-schema");
 
 let router = express.Router();
@@ -13,12 +14,23 @@ router.post("", async (req, res) => {
 
   let bookshelf;
 
+  let user;
+  try {
+    user = await User.findById(req.user.id);
+  } catch (err) {
+    res.status(500).json({
+      message: "couln't find user",
+    });
+    return;
+  }
+
   try {
     bookshelf = await BookShelf.findByIdAndUpdate(
       req.body.bookshelf_id,
       {
         $push: {
           posts: {
+            username: user.username,
             user_id: req.user.id,
             comment: sentComment,
             bookshelf_id: req.body.bookshelf_id,
