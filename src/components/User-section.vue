@@ -3,8 +3,20 @@
     <router-link v-if="state.currentUser.length === 0" to="/login"
       ><a>Sign In</a></router-link
     >
-    <a v-else @click="logOut()">Sign Out</a>
-    <p>{{ state.currentUser }}</p>
+    <w-flex v-else align-center class="pr5">
+      <p class="pr2">{{ state.currentUser }}</p>
+      <w-button
+      icon="mdi mdi-account-circle"
+      xl
+      class="account-button">
+      </w-button>
+    </w-flex>
+    <w-menu hide-on-menu-click v-show="state.currentUser.length > 0" activator=".account-button" arrow>
+      <w-button v-on="on" @click="logOut()">Sign Out</w-button>
+    </w-menu>
+
+    
+    
   </div>
 </template>
 
@@ -27,6 +39,7 @@ export default {
         });
         if (response.status == 200) {
           console.log("successful logout");
+          this.state.currentUser = ""
         }
         this.getSession();
       } catch (err) {

@@ -1,6 +1,10 @@
-
+import { ref } from "vue";
 
 const Login = () => {
+
+  const state = ref({
+    responseStatus: null
+  });
 
   const postSession = async function (username, password) {
     try {
@@ -17,11 +21,17 @@ const Login = () => {
         },
         credentials: "include",
       });
-      console.log("SUCCESSFUL LOGIN ATTEMPT")
+      console.log(response.status)
       if (response.status == 201) {
-        console.log("SUCCESSFUL LOGIN ATTEMPT");
+        state.value.responseStatus = response.status
+        console.log("SUCCESS!! EVERYTHING RIGHT!!");
+        this.$router.go({ path: '/' })
       } else if (response.status == 401) {
-        console.log("UNSUCCESSFUL LOGIN ATTEMPT");
+        state.value.responseStatus = response.status
+        console.log("WRONG PASSWORD");
+      } else if (response.status == 500) {
+        state.value.responseStatus = response.status
+        console.log("ERVERYTHING IS WRONG");
       }
     } catch (error) {
       console.log(
@@ -33,6 +43,7 @@ const Login = () => {
 
   return {
     postSession,
+    state
   };
 };
 

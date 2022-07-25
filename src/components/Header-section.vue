@@ -1,7 +1,7 @@
 <template>
   <header>
     <Nav/>
-    <h1><router-link to="/">Bookshelf</router-link></h1>
+    <h1 class="pt5"><router-link to="/">Bookshelf</router-link></h1>
     <h2><Acount id="acount" /></h2>
   </header>
 </template>

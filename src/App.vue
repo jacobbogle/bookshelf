@@ -1,9 +1,9 @@
 <template>
-  <div class="wrapper">
+  <w-app class="wrapper">
     <Header />
     <router-view />
     <Footer />
-  </div>
+  </w-app>
 </template>
 
 <script>

@@ -86,10 +86,6 @@ const setUpAuth = function (app) {
       .json({ message: "authenticated", username: req.user.username });
   });
 
-  app.delete("/session", (req, res) => {
-    req.session.destroy()
-  });
-
   //google
   app.get("/auth/google", passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/books','email','profile']}));
 
@@ -99,8 +95,7 @@ const setUpAuth = function (app) {
         res.status(401).json({ message: "unauthenticated" });
         return;
       }
-      res.status(200).json({ message: "authenticated" });
-      console.log(res)
+      res.status(200).json({ message: "Authenticated! Close this window and refresh the webpage" });
     }
   );
 };

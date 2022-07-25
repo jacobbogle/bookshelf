@@ -12,6 +12,14 @@ make sure there is a .env file in the root with your mondoDB-url set to SERVER_U
 SERVER_URL = <replace me with mongodb-url>
 
 PORT = 3000
+
+SESSION_SECRET = <replace me with secret>
+
+GOOGLE_CLIENT_ID = <replace me>
+
+GOOGLE_CLIENT_SECRET = <replace me>
+
+GOOGLE_AUTH_REDIRECT_URL = <replace me>
 ```
 ## api.config.json file
 ```

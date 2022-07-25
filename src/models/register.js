@@ -1,5 +1,11 @@
+import { ref } from "vue";
 
 const Register = () => {
+    const state = ref({
+        responseStatus: null
+      });
+
+
     const postUser = async function (email, name, password) {
         let user = {
             email: email,
@@ -14,16 +20,20 @@ const Register = () => {
             },
             credentials: "include",
         })
+        console.log(response.status)
         if (response.status == 201) {
+            state.value.responseStatus = response.status
             console.log("successful user created");
             this.$router.push({ path: "/login", replace: true });
-        } else {
-            console.log("Some error in /POST users");
-        }
+        } else if (response.status == 500) {
+            state.value.responseStatus = response.status
+            console.log("email or username already exists");
+        } 
     }
 
     return {
-        postUser
+        postUser,
+        state
     }
 }
 
