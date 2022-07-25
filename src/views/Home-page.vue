@@ -29,15 +29,20 @@
                   <!-- Book Series Name -->
                   <h4 ref="authors">By: {{ book.authors }}</h4>
                   <!-- Author's Name -->
-                  <a
-                    ref="link"
-                    class="Amazon"
-                    :href="`${book.link}`"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Google Link</a
-                  ><!-- Product Link -->
-                  <a @click="postBook(book)"> Add Book</a>
+                  <div class="book-buttons">
+                    <button
+                      ref="link"
+                      class="Amazon"
+                      :href="`${book.link}`"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Google <w-icon>mdi mdi-link</w-icon></button
+                    ><!-- Product Link -->
+                    <button @click="postBook(book)">
+                      Add Book<w-icon>mdi mdi-plus</w-icon>
+                    </button>
+                  </div>
                   <p ref="description" v-html="book.description"></p>
                   <p ref="isbn">{{ book.isbn }}</p>
                 </div>
@@ -147,7 +152,7 @@ export default {
 }
 
 h1 {
-  color: rgb(201, 201, 201)
+  color: rgb(201, 201, 201);
 }
 
 #bookCollection {
@@ -206,6 +211,19 @@ span {
   color: rgb(201, 201, 201);
   font-family: "OCR A", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.book-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.book-buttons button {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 0;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 684px) {

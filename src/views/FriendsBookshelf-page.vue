@@ -298,5 +298,6 @@ i {
   border-radius: 0;
   border: none;
   padding: 5px;
+  cursor: pointer;
 }
 </style>
