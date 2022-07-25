@@ -30,7 +30,7 @@
           inner-icon-left="mdi mdi-account"
           class="mb3"
           type="text"
-          bg-color="blue-light5"
+          bg-color="secondary"
           :validators="[validators.required]"
           name="name"
           required
@@ -44,7 +44,7 @@
           v-model="email"
           type="text"
           name="email"
-          bg-color="blue-light5"
+          bg-color="secondary"
           :validators="[validators.required]"
           required
           inner-icon-left="mdi mdi-email"
@@ -61,7 +61,7 @@
           :type="isPassword ? 'password' : 'text'"
           :inner-icon-right="isPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
           @click:inner-icon-right="isPassword = !isPassword"
-          bg-color="blue-light5"
+          bg-color="secondary"
           required
           outline
           shadow

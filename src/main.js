@@ -12,7 +12,7 @@ new WaveUI(app, {
   // Some Wave UI options.
   colors: {
     primary: '#3f51b5',
-    secondary: '#2196f3'
+    secondary: '#e3f2fd'
   }
 })
 app.use(router)
