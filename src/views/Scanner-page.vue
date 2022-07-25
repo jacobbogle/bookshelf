@@ -5,9 +5,9 @@
       @decode="(isbn) => onDecode(isbn)"
       @loaded="() => onLoaded()"
     ></StreamBarcodeReader>
-    <button v-show="bookSearched === true" @click="bookSearched = false">
+    <w-button xl v-show="bookSearched === true" @click="bookSearched = false">
       Scan Again
-    </button>
+    </w-button>
     <div id="bookCollection" v-show="bookSearched === true">
       <div
         class="book-recommend"
