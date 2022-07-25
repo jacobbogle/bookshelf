@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <h1>Public : {{ state.bookshelf.public }}</h1>
-    <button @click="patchBookShelfPublic()">Make Public</button>
+    <w-button class="mt4" @click="patchBookShelfPublic()">Make Public</w-button>
     <div id="bookCollection">
       <div
         class="book-recommend"
@@ -34,16 +34,22 @@
             <!-- Book Series Name -->
             <h4>By: {{ book.authors }}</h4>
             <!-- Author's Name -->
-            <a
-              :value="`${index}`"
-              ref="amazon"
-              class="Amazon"
-              :href="`${book.link}`"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Google Link</a
-            ><!-- Product Link -->
-            <a @click="deleteBook(book._id)"> DELETE BOOK</a>
+            <div class="book-buttons">
+              <button
+                :value="`${index}`"
+                ref="amazon"
+                class="Amazon"
+                :href="`${book.link}`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google
+                <w-icon>mdi mdi-link</w-icon></button
+              ><!-- Product Link -->
+              <button @click="deleteBook(book._id)" s>
+                DELETE <w-icon>mdi mdi-delete</w-icon>
+              </button>
+            </div>
             <p v-html="book.description" :value="`${index}`"></p>
           </div>
         </div>
@@ -53,19 +59,30 @@
     <h1>Comments</h1>
     <div>
       <div id="comments" v-for="(post, i) in state.bookshelf.posts" :key="i">
-        <i>{{ state.bookshelf.posts[i].username }}:&nbsp; </i>
-        <p>{{ state.bookshelf.posts[i].comment }}</p>
-        <!-- TODO DELETE POSTS ON FRONT END ALSO CHECK TO IF ABLE TO DELETE FIRST -->
-        <!-- v-if="checkIfDeleteable(post)" -->
-        <button
-          @click="deletePost(state.bookshelf.posts[i]._id, state.bookshelf._id)"
-        >
-          Delete
-        </button>
+        <w-flex>
+          <i class="mr4"> {{ state.bookshelf.posts[i].username }}:&nbsp; </i>
+          <w-flex wrap>
+            <p>{{ state.bookshelf.posts[i].comment }}</p>
+          </w-flex>
+        </w-flex>
+        <w-flex justify-end>
+          <w-button
+            @click="
+              deletePost(state.bookshelf.posts[i]._id, state.bookshelf._id)
+            "
+          >
+            Delete <w-icon> mdi mdi-delete</w-icon>
+          </w-button>
+        </w-flex>
       </div>
       <h1>Add A Comment</h1>
-      <input type="text" placeholder="Leave A Comment" v-model="postInput" />
-      <button @click="postPosts()">Add Comment</button>
+      <w-input
+        bg-color="secondary"
+        type="text"
+        placeholder="Leave A Comment"
+        v-model="postInput"
+      />
+      <w-button @click="postPosts()">Add Comment</w-button>
     </div>
   </div>
 </template>
@@ -200,11 +217,14 @@ export default {
 <style scoped>
 @import "../book-data/style.css";
 
-p {
+#comments p {
   color: white;
 }
 i {
   color: #c9c9c9;
+}
+h1 {
+  margin-top: 50px;
 }
 
 #comments {
@@ -213,6 +233,9 @@ i {
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
+  margin-top: 20px;
+  min-width: 500px;
+  max-width: 500px;
 }
 #getBooks {
   align-self: center;
@@ -240,5 +263,18 @@ i {
 
 #bookCollection > * {
   margin: 0.5rem;
+}
+
+.book-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.book-buttons button {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 0;
+  border: none;
+  padding: 5px;
 }
 </style>

@@ -33,15 +33,18 @@
             <!-- Book Series Name -->
             <h4>By: {{ book.authors }}</h4>
             <!-- Author's Name -->
-            <a
-              :value="`${index}`"
-              ref="amazon"
-              class="Amazon"
-              :href="`${book.link}`"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Google Link</a
-            ><!-- Product Link -->
+            <div class="book-buttons">
+              <button
+                :value="`${index}`"
+                ref="amazon"
+                class="Amazon"
+                :href="`${book.link}`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google <w-icon>mdi mdi-link</w-icon></button
+              ><!-- Product Link -->
+            </div>
             <p v-html="book.description" :value="`${index}`"></p>
           </div>
         </div>
@@ -51,18 +54,30 @@
     <h1>Comments</h1>
     <div>
       <div id="comments" v-for="(post, i) in bookshelf.posts" :key="i">
-        <i>{{ bookshelf.posts[i].username }}:&nbsp; </i>
-        <p>{{ bookshelf.posts[i].comment }}</p>
-        <button
-          v-if="checkIfDeleteable(post)"
-          @click="deletePost(bookshelf.posts[i]._id, bookshelf._id)"
-        >
-          Delete
-        </button>
+        <w-flex>
+          <i class="mr4">{{ bookshelf.posts[i].username }}:&nbsp; </i>
+          <w-flex wrap>
+            <p>{{ bookshelf.posts[i].comment }}</p>
+          </w-flex>
+        </w-flex>
+        <w-flex justify-end>
+          <w-button
+            v-if="checkIfDeleteable(post)"
+            @click="deletePost(bookshelf.posts[i]._id, bookshelf._id)"
+          >
+            Delete
+            <w-icon>mdi mdi-delete</w-icon>
+          </w-button>
+        </w-flex>
       </div>
       <h1>Add A Comment</h1>
-      <input type="text" placeholder="Leave A Comment" v-model="postInput" />
-      <button @click="postPosts()">Add Comment</button>
+      <w-input
+        bg-color="secondary"
+        type="text"
+        placeholder="Leave A Comment"
+        v-model="postInput"
+      />
+      <w-button @click="postPosts()">Add Comment</w-button>
     </div>
   </div>
 </template>
@@ -225,7 +240,10 @@ export default {
 <style scoped>
 @import "../book-data/style.css";
 
-p {
+h1 {
+  margin-top: 50px;
+}
+#comments p {
   color: white;
 }
 i {
@@ -263,7 +281,22 @@ i {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  min-width: 500px;
+  max-width: 500px;
+}
+.book-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.book-buttons button {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 0;
+  border: none;
+  padding: 5px;
 }
 </style>
