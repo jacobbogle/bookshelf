@@ -49,6 +49,24 @@
         </div>
       </div>
     </div>
+
+    <h1>Comments</h1>
+    <div>
+      <div id="comments" v-for="(post, i) in state.bookshelf.posts" :key="i">
+        <!-- <i>{{ bookshelf.posts[i].user.username }}:&nbsp; </i> -->
+        <p>{{ state.bookshelf.posts[i].comment }}</p>
+        <!-- TODO DELETE POSTS ON FRONT END ALSO CHECK TO IF ABLE TO DELETE FIRST -->
+        <!-- v-if="checkIfDeleteable(post)" -->
+        <button
+          @click="deletePost(state.bookshelf.posts[i]._id, state.bookshelf._id)"
+        >
+          Delete
+        </button>
+      </div>
+      <h1>Add A Comment</h1>
+      <input type="text" placeholder="Leave A Comment" v-model="postInput" />
+      <button @click="postPosts()">Add Comment</button>
+    </div>
   </div>
 </template>
 
@@ -63,9 +81,27 @@ export default {
     return {
       isBookOpen: false,
       IndexOfOpenedBook: null,
+      postInput: "",
     };
   },
   methods: {
+    async postPosts() {
+      let newPost = {
+        comment: this.postInput,
+        bookshelf_id: this.bookshelf._id,
+      };
+      let response = await fetch(`http://localhost:3000/posts`, {
+        method: "POST",
+        body: JSON.stringify(newPost),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      let data = await response.json();
+      console.log(data);
+      this.getBookshelf();
+    },
     bookClickHandler(index) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != index && this.isBookOpen === false) {
@@ -140,6 +176,18 @@ export default {
       console.log(data);
       this.getBookshelf();
     },
+    async deletePost(postID, bookshelfID) {
+      let response = await fetch(
+        `http://localhost:3000/posts/${postID}/bookshelf/${bookshelfID}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      let data = await response.json();
+      console.log(data);
+      this.getBookshelf();
+    },
   },
   created: function () {
     this.getBooks();
@@ -151,6 +199,20 @@ export default {
 <style scoped>
 @import "../book-data/style.css";
 
+p {
+  color: white;
+}
+i {
+  color: #c9c9c9;
+}
+
+#comments {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 #getBooks {
   align-self: center;
 }

@@ -4,6 +4,8 @@ const { BookShelf } = require("../schema/bookShelf-schema");
 let router = express.Router();
 
 router.post("", async (req, res) => {
+  let sentComment = req.body.comment;
+  console.log("this is the comment, ", sentComment);
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
     return;
@@ -18,7 +20,7 @@ router.post("", async (req, res) => {
         $push: {
           posts: {
             user_id: req.user.id,
-            comment: req.body.comment,
+            comment: sentComment,
             bookshelf_id: req.body.bookshelf_id,
           },
         },
@@ -37,6 +39,7 @@ router.post("", async (req, res) => {
       message: "failed to insert post",
       error: err,
     });
+    console.log(err);
   }
   res.status(201).json(bookshelf.posts[bookshelf.posts.length - 1]);
 });
@@ -72,10 +75,11 @@ router.delete("/:post_id/bookshelf/:bookshelf_id", async (req, res) => {
   let authorizedToDelete = false;
 
   console.log("bookshelf you are trying to delete: ", bookshelf);
-  //   if (req.user.id == bookshelf.user_id) authorizedToDelete = true;
+
+  if (req.user.id == bookshelf.user_id) authorizedToDelete = true;
 
   for (let i in bookshelf.posts) {
-    if (bookshelf.posts[i]._id == req.params.post_id) {
+    if (bookshelf.posts[i]._id.toString() == req.params.post_id.toString()) {
       post = bookshelf.posts[i];
       if (bookshelf.posts[i].user_id == req.user.id) {
         authorizedToDelete = true;
@@ -89,14 +93,13 @@ router.delete("/:post_id/bookshelf/:bookshelf_id", async (req, res) => {
   }
 
   try {
-    await BookShelf.findByIdAndUpdate(req.params.bookshelf_id),
-      {
-        $pull: {
-          posts: {
-            _id: req.params.post_id,
-          },
+    await BookShelf.findByIdAndUpdate(req.params.bookshelf_id, {
+      $pull: {
+        posts: {
+          _id: req.params.post_id.toString(),
         },
-      };
+      },
+    });
   } catch (err) {
     res.status(500).json({
       message: "error deleting post",

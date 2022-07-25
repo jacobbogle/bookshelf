@@ -5,8 +5,8 @@ const postSchema = mongoose.Schema({
     type: String,
   },
   comment: {
-    Type: String,
-    default: "",
+    type: String,
+    required: true,
   },
   bookshelf_id: {
     type: String,
@@ -25,8 +25,8 @@ const bookShelfSchema = new mongoose.Schema({
     default: false,
   },
   posts: {
-    type: [mongoose.Schema.Types.Mixed],
-    // type: [postSchema]
+    // type: [mongoose.Schema.Types.Mixed],
+    type: [postSchema],
     required: false,
     default: [],
   },
