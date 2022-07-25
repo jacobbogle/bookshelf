@@ -1,16 +1,17 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
-    
-    <w-form ref="test">
-      <w-input
-      class="mt12 mb4 ml5 mr5"
-        type="text"
-        label="Search"
-        @keyup.enter=" closeAllBooks(), searchByTitle(), searchReset()"
-        v-model="state.searchTitle"
-        bg-color="secondary"
-      />
-    </w-form>
+  <w-flex justify-center align-center>
+      <w-form ref="test" id="searchBar">
+        <w-input
+        class="mt12 mb4 ml5 mr5"
+          type="text"
+          label="Search"
+          @keyup.enter=" closeAllBooks(), searchByTitle(), searchReset()"
+          v-model="state.searchTitle"
+          bg-color="secondary"
+        />
+      </w-form>
+    </w-flex>    
     <w-flex justify-center align-center>
       <w-button xl v-on:click="searchByTitle()">Search</w-button>
       <a id="scanner" class="ml4" bg-color="secondary">
@@ -241,6 +242,11 @@ export default {
 
 #bookCollection > * {
   margin: 0.5rem;
+}
+
+#searchBar {
+  width: 100%;
+  max-width: 500px;
 }
 
 h1 {
