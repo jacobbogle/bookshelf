@@ -40,7 +40,7 @@
                       Google <w-icon>mdi mdi-link</w-icon></button
                     ><!-- Product Link -->
                     <button @click="postBook(book)">
-                      Add Book<w-icon>mdi mdi-plus</w-icon>
+                      Save Book<w-icon>mdi mdi-plus</w-icon>
                     </button>
                   </div>
                   <p ref="description" v-html="book.description"></p>

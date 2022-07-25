@@ -5,9 +5,11 @@
       @decode="(isbn) => onDecode(isbn)"
       @loaded="() => onLoaded()"
     ></StreamBarcodeReader>
-    <button v-show="bookSearched === true" @click="bookSearched = false">
-      Scan Again
-    </button>
+    <w-flex class="pt8" justify-center>
+      <w-button xl v-show="bookSearched === true" @click="bookSearched = false">
+        Scan Again
+      </w-button>
+    </w-flex>
     <div id="bookCollection" v-show="bookSearched === true">
       <div
         class="book-recommend"
@@ -27,17 +29,20 @@
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
-            <a
-              ref="link"
-              class="Amazon"
-              :href="`${book.volumeInfo.infoLink}`"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Google Link</a
-            ><!-- Product Link -->
-            <button @click="serveBook(index), postBook(bookObject)">
-              Save Book
-            </button>
+            <div class="book-buttons">
+              <button
+                ref="link"
+                class="Amazon"
+                :href="`${book.volumeInfo.infoLink}`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google <w-icon>mdi mdi-link</w-icon></button
+              ><!-- Product Link -->
+              <button @click="serveBook(index), postBook(bookObject)">
+                Save Book <w-icon>mdi mdi-plus</w-icon>
+              </button>
+            </div>
             <!-- button to add to database -->
             <p ref="description" v-html="snippetGive(book)"></p>
           </div>
@@ -231,5 +236,18 @@ export default {
   grid-column: 1/-1;
   grid-row: 2/3;
   color: white;
+}
+.book-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.book-buttons button {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 0;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
 }
 </style>

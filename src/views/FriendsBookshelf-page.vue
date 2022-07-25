@@ -44,6 +44,9 @@
               >
                 Google <w-icon>mdi mdi-link</w-icon></button
               ><!-- Product Link -->
+              <button @click="postBook(book)">
+                Save Book<w-icon>mdi mdi-plus</w-icon>
+              </button>
             </div>
             <p v-html="book.description" :value="`${index}`"></p>
           </div>
@@ -83,9 +86,13 @@
 </template>
 
 <script>
+import Search from "../models/search";
 export default {
   name: "FriendsBookshelf",
-  setup() {},
+  setup() {
+    const { postBook, shuffle } = Search();
+    return { postBook, shuffle };
+  },
 
   data() {
     return {

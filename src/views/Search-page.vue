@@ -1,17 +1,17 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
-  <w-flex justify-center align-center>
+    <w-flex justify-center align-center>
       <w-form ref="test" id="searchBar">
         <w-input
-        class="mt12 mb4 ml5 mr5"
+          class="mt12 mb4 ml5 mr5"
           type="text"
           label="Search"
-          @keyup.enter=" closeAllBooks(), searchByTitle(), searchReset()"
+          @keyup.enter="closeAllBooks(), searchByTitle(), searchReset()"
           v-model="state.searchTitle"
           bg-color="secondary"
         />
       </w-form>
-    </w-flex>    
+    </w-flex>
     <w-flex justify-center align-center>
       <w-button xl v-on:click="searchByTitle()">Search</w-button>
       <a id="scanner" class="ml4" bg-color="secondary">
@@ -22,8 +22,7 @@
         />
       </a>
     </w-flex>
-      
-    
+
     <br />
     <div id="bookCollection">
       <div
@@ -44,17 +43,20 @@
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
-            <a
-              ref="link"
-              class="Amazon"
-              :href="`${book.volumeInfo.infoLink}`"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Google Link</a
-            ><!-- Product Link -->
-            <button @click="serveBook(index), postBook(bookObject)">
-              Save Book
-            </button>
+            <div class="book-buttons">
+              <button
+                ref="link"
+                class="Amazon"
+                :href="`${book.volumeInfo.infoLink}`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google <w-icon>mdi mdi-link</w-icon></button
+              ><!-- Product Link -->
+              <button @click="serveBook(index), postBook(bookObject)">
+                Save Book <w-icon>mdi mdi-plus</w-icon>
+              </button>
+            </div>
             <!-- button to add to database -->
             <p ref="description" v-html="snippetGive(book)"></p>
           </div>
@@ -262,5 +264,18 @@ h1 {
 #scanner img {
   width: inherit;
   height: inherit;
+}
+.book-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.book-buttons button {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 0;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
 }
 </style>
