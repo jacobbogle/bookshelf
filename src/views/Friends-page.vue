@@ -5,7 +5,10 @@
       <router-link
         id="name"
         v-if="friend.value == 3"
-        :to="{ name: 'FriendsBookshelf', params: { id: friend.id } }"
+        :to="{
+          name: 'FriendsBookshelf',
+          params: { name: friend.name, id: friend.id },
+        }"
         >{{ friend.name }}</router-link
       >
     </div>

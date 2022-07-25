@@ -58,7 +58,7 @@ const routes = [
     component: Users,
   },
   {
-    path: "/FriendsBookshelf/:id",
+    path: "/FriendsBookshelf/:name/:id",
     name: "FriendsBookshelf",
     component: FriendsBookshelf,
   },
