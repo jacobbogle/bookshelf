@@ -88,7 +88,7 @@ export default {
     async postPosts() {
       let newPost = {
         comment: this.postInput,
-        bookshelf_id: this.bookshelf._id,
+        bookshelf_id: this.state.bookshelf._id,
       };
       let response = await fetch(`http://localhost:3000/posts`, {
         method: "POST",
@@ -101,6 +101,7 @@ export default {
       let data = await response.json();
       console.log(data);
       this.getBookshelf();
+      this.postInput = "";
     },
     bookClickHandler(index) {
       this.$emit("openBookContent");
@@ -210,7 +211,7 @@ i {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 #getBooks {

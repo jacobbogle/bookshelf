@@ -53,9 +53,10 @@
       <div id="comments" v-for="(post, i) in bookshelf.posts" :key="i">
         <i>{{ bookshelf.posts[i].username }}:&nbsp; </i>
         <p>{{ bookshelf.posts[i].comment }}</p>
-        <!-- TODO DELETE POSTS ON FRONT END ALSO CHECK TO IF ABLE TO DELETE FIRST -->
-        <!-- v-if="checkIfDeleteable(post)" -->
-        <button @click="deletePost(bookshelf.posts[i]._id, bookshelf._id)">
+        <button
+          v-if="checkIfDeleteable(post)"
+          @click="deletePost(bookshelf.posts[i]._id, bookshelf._id)"
+        >
           Delete
         </button>
       </div>
@@ -80,6 +81,7 @@ export default {
       isBookOpen: false,
       IndexOfOpenedBook: null,
       postInput: "",
+      currentUser: "",
     };
   },
   created() {
@@ -87,6 +89,7 @@ export default {
     this.username = this.$route.params.name;
     this.getFriendsBooks();
     this.getFriendsBookshelf();
+    this.getSession();
   },
   methods: {
     async postPosts() {
@@ -105,6 +108,7 @@ export default {
       let data = await response.json();
       console.log(data);
       this.getFriendsBookshelf();
+      this.postInput = "";
     },
 
     async getFriendsBookshelf() {
@@ -195,6 +199,24 @@ export default {
       let data = await response.json();
       console.log(data);
       this.getFriendsBookshelf();
+    },
+
+    async getSession() {
+      let response = await fetch("http://localhost:3000/session", {
+        credentials: "include",
+      });
+      if (response.status == 200) {
+        console.log("LOGGED IN");
+        let data = await response.json();
+        this.currentUser = data.username;
+        console.log("username: ", this.currentUser);
+      }
+    },
+
+    checkIfDeleteable(post) {
+      if (this.currentUser == post.username) {
+        return true;
+      }
     },
   },
 };
