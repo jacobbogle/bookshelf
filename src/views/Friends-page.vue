@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <h1 v-if="friendsExist">Friends</h1>
+    <h1 class="mb8" v-if="friendsExist">Friends</h1>
     <div v-for="(friend, index) in friends" :key="index">
       <router-link
         id="name"
@@ -9,24 +9,30 @@
           name: 'FriendsBookshelf',
           params: { name: friend.name, id: friend.id },
         }"
-        >{{ friend.name }}</router-link
+        ><span>{{ friend.name }}</span></router-link
       >
     </div>
 
     <h1 v-if="receivedsExist">Received Friend Requests</h1>
     <div v-for="(friend, index) in friends" :key="index">
-      <h2 v-if="friend.value == 1">
+      <h2 class="mt8 mb8" v-if="friend.value == 1">
         {{ friend.name }}
       </h2>
-      <button v-if="friend.value == 1" @click="acceptFriendRequest(friend.id)">
-        Add Friend
-      </button>
-      <button v-if="friend.value == 1" @click="denyFriendRequest(friend.id)">
-        Deny Friend
-      </button>
+      <w-button
+        class="mr4"
+        v-if="friend.value == 1"
+        @click="acceptFriendRequest(friend.id)"
+      >
+        Add &nbsp;
+        <w-icon>mdi mdi-account-plus</w-icon>
+      </w-button>
+      <w-button v-if="friend.value == 1" @click="denyFriendRequest(friend.id)">
+        Deny &nbsp;
+        <w-icon>mdi mdi-account-cancel</w-icon>
+      </w-button>
     </div>
 
-    <h1 v-if="sentsExist">Sent Friend Requests</h1>
+    <h1 class="mt8 mb8" v-if="sentsExist">Sent Friend Requests</h1>
     <div v-for="(friend, index) in friends" :key="index">
       <h2 v-if="friend.value == 2">{{ friend.name }}</h2>
     </div>
@@ -123,13 +129,16 @@ export default {
 }
 
 h1 {
-  border-bottom: 1px solid white;
   margin-bottom: 10px;
   margin-top: 50px;
 }
 
+span {
+  color: #bdbdbd !important;
+  font-weight: bold;
+}
 h2 {
-  color: white;
+  color: #bdbdbd;
   text-align: center;
 }
 
