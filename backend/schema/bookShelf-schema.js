@@ -1,20 +1,17 @@
 const mongoose = require("mongoose");
 
-const postSchema = mongoose.Schema(
-  {
-    user_id: {
-      type: String,
-    },
-    body: {
-      Type: String,
-      default: "",
-    },
-    bookshelf_id: {
-      type: String,
-    },
+const postSchema = mongoose.Schema({
+  user_id: {
+    type: String,
   },
-  { timestamps: true }
-);
+  comment: {
+    Type: String,
+    default: "",
+  },
+  bookshelf_id: {
+    type: String,
+  },
+});
 
 const bookShelfSchema = new mongoose.Schema({
   books: {
@@ -28,7 +25,8 @@ const bookShelfSchema = new mongoose.Schema({
     default: false,
   },
   posts: {
-    type: [postSchema],
+    type: [mongoose.Schema.Types.Mixed],
+    // type: [postSchema]
     required: false,
     default: [],
   },

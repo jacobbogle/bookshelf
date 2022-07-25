@@ -47,6 +47,22 @@
         </div>
       </div>
     </div>
+
+    <h1>Comments</h1>
+    <div>
+      <div id="comments" v-for="(post, i) in bookshelf.posts" :key="i">
+        <i>{{ bookshelf.posts[i].user.username }}:&nbsp; </i>
+        <p>{{ bookshelf.posts[i].comment }}</p>
+        <!-- TODO DELETE POSTS ON FRONT END ALSO CHECK TO IF ABLE TO DELETE FIRST -->
+        <!-- v-if="checkIfDeleteable(post)" -->
+        <button @click="deletePost(bookshelf.posts[i]._id, bookshelf._id)">
+          Delete
+        </button>
+      </div>
+      <h1>Add A Comment</h1>
+      <input type="text" placeholder="Leave A Comment" v-model="postInput" />
+      <button @click="postPosts()">Add Comment</button>
+    </div>
   </div>
 </template>
 
@@ -60,16 +76,48 @@ export default {
       id: "",
       username: "",
       books: [],
+      bookshelf: {},
       isBookOpen: false,
       IndexOfOpenedBook: null,
+      postInput: "",
     };
   },
   created() {
     this.id = this.$route.params.id;
     this.username = this.$route.params.name;
     this.getFriendsBooks();
+    this.getFriendsBookshelf();
   },
   methods: {
+    async postPosts() {
+      let newPost = {
+        comment: this.postInput,
+        bookshelf_id: this.bookshelf._id,
+      };
+      let response = await fetch(`http://localhost:3000/posts`, {
+        method: "POST",
+        body: JSON.stringify(newPost),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      let data = await response.json();
+      console.log(data);
+      this.getFriendsBookshelf();
+    },
+
+    async getFriendsBookshelf() {
+      let response = await fetch(
+        `http://localhost:3000/bookshelves/${this.id}`,
+        {
+          credentials: "include",
+        }
+      );
+      let data = await response.json();
+      this.bookshelf = data;
+      console.log("friend's bookshelf data", data);
+    },
     async getFriendsBooks() {
       let response = await fetch(
         `http://localhost:3000/bookshelves/books/${this.id}`,
@@ -136,13 +184,18 @@ export default {
       }
     },
 
-    // async getBookshelf(id) {
-    //   let response = await fetch(`http://localhost:3000/bookshelves/${id}`, {
-    //     credentials: "include",
-    //   });
-    //   let data = await response.json();
-    //   console.log(data);
-    // },
+    async deletePost(postID, bookshelfID) {
+      let response = await fetch(
+        `http://localhost:3000/posts/${postID}/bookshelf/${bookshelfID}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      let data = await response.json();
+      console.log(data);
+      this.getFriendsBookshelf();
+    },
   },
 };
 </script>
@@ -150,6 +203,12 @@ export default {
 <style scoped>
 @import "../book-data/style.css";
 
+p {
+  color: white;
+}
+i {
+  color: #c9c9c9;
+}
 #getbooks {
   align-self: center;
 }
@@ -176,5 +235,13 @@ export default {
 
 #bookCollection > * {
   margin: 0.5rem;
+}
+
+#comments {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 </style>

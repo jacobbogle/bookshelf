@@ -136,9 +136,9 @@ router.get("/books/:id", async (req, res) => {
   }
   let id = req.params.id;
   let bookshelf;
+  let listOfBooks = [];
   try {
     bookshelf = await BookShelf.findOne({ user_id: id });
-    let listOfBooks = [];
     let book;
     let currentBook;
     for (book in bookshelf.books) {
@@ -147,12 +147,14 @@ router.get("/books/:id", async (req, res) => {
       });
       listOfBooks.push(currentBook);
     }
-    res.status(200).json({ listOfBooks });
   } catch (err) {
     res.status(500).json({
       message: "failed to get bookshelf from id",
     });
+    return;
   }
+
+  res.status(200).json({ listOfBooks });
 });
 
 router.get("", async (req, res) => {
@@ -164,12 +166,23 @@ router.get("", async (req, res) => {
   let bookshelf;
   try {
     bookshelf = await BookShelf.findOne({ user_id: id });
-    res.status(200).json({ bookshelf });
   } catch (err) {
     res.status(500).json({
       message: "failed to get bookshelf from id",
     });
   }
+
+  for (let i in bookshelf.posts) {
+    try {
+      bookshelf.posts[i].user = await User.findById(
+        bookshelf.posts[i].user_id,
+        "-password"
+      );
+    } catch (err) {
+      console.log("unable to get user when getting bookshelf", err);
+    }
+  }
+  res.status(200).json({ bookshelf });
 });
 
 router.get("/:user_id", async (req, res) => {
@@ -182,6 +195,16 @@ router.get("/:user_id", async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: "bookshelf by id not found", error: err });
     return;
+  }
+  for (let i in bookshelf.posts) {
+    try {
+      bookshelf.posts[i].user = await User.findById(
+        bookshelf.posts[i].user_id,
+        "-password"
+      );
+    } catch (err) {
+      console.log("unable to get user when getting bookshelf", err);
+    }
   }
   res.status(200).json(bookshelf);
 });

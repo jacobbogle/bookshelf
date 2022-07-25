@@ -13,12 +13,12 @@ router.post("", async (req, res) => {
 
   try {
     bookshelf = await BookShelf.findByIdAndUpdate(
-      req.body.thread_id,
+      req.body.bookshelf_id,
       {
         $push: {
           posts: {
             user_id: req.user.id,
-            body: req.body.body,
+            comment: req.body.comment,
             bookshelf_id: req.body.bookshelf_id,
           },
         },
@@ -27,7 +27,7 @@ router.post("", async (req, res) => {
     );
 
     if (!bookshelf) {
-      res.status(404).jsoN({
+      res.status(404).json({
         message: "bookshelf not found",
         id: req.params.bookshelf_id,
       });
@@ -38,7 +38,7 @@ router.post("", async (req, res) => {
       error: err,
     });
   }
-  res.staus(201).json(bookshelf.posts[bookshelf.posts.length - 1]);
+  res.status(201).json(bookshelf.posts[bookshelf.posts.length - 1]);
 });
 
 router.delete("/:post_id/bookshelf/:bookshelf_id", async (req, res) => {
@@ -53,7 +53,6 @@ router.delete("/:post_id/bookshelf/:bookshelf_id", async (req, res) => {
   try {
     bookshelf = await BookShelf.findOne({
       _id: req.params.bookshelf_id,
-      "posts._id": req.params.post_id,
     });
   } catch (err) {
     res.status(500).json({
@@ -72,12 +71,13 @@ router.delete("/:post_id/bookshelf/:bookshelf_id", async (req, res) => {
 
   let authorizedToDelete = false;
 
-  if (req.user.id == bookshelf.user_id) authorizedToDelete = true;
+  console.log("bookshelf you are trying to delete: ", bookshelf);
+  //   if (req.user.id == bookshelf.user_id) authorizedToDelete = true;
 
   for (let i in bookshelf.posts) {
     if (bookshelf.posts[i]._id == req.params.post_id) {
       post = bookshelf.posts[i];
-      if (bookshelf.post[i].user_id == req.user.id) {
+      if (bookshelf.posts[i].user_id == req.user.id) {
         authorizedToDelete = true;
       }
     }

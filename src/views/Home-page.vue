@@ -78,6 +78,7 @@ export default {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
       this.books = this.shuffle(data);
+      console.log(data);
     },
     getUsername() {},
     reset() {
