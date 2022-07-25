@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
-    <h1>Public Shelves</h1>
+    <h1 class="mt10 mb8">Public Shelves</h1>
     <div class="user-shelf">
       <div v-for="(list, obj) in this.books" :key="obj">
         <div v-for="(shelf, user) in list" :key="user">
@@ -144,6 +144,10 @@ export default {
 #wrapper {
   grid-column: 1/-1;
   grid-row: 2/3;
+}
+
+h1 {
+  color: rgb(201, 201, 201)
 }
 
 #bookCollection {

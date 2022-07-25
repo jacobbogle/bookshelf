@@ -1,12 +1,12 @@
 <template>
   <div id="wrapper">
-    <h1>Users</h1>
-    <input type="text" placeholder="search" v-model="searchInput" />
+    <h1 class="mt10">Users</h1>
+    <w-input id="searchUser" class="mt3 pl3 pr3 mb10" bg-color="secondary" type="text" label="Search" v-model="searchInput" />
     <div v-for="(user, index) in filteredUsers" :key="index">
       <h2 @click="getUsersBookshelf(user._id)">
         {{ user.username }}
       </h2>
-      <button @click="sendFriendRequest(user._id)">Send Friend Request</button>
+      <w-button @click="sendFriendRequest(user._id)">Send Friend Request</w-button>
     </div>
   </div>
 </template>
@@ -87,13 +87,17 @@ export default {
   align-items: center;
 }
 
+#searchUser {
+  width: 100%;
+  max-width: 500px;
+}
+
 h1 {
-  border-bottom: 1px solid white;
-  margin-bottom: 50px;
+  color: rgb(201, 201, 201);
 }
 
 h2 {
-  color: white;
+  color: rgb(201, 201, 201);
   text-align: center;
 }
 

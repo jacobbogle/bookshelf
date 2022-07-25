@@ -42,8 +42,6 @@
           inner-icon-left="mdi mdi-email"
           bg-color="secondary"
           :validators="[validators.required]"
-          outline
-          shadow
         />
 
         <w-input

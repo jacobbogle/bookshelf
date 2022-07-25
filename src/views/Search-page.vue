@@ -1,22 +1,28 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
-    <h1>Search Page</h1>
-    <div ref="test" id="searchSection">
-      <input
+    
+    <w-form ref="test">
+      <w-input
+      class="mt12 mb4 ml5 mr5"
         type="text"
-        placeholder="Search"
+        label="Search"
         @keyup.enter=" closeAllBooks(), searchByTitle(), searchReset()"
         v-model="state.searchTitle"
+        bg-color="secondary"
       />
-      <button v-on:click="searchByTitle()">Search</button>
-      <a id="scanner">
+    </w-form>
+    <w-flex justify-center align-center>
+      <w-button xl v-on:click="searchByTitle()">Search</w-button>
+      <a id="scanner" class="ml4" bg-color="secondary">
         <img
           @click="toScanner()"
           src="https://static.thenounproject.com/png/473299-200.png"
           alt="scanner"
         />
       </a>
-    </div>
+    </w-flex>
+      
+    
     <br />
     <div id="bookCollection">
       <div
@@ -243,7 +249,7 @@ h1 {
 
 #scanner {
   width: 35px;
-  background-color: white;
+  background-color: rgb(201, 201, 201);
   cursor: pointer;
 }
 

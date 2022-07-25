@@ -3,21 +3,19 @@
     <div ref="sideNav" class="bm-menu">
       <nav class="bm-item-list">
         <slot>
-          <router-link @click="closeMenu" to="/"><span>Home</span></router-link>
-          <router-link @click="closeMenu" to="/about"
-            ><span>About</span></router-link
-          >
+          <router-link @click="closeMenu" to="/"><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-home</w-icon>Home</w-flex></span></router-link>
+        
           <router-link @click="closeMenu" to="/books"
-            ><span>Books</span></router-link
+            ><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-bookshelf</w-icon>Books</w-flex></span></router-link
           >
           <router-link @click="closeMenu" to="/search"
-            ><span>Search</span></router-link
+            ><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-magnify</w-icon>Search</w-flex></span></router-link
           >
           <router-link @click="closeMenu" to="/users"
-            ><span>Users</span></router-link
+            ><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-account</w-icon>Users</w-flex></span></router-link
           >
           <router-link @click="closeMenu" to="/friends"
-            ><span>Friends</span></router-link
+            ><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-account-group</w-icon>Friends</w-flex></span></router-link
           >
         </slot>
       </nav>
