@@ -103,7 +103,9 @@ router.get("/public", async (req, res) => {
         listOfBooks.push(currentBook);
       }
       let username = await User.findOne({ _id: listOfShelves[shelf].user_id });
-      object[username.username] = shuffle(listOfBooks);
+      object["username"] = username.username;
+      object["books"] = shuffle(listOfBooks);
+      object["user_id"] = username._id;
       listOfUsersAndBooks.push(object);
     }
     res.status(200).json(listOfUsersAndBooks);

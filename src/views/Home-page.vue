@@ -2,49 +2,56 @@
   <div id="wrapper" @dblclick="closeAllBooks()">
     <h1 class="mt12 mb8">Public Shelves</h1>
     <div class="user-shelf">
-      <div v-for="(list, obj) in this.books" :key="obj">
-        <div v-for="(shelf, user) in list" :key="user">
-          <span class="ml10">{{ Object(user) }}</span>
-          <div id="bookCollection">
+      <div v-for="(object, i) in books" :key="i">
+        <router-link
+          :to="{
+            name: 'FriendsBookshelf',
+            params: { name: object.username, id: object.user_id },
+          }"
+        >
+          <span class="ml12" id="usernamePublic">
+            {{ object.username }}
+          </span>
+        </router-link>
+        <div id="bookCollection">
+          <div
+            class="book-recommend"
+            v-for="(book, index) in object.books"
+            :key="index"
+          >
             <div
-              class="book-recommend"
-              v-for="(book, index) in shelf"
-              :key="index"
+              class="book-box"
+              @click="bookClickHandler(`${index + object.username}`)"
             >
-              <div
-                class="book-box"
-                @click="bookClickHandler(`${index + user}`)"
-              >
-                <img class="book-image" :src="`${book.image}`" />
-              </div>
-              <div
-                style="visibility: hidden"
-                :ref="`${index + user}`"
-                class="book-content"
-              >
-                <div class="text-content">
-                  <h2 ref="title">{{ book.title }}</h2>
-                  <!-- Book Title -->
-                  <w-rating :model-value="book.rating" ref="rating"></w-rating>
-                  <!-- Book Series Name -->
-                  <h4 ref="authors">By: {{ book.authors }}</h4>
-                  <!-- Author's Name -->
-                  <div class="book-buttons">
-                    <w-button
-                      ref="link"
-                      class="Amazon"
-                      @click="openLink(book.link)"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Google <w-icon>mdi mdi-link</w-icon></w-button
-                    ><!-- Product Link -->
-                    <w-button @click="postBook(book)">
-                      Save Book<w-icon>mdi mdi-plus</w-icon>
-                    </w-button>
-                  </div>
-                  <p ref="description" v-html="book.description"></p>
+              <img class="book-image" :src="`${book.image}`" />
+            </div>
+            <div
+              style="visibility: hidden"
+              :ref="`${index + object.username}`"
+              class="book-content"
+            >
+              <div class="text-content">
+                <h2 ref="title">{{ book.title }}</h2>
+                <!-- Book Title -->
+                <w-rating :model-value="book.rating" ref="rating"></w-rating>
+                <!-- Book Series Name -->
+                <h4 ref="authors">By: {{ book.authors }}</h4>
+                <!-- Author's Name -->
+                <div class="book-buttons">
+                  <w-button
+                    ref="link"
+                    class="Amazon"
+                    @click="openLink(book.link)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Google <w-icon>mdi mdi-link</w-icon></w-button
+                  ><!-- Product Link -->
+                  <w-button @click="postBook(book)">
+                    Save Book<w-icon>mdi mdi-plus</w-icon>
+                  </w-button>
                 </div>
+                <p ref="description" v-html="book.description"></p>
               </div>
             </div>
           </div>
@@ -85,6 +92,8 @@ export default {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
       this.books = this.shuffle(data);
+      this.listOfUsernames = Object.keys(data);
+      console.log(data);
     },
     getUsername() {},
     reset() {
@@ -92,6 +101,7 @@ export default {
       this.IndexOfOpenedBook = "";
     },
     bookClickHandler(Nindex) {
+      console.log(Nindex);
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != Nindex && this.isBookOpen === true) {
         this.openBookContent(Nindex);
@@ -117,6 +127,7 @@ export default {
       }
     },
     openBookContent(Nindex) {
+      console.log(this.$refs);
       this.$emit("openBookContent");
       this.$refs[Nindex][0].style.width = "256px";
       this.$refs[Nindex][0].style.visibility = "visible";
@@ -142,7 +153,15 @@ export default {
 
 <style scoped>
 @import "../book-data/style.css";
+#usernamePublic:hover {
+  background-color: #e3f2fd;
+  color: #3f51b5;
+}
 
+#usernamePublic {
+  background-color: #3f51b5;
+  color: #e3f2fd;
+}
 #wrapper {
   grid-column: 1/-1;
   grid-row: 2/3;
@@ -199,15 +218,21 @@ h1 {
   background-color: transparent;
 }
 
-span {
+a {
   margin-top: 1rem;
   font-size: 3rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  cursor: pointer;
   color: rgb(201, 201, 201);
   font-family: "OCR A", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+a:hover {
+  background-color: "#3f51b5";
+  color: "#e3f2fd";
 }
 .book-buttons {
   display: flex;
