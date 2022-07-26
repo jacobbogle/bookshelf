@@ -1,17 +1,35 @@
 const express = require("express");
 const User = require("../schema/user-schema");
+const { BookShelf } = require("../schema/bookShelf-schema");
 let router = express.Router();
 const bcrypt = require("bcrypt");
 
 router.post("", async (req, res) => {
+  let user = {};
+  let bookshelf = {};
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    let user = await User.create({
+    user = await User.create({
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
       friends: [],
     });
+    try {
+      bookshelf = await BookShelf.create({
+        books: [],
+        user_id: user._id,
+        public: false,
+        posts: [],
+      });
+      console.log(bookshelf);
+    } catch (err) {
+      res.status(500).json({
+        message: "couldn't create default bookshelf",
+        error: err,
+      });
+      return;
+    }
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json({
