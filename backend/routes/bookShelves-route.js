@@ -30,14 +30,16 @@ router.post("", async (req, res) => {
       });
     } else if (testBookInDatabase) {
       book = testBookInDatabase;
-      let test = await bookModel.findOneAndUpdate(
-        { _id: testBookInDatabase._id.toString() },
-        {
-          $push: { user_id: req.user.id },
-        },
-        { new: true }
-      );
-      console.log(test);
+      if (!book.user_id.includes(req.user.id)) {
+        let test = await bookModel.findOneAndUpdate(
+          { _id: testBookInDatabase._id.toString() },
+          {
+            $push: { user_id: req.user.id },
+          },
+          { new: true }
+        );
+        console.log(test);
+      }
     }
   } catch (err) {
     console.log(err);
@@ -54,7 +56,10 @@ router.post("", async (req, res) => {
       console.log(bookshelftest);
     } else if (bookshelfObject) {
       if (bookshelfObject.books.includes(book._id)) {
-        console.log("you already have this book in your bookshelf");
+        res.status(400).json({
+          message: "already have book in shelf",
+        });
+        return;
       } else {
         let bookshelf = await BookShelf.findOneAndUpdate(
           { user_id: userID },
@@ -260,6 +265,23 @@ router.delete("/:book_id", async (req, res) => {
       error: err,
     });
     return;
+  }
+  try {
+    let bookUser;
+    bookUser = await bookModel.findOneAndUpdate(
+      { _id: req.params.book_id },
+      {
+        $pull: {
+          user_id: req.user.id,
+        },
+      }
+    );
+    console.log(bookUser);
+  } catch (err) {
+    res.status(500).json({
+      message: "error deleting user from book array",
+      error: err,
+    });
   }
   res.status(200).json(book + index);
 });
