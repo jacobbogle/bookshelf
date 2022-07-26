@@ -9,6 +9,7 @@ const SearchBar = () => {
   const state = ref({
     searchTitle: "",
     books: {},
+    responseStatus: null,
   });
 
   //makes the querystring and adds the needed api string for the GET of google books api
@@ -18,8 +19,8 @@ const SearchBar = () => {
     let title = encodeURIComponent(state.value.searchTitle);
 
     let key = googleApiKey;
-    let num = Num
-    return "?q=" + title + "&maxResults="+ num + "&key=" + key;
+    let num = Num;
+    return "?q=" + title + "&maxResults=" + num + "&key=" + key;
   }
 
   //returns a json file of related books from searchTitle
@@ -32,7 +33,7 @@ const SearchBar = () => {
           return response;
         })
         .then((data) => {
-          state.value.books = shuffle(data.items)
+          state.value.books = shuffle(data.items);
         });
     } catch (err) {
       console.log(err);
@@ -45,8 +46,8 @@ const SearchBar = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-    return array
-  }
+    return array;
+  };
 
   const postBook = async function (book) {
     let newBook = {
@@ -68,6 +69,12 @@ const SearchBar = () => {
       credentials: "include",
     });
     let data = await response.json();
+    if (response.status == 400) {
+      state.value.responseStatus = response.status;
+      console.log(state.value.responseStatus);
+    } else if (response.status == 200) {
+      state.value.responseStatus = null;
+    }
     console.log(data);
   };
 
@@ -75,7 +82,7 @@ const SearchBar = () => {
     state,
     searchByTitle,
     postBook,
-    shuffle
+    shuffle,
   };
 };
 

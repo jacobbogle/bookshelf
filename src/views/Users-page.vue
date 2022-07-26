@@ -1,12 +1,32 @@
 <template>
   <div id="wrapper">
+    <div class="message-box">
+      <w-transition-fade>
+        <w-alert
+          v-if="responseStatus === 400"
+          error
+          no-border
+          class="my0 text-light"
+          >Can't Double Add User</w-alert
+        >
+      </w-transition-fade>
+    </div>
     <h1 class="mt12">Users</h1>
-    <w-input id="searchUser" class="mt3 pl3 pr3 mb10" bg-color="secondary" type="text" label="Search" v-model="searchInput" />
+    <w-input
+      id="searchUser"
+      class="mt3 pl3 pr3 mb10"
+      bg-color="secondary"
+      type="text"
+      label="Search"
+      v-model="searchInput"
+    />
     <div v-for="(user, index) in filteredUsers" :key="index">
       <h2 @click="getUsersBookshelf(user._id)">
         {{ user.username }}
       </h2>
-      <w-button @click="sendFriendRequest(user._id)">Send Friend Request</w-button>
+      <w-button @click="sendFriendRequest(user._id)"
+        >Send Friend Request</w-button
+      >
     </div>
   </div>
 </template>
@@ -18,6 +38,7 @@ export default {
     return {
       users: [],
       searchInput: "",
+      responseStatus: null,
     };
   },
   methods: {
@@ -50,7 +71,12 @@ export default {
           credentials: "include",
         }
       );
-
+      console.log(response.status);
+      if (response.status == 400) {
+        this.responseStatus = 400;
+      } else if (response.status == 201) {
+        this.responseStatus = null;
+      }
       let data = await response.json();
       console.log("sendFriendRequest: ", data);
     },

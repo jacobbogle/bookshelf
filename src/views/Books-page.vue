@@ -1,12 +1,22 @@
 <template>
   <div id="wrapper">
     <w-flex row justify-center align-center class="mt12" gap="3">
-      <w-button lg v-if="state.bookshelf.public === true"  @click="patchBookShelfPublic()">Public Bookshelf</w-button>
-      <w-button lg v-else  @click="patchBookShelfPublic()">Private Bookshelf</w-button>
-      <w-button  lg v-show="viewComments === false" @click="viewComments = true">See Comments</w-button>
-      <w-button lg  v-show="viewComments === true" @click="viewComments = false">See Books</w-button>
+      <w-button
+        lg
+        v-if="state.bookshelf.public === true"
+        @click="patchBookShelfPublic()"
+        >Public Bookshelf</w-button
+      >
+      <w-button lg v-else @click="patchBookShelfPublic()"
+        >Private Bookshelf</w-button
+      >
+      <w-button lg v-show="viewComments === false" @click="viewComments = true"
+        >See Comments</w-button
+      >
+      <w-button lg v-show="viewComments === true" @click="viewComments = false"
+        >See Books</w-button
+      >
     </w-flex>
-    
 
     <div id="bookCollection" v-show="viewComments === false">
       <div
@@ -33,7 +43,7 @@
           ref="bookContent"
           class="book-content"
         >
-          <div :value="`${index}`" class="text-content" >
+          <div :value="`${index}`" class="text-content">
             <h2>{{ book.title }}</h2>
             <!-- Book Title -->
             <w-rating :model-value="book.rating" ref="rating"></w-rating>
@@ -111,7 +121,7 @@ export default {
   },
   methods: {
     openLink(link) {
-      window.open(link)
+      window.open(link);
     },
     async postPosts() {
       let newPost = {
@@ -236,7 +246,7 @@ i {
 }
 h1 {
   margin-top: 50px;
-  color: #c9c9c9
+  color: #c9c9c9;
 }
 
 #comments {
@@ -276,5 +286,4 @@ h1 {
 #bookCollection > * {
   margin: 0.5rem;
 }
-
 </style>

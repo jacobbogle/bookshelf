@@ -1,5 +1,16 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
+    <div class="message-box">
+      <w-transition-fade>
+        <w-alert
+          v-if="state.responseStatus === 400"
+          error
+          no-border
+          class="my0 text-light"
+          >This Book Is Already In Your Bookshelf</w-alert
+        >
+      </w-transition-fade>
+    </div>
     <w-flex class="mt12" justify-center align-center>
       <w-form ref="test" id="searchBar">
         <w-slider
@@ -9,7 +20,7 @@
           thumb-label
           :max="40"
           :min="10"
-          >
+        >
         </w-slider>
         <w-input
           class="mt2 mb4 ml5 mr5"
@@ -23,7 +34,9 @@
       </w-form>
     </w-flex>
     <w-flex justify-center align-center>
-      <w-button xl v-on:click="closeAllBooks(), searchFunc(), searchReset()">Search</w-button>
+      <w-button xl v-on:click="closeAllBooks(), searchFunc(), searchReset()"
+        >Search</w-button
+      >
       <a id="scanner" class="ml4" bg-color="secondary">
         <img
           @click="toScanner()"
@@ -47,7 +60,10 @@
           <div class="text-content">
             <h2 ref="title">{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
-            <w-rating :model-value="numGive(book.volumeInfo.averageRating)" ref="rating">
+            <w-rating
+              :model-value="numGive(book.volumeInfo.averageRating)"
+              ref="rating"
+            >
             </w-rating>
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
@@ -100,11 +116,11 @@ export default {
   },
   methods: {
     searchFunc() {
-      let Num = this.sliderValue
-      this.searchByTitle(Math.floor(Num))
+      let Num = this.sliderValue;
+      this.searchByTitle(Math.floor(Num));
     },
     openLink(link) {
-      window.open(link)
+      window.open(link);
     },
     toScanner() {
       this.$router.push({ path: "/scanner" });
@@ -268,7 +284,6 @@ export default {
   max-width: 500px;
 }
 
-
 #scanner {
   width: 35px;
   background-color: rgb(201, 201, 201);
@@ -283,5 +298,4 @@ export default {
   width: inherit;
   height: inherit;
 }
-
 </style>
