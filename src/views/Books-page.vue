@@ -1,8 +1,14 @@
 <template>
   <div id="wrapper">
-    <h1>Public : {{ state.bookshelf.public }}</h1>
-    <w-button class="mt4" @click="patchBookShelfPublic()">Make Public</w-button>
-    <div id="bookCollection">
+    <w-flex row justify-center align-center class="mt12" gap="3">
+      <w-button lg v-if="state.bookshelf.public === true"  @click="patchBookShelfPublic()">Is Private</w-button>
+      <w-button lg v-else  @click="patchBookShelfPublic()">Is Public</w-button>
+      <w-button  lg v-show="viewComments === false" @click="viewComments = true">See Comments</w-button>
+      <w-button lg  v-show="viewComments === true" @click="viewComments = false">See Books</w-button>
+    </w-flex>
+    
+
+    <div id="bookCollection" v-show="viewComments === false">
       <div
         class="book-recommend"
         v-for="(book, index) in state.books"
@@ -55,34 +61,35 @@
         </div>
       </div>
     </div>
-
-    <h1>Comments</h1>
-    <div>
-      <div id="comments" v-for="(post, i) in state.bookshelf.posts" :key="i">
-        <w-flex>
-          <i class="mr4"> {{ state.bookshelf.posts[i].username }}:&nbsp; </i>
-          <w-flex wrap>
-            <p>{{ state.bookshelf.posts[i].comment }}</p>
+    <div class="" v-show="viewComments === true">
+      <h1>Comments</h1>
+      <div>
+        <div id="comments" v-for="(post, i) in state.bookshelf.posts" :key="i">
+          <w-flex>
+            <i class="mr4"> {{ state.bookshelf.posts[i].username }}:&nbsp; </i>
+            <w-flex wrap>
+              <p>{{ state.bookshelf.posts[i].comment }}</p>
+            </w-flex>
           </w-flex>
-        </w-flex>
-        <w-flex justify-end>
-          <w-button
-            @click="
-              deletePost(state.bookshelf.posts[i]._id, state.bookshelf._id)
-            "
-          >
-            Delete <w-icon> mdi mdi-delete</w-icon>
-          </w-button>
-        </w-flex>
+          <w-flex justify-end>
+            <w-button
+              @click="
+                deletePost(state.bookshelf.posts[i]._id, state.bookshelf._id)
+              "
+            >
+              Delete <w-icon> mdi mdi-delete</w-icon>
+            </w-button>
+          </w-flex>
+        </div>
+        <h1>Add A Comment</h1>
+        <w-input
+          bg-color="secondary"
+          type="text"
+          placeholder="Leave A Comment"
+          v-model="postInput"
+        />
+        <w-button @click="postPosts()">Add Comment</w-button>
       </div>
-      <h1>Add A Comment</h1>
-      <w-input
-        bg-color="secondary"
-        type="text"
-        placeholder="Leave A Comment"
-        v-model="postInput"
-      />
-      <w-button @click="postPosts()">Add Comment</w-button>
     </div>
   </div>
 </template>
@@ -96,6 +103,7 @@ export default {
   },
   data() {
     return {
+      viewComments: false,
       isBookOpen: false,
       IndexOfOpenedBook: null,
       postInput: "",
@@ -262,7 +270,7 @@ h1 {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 
 #bookCollection > * {

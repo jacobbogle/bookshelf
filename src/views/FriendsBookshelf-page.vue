@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="" v-show="viewComments === true">
-      <w-flex justify-center align-center class="mt12"><h1>Comments</h1><w-button @click="hover = true" class="ml3">Edit</w-button></w-flex>
+      <w-flex justify-center align-center class="mt12 mb8"><h1>Comments</h1><w-button @click="hover = !hover" class="ml3">Edit</w-button></w-flex>
       <w-card id="comments" class="">
         <div v-for="(post, i) in bookshelf.posts" :key="i">
           <w-flex 
@@ -354,8 +354,8 @@ i {
 
 @media only screen and (max-width: 684px) {
   #comments {
-    max-height: 500px;
-    max-width: 370px;
+    max-height: 400px;
+    max-width: 325px;
   }
 }
 

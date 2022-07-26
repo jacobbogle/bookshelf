@@ -1,44 +1,54 @@
 <template>
   <div id="wrapper">
-    <h1 class="mb2 mt12" v-if="friendsExist">Friends Bookshelf</h1>
-    <div v-for="(friend, index) in friends" :key="index">
-      <router-link
-        id="name"
-        v-if="friend.value == 3"
-        :to="{
-          name: 'FriendsBookshelf',
-          params: { name: friend.name, id: friend.id },
-        }"
-        ><w-button class="mt2" xl>{{ friend.name }}</w-button></router-link
-      >
+    <w-tabs  class="mt12" v-model="activeTabNum" color="secondary" :items="tabs" center></w-tabs>
+    <div v-if="activeTabNum === 0">
+      <div v-show="friends.length === 0 || friends[0].value != 3" ><h1 class="mr3 ml3">Well Dang, Reach out young scholar. Your friends await!</h1></div>
+      <div v-for="(friend, index) in friends" :key="index">
+        <w-flex justify-center align-center>
+          <router-link
+            id="name"
+            v-if="friend.value == 3"
+            :to="{
+              name: 'FriendsBookshelf',
+              params: { name: friend.name, id: friend.id },
+            }"
+          >
+            <w-button class="mt2" xl>{{ friend.name }}</w-button>
+          </router-link>
+        </w-flex>
+      </div>
     </div>
-
-    <h1 class="mt12" v-if="receivedsExist">Received Friend Requests</h1>
-    <div  v-for="(friend, index) in friends" :key="index">
-      <h2 class="mt8 mb2 secondary" color="" v-if="friend.value == 1">
-        <w-card bg-color="secondary" color="primary" >{{ friend.name }}</w-card>
-      </h2>
-      <w-button
-        class="mr4"
-        v-if="friend.value == 1"
-        @click="acceptFriendRequest(friend.id)"
-      >
-        Add &nbsp;
-        <w-icon>mdi mdi-account-plus</w-icon>
-      </w-button>
-      <w-button v-if="friend.value == 1" @click="denyFriendRequest(friend.id)">
-        Deny &nbsp;
-        <w-icon>mdi mdi-account-cancel</w-icon>
-      </w-button>
+    <div v-if="activeTabNum === 1">
+      <div v-show="friends.length === 0 || friends[0].value != 1" ><h1 class="mr3 ml3">Don't worry we built it so they will come.</h1></div>
+      <div  v-for="(friend, index) in friends" :key="index">
+        <h2 class="mt8 mb2 secondary" color="" v-if="friend.value == 1">
+          <w-card bg-color="secondary" color="primary" >{{ friend.name }}</w-card>
+          
+        </h2>
+        <w-button
+          class="mr4"
+          v-if="friend.value == 1"
+          @click="acceptFriendRequest(friend.id)"
+        >
+          Add &nbsp;
+          <w-icon>mdi mdi-account-plus</w-icon>
+        </w-button>
+        <w-button v-if="friend.value == 1" @click="denyFriendRequest(friend.id)">
+          Deny &nbsp;
+          <w-icon>mdi mdi-account-cancel</w-icon>
+        </w-button>
+      </div>
     </div>
-
-    <h1 class="mt12" v-if="sentsExist">Sent Friend Requests</h1>
-    <div v-for="(friend, index) in friends" :key="index">
-      <h2 class="mb1">
-        <w-card bg-color="secondary" color="primary" v-if="friend.value == 2">{{ friend.name }}</w-card>
-      </h2>
+    <div v-if="activeTabNum === 2">
+      <div v-show="friends.length === 0" ><h1 class="mr3 ml3">Waiting on you...</h1></div>
+      <div v-for="(friend, index) in friends" :key="index">
+        <h2 class="mb1">
+          <w-card bg-color="secondary" color="primary" v-if="friend.value == 2">{{ friend.name }}</w-card>
+        </h2>
+      </div>
     </div>
   </div>
+
 </template>
 <script>
 export default {
@@ -46,7 +56,13 @@ export default {
 
   data() {
     return {
+      activeTabNum: 0,
       friends: [],
+      tabs: [
+        { title: 'Friends Bookshelf'},
+        { title: 'Received Friend Requests'},
+        { title: 'Sent Friend Requests'}
+      ]
     };
   },
   methods: {

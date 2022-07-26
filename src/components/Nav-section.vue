@@ -1,7 +1,6 @@
 <template>
   <div>
     <div ref="sideNav" class="bm-menu">
-      <w-flex class="ml10 mb4" justify-start align-center><h1>{{state.currentUser}}</h1></w-flex>
       <nav class="bm-item-list">
         <slot>
           <router-link @click="closeMenu" to="/"><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-home</w-icon>Home</w-flex></span></router-link>
@@ -57,13 +56,8 @@
 </template>
 
 <script>
-import User from "../models/user";
 export default {
   name: "menu-bar",
-  setup() {
-    const { state, getSession } = User();
-    return { state, getSession };
-  },
   data() {
     return {
       isSideBarOpen: false,
@@ -81,7 +75,7 @@ export default {
     width: {
       type: [String],
       required: false,
-      default: "300",
+      default: "230",
     },
     disableEsc: {
       type: Boolean,
@@ -175,7 +169,6 @@ export default {
     if (!this.disableEsc) {
       document.addEventListener("keyup", this.closeMenuOnEsc);
     }
-    this.getSession()
   },
   created: function () {
     document.addEventListener("click", this.documentClick);
@@ -236,9 +229,6 @@ export default {
 <style lang="css" scoped>
 html {
   height: 100%;
-}
-h1 {
-color: rgb(201, 201, 201);;
 }
 .bm-burger-button {
   grid-column: 1/2;

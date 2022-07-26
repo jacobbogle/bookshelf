@@ -12,7 +12,7 @@
       </w-button>
     </w-flex>
     <w-menu hide-on-menu-click v-show="state.currentUser.length > 0" activator=".account-button" arrow>
-      <w-button v-on="on" @click="logOut()">Sign Out</w-button>
+      <w-button @click="logOut()">Sign Out</w-button>
     </w-menu>
 
     
@@ -57,6 +57,7 @@ export default {
 <style scoped>
 a {
   cursor: pointer;
+  font-size: large;
 }
 
 a,
