@@ -48,17 +48,26 @@ router.patch("/send/:id", async (req, res) => {
     requestingUser = await User.findOne({
       _id: req.user.id,
     });
+    for (let i in requestingUser.friends) {
+      if (requestingUser.friends[i].id == possibleFriendID) {
+        res.status(400).json({
+          message: "can't add friends twice",
+        });
+        return;
+      }
+    }
   } catch (err) {
     res.status(500).json({
       message: "could not find you O_O",
       error: err,
     });
+    console.log(err);
     return;
   }
 
   // updating possible friends friend status to 1 (a request was made to you)
   try {
-    let object = await User.findByIdAndUpdate(
+    let userObject = await User.findByIdAndUpdate(
       possibleFriendID,
       {
         $push: {
@@ -71,7 +80,7 @@ router.patch("/send/:id", async (req, res) => {
       },
       { new: true }
     );
-    console.log(object);
+    console.log(userObject);
   } catch (err) {
     console.log(err);
     res.status(500).json({
