@@ -31,14 +31,13 @@ router.post("", async (req, res) => {
     } else if (testBookInDatabase) {
       book = testBookInDatabase;
       if (!book.user_id.includes(req.user.id)) {
-        let test = await bookModel.findOneAndUpdate(
+        await bookModel.findOneAndUpdate(
           { _id: testBookInDatabase._id.toString() },
           {
             $push: { user_id: req.user.id },
           },
           { new: true }
         );
-        console.log(test);
       }
     }
   } catch (err) {
@@ -48,12 +47,11 @@ router.post("", async (req, res) => {
   try {
     let bookshelfObject = await BookShelf.findOne({ user_id: req.user.id });
     if (!bookshelfObject) {
-      let bookshelftest = await BookShelf.create({
+      await BookShelf.create({
         user_id: userID,
         books: [book._id],
         posts: [],
       });
-      console.log(bookshelftest);
     } else if (bookshelfObject) {
       if (bookshelfObject.books.includes(book._id)) {
         res.status(400).json({
@@ -249,8 +247,7 @@ router.delete("/:book_id", async (req, res) => {
     return;
   }
   try {
-    let newbookshelf;
-    newbookshelf = await BookShelf.findOneAndUpdate(
+    await BookShelf.findOneAndUpdate(
       { user_id: req.user.id },
       {
         $pull: {
@@ -258,7 +255,6 @@ router.delete("/:book_id", async (req, res) => {
         },
       }
     );
-    console.log(newbookshelf);
   } catch (err) {
     res.status(500).json({
       message: "error deleting book",

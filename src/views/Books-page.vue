@@ -156,7 +156,7 @@ export default {
         comment: this.postInput,
         bookshelf_id: this.state.bookshelf._id,
       };
-      let response = await fetch(`http://localhost:3000/posts`, {
+      await fetch(`http://localhost:3000/posts`, {
         method: "POST",
         body: JSON.stringify(newPost),
         headers: {
@@ -164,8 +164,6 @@ export default {
         },
         credentials: "include",
       });
-      let data = await response.json();
-      console.log(data);
       this.getBookshelf();
       this.postInput = "";
     },
@@ -230,7 +228,7 @@ export default {
       } else {
         requestBody["public"] = true;
       }
-      let response = await fetch("http://localhost:3000/bookshelves", {
+      await fetch("http://localhost:3000/bookshelves", {
         credentials: "include",
         method: "PATCH",
         body: JSON.stringify(requestBody),
@@ -239,20 +237,16 @@ export default {
         },
       });
 
-      let data = await response.json();
-      console.log(data);
       this.getBookshelf();
     },
     async deletePost(postID, bookshelfID) {
-      let response = await fetch(
+      await fetch(
         `http://localhost:3000/posts/${postID}/bookshelf/${bookshelfID}`,
         {
           method: "DELETE",
           credentials: "include",
         }
       );
-      let data = await response.json();
-      console.log(data);
       this.getBookshelf();
     },
     async getSession() {
@@ -260,10 +254,8 @@ export default {
         credentials: "include",
       });
       if (response.status == 200) {
-        console.log("LOGGED IN");
         let data = await response.json();
         this.username = data.username;
-        console.log(this.username);
       }
     },
   },

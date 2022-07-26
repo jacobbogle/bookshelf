@@ -6,7 +6,6 @@ const bcrypt = require("bcrypt");
 
 router.post("", async (req, res) => {
   let user = {};
-  let bookshelf = {};
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     user = await User.create({
@@ -16,13 +15,12 @@ router.post("", async (req, res) => {
       friends: [],
     });
     try {
-      bookshelf = await BookShelf.create({
+      await BookShelf.create({
         books: [],
         user_id: user._id,
         public: false,
         posts: [],
       });
-      console.log(bookshelf);
     } catch (err) {
       res.status(500).json({
         message: "couldn't create default bookshelf",

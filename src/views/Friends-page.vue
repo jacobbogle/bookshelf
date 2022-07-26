@@ -1,8 +1,16 @@
 <template>
   <div id="wrapper">
-    <w-tabs  class="mt12" v-model="activeTabNum" color="secondary" :items="tabs" center></w-tabs>
+    <w-tabs
+      class="mt12"
+      v-model="activeTabNum"
+      color="secondary"
+      :items="tabs"
+      center
+    ></w-tabs>
     <div v-if="activeTabNum === 0">
-      <div v-show="friends.length === 0 || friends[0].value != 3" ><h1 class="mr3 ml3">Well Dang, Reach out young scholar. Your friends await!</h1></div>
+      <h3 style="color: white" class="mr3 ml3 mb3">
+        Reach out young scholar. Your friends await!
+      </h3>
       <div v-for="(friend, index) in friends" :key="index">
         <w-flex justify-center align-center>
           <router-link
@@ -19,11 +27,14 @@
       </div>
     </div>
     <div v-if="activeTabNum === 1">
-      <div v-show="friends.length === 0 || friends[0].value == 1" ><h1 class="mr3 ml3">Don't worry we built it so they will come.</h1></div>
-      <div  v-for="(friend, index) in friends" :key="index">
+      <h3 style="color: white" class="mr3 ml3 mb3">
+        Don't worry we built it so they will come.
+      </h3>
+      <div v-for="(friend, index) in friends" :key="index">
         <h2 class="mt8 mb2 secondary" color="" v-if="friend.value == 1">
-          <w-card bg-color="secondary" color="primary" >{{ friend.name }}</w-card>
-          
+          <w-card bg-color="secondary" color="primary">{{
+            friend.name
+          }}</w-card>
         </h2>
         <w-button
           class="mr4"
@@ -33,22 +44,29 @@
           Add &nbsp;
           <w-icon>mdi mdi-account-plus</w-icon>
         </w-button>
-        <w-button v-if="friend.value == 1" @click="denyFriendRequest(friend.id)">
+        <w-button
+          v-if="friend.value == 1"
+          @click="denyFriendRequest(friend.id)"
+        >
           Deny &nbsp;
           <w-icon>mdi mdi-account-cancel</w-icon>
         </w-button>
       </div>
     </div>
     <div v-if="activeTabNum === 2">
-      <div v-show="friends.length === 0 || friends[0].value == 2" ><h1 class="mr3 ml3">Waiting on you...</h1></div>
+      <h3 style="color: white" class="mr3 ml3 mb3">Waiting on them...</h3>
       <div v-for="(friend, index) in friends" :key="index">
         <h2 class="mb1">
-          <w-card bg-color="secondary" color="primary" v-if="friend.value == 2">{{ friend.name }}</w-card>
+          <w-card
+            bg-color="secondary"
+            color="primary"
+            v-if="friend.value == 2"
+            >{{ friend.name }}</w-card
+          >
         </h2>
       </div>
     </div>
   </div>
-
 </template>
 <script>
 export default {
@@ -59,10 +77,10 @@ export default {
       activeTabNum: 0,
       friends: [],
       tabs: [
-        { title: 'Friends Bookshelf'},
-        { title: 'Received Friend Requests'},
-        { title: 'Sent Friend Requests'}
-      ]
+        { title: "Friends Bookshelf" },
+        { title: "Received Friend Requests" },
+        { title: "Sent Friend Requests" },
+      ],
     };
   },
   methods: {
@@ -72,26 +90,21 @@ export default {
       });
       let data = await response.json();
       this.friends = data;
-      console.log(data);
     },
 
     async acceptFriendRequest(id) {
-      let response = await fetch(`http://localhost:3000/friends/accept/${id}`, {
+      await fetch(`http://localhost:3000/friends/accept/${id}`, {
         method: "PATCH",
         credentials: "include",
       });
-      let data = await response.json();
-      console.log("acceptFriendRequest Response: ", data);
       this.getFriends();
     },
 
     async denyFriendRequest(id) {
-      let response = await fetch(`http://localhost:3000/friends/deny/${id}`, {
+      await fetch(`http://localhost:3000/friends/deny/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
-      let data = await response.json();
-      console.log("denyFriendRequest Resposne: ", data);
       this.getFriends();
     },
   },
@@ -149,7 +162,6 @@ export default {
 h1 {
   color: rgb(201, 201, 201);
 }
-
 
 h2 {
   text-align: center;

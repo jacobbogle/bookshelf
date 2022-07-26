@@ -1,10 +1,20 @@
 <template>
   <div id="wrapper">
-    <h1 class="mt12">
-      {{ username }}'s Bookshelf
-    </h1>
-    <w-button class="mt3" xl v-show="viewComments === false" @click="viewComments = true">See Comments</w-button>
-    <w-button xl class="mt3" v-show="viewComments === true" @click="viewComments = false">See Books</w-button>
+    <h1 class="mt12">{{ username }}'s Bookshelf</h1>
+    <w-button
+      class="mt3"
+      xl
+      v-show="viewComments === false"
+      @click="viewComments = true"
+      >See Comments</w-button
+    >
+    <w-button
+      xl
+      class="mt3"
+      v-show="viewComments === true"
+      @click="viewComments = false"
+      >See Books</w-button
+    >
     <div id="bookCollection" v-show="viewComments === false">
       <div class="book-recommend" v-for="(book, index) in books" :key="index">
         <div
@@ -41,7 +51,6 @@
                 @click="openLink(book.link)"
                 target="_blank"
                 rel="noopener noreferrer"
-
               >
                 Google <w-icon>mdi mdi-link</w-icon></w-button
               ><!-- Product Link -->
@@ -55,18 +64,25 @@
       </div>
     </div>
     <div class="" v-show="viewComments === true">
-      <w-flex justify-center align-center class="mt12 mb8"><h1>Comments</h1><w-button @click="hover = !hover" class="ml3">Edit</w-button></w-flex>
+      <w-flex justify-center align-center class="mt12 mb8"
+        ><h1>Comments</h1>
+        <w-button @click="hover = !hover" class="ml3">Edit</w-button></w-flex
+      >
       <w-card id="comments" class="">
         <div v-for="(post, i) in bookshelf.posts" :key="i">
-          <w-flex 
+          <w-flex
             class="mb6"
-            :class="{'reverse-end-post': compareName(bookshelf.posts[i].username)}" 
-            align-center 
-            row 
+            :class="{
+              'reverse-end-post': compareName(bookshelf.posts[i].username),
+            }"
+            align-center
+            row
             wrap
           >
-            <w-tag lg color="secondary" bg-color="primary" class="mr4 ml4">{{ bookshelf.posts[i].username }}</w-tag>
-            <p class="mr1 ml1" color="secondary">  
+            <w-tag lg color="secondary" bg-color="primary" class="mr4 ml4">{{
+              bookshelf.posts[i].username
+            }}</w-tag>
+            <p class="mr1 ml1" color="secondary">
               {{ bookshelf.posts[i].comment }}
             </p>
             <w-button
@@ -128,20 +144,20 @@ export default {
   methods: {
     compareName(name) {
       if (name === this.username) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     openLink(link) {
-      window.open(link)
+      window.open(link);
     },
     async postPosts() {
       let newPost = {
         comment: this.postInput,
         bookshelf_id: this.bookshelf._id,
       };
-      let response = await fetch(`http://localhost:3000/posts`, {
+      await fetch(`http://localhost:3000/posts`, {
         method: "POST",
         body: JSON.stringify(newPost),
         headers: {
@@ -149,8 +165,6 @@ export default {
         },
         credentials: "include",
       });
-      let data = await response.json();
-      console.log(data);
       this.getFriendsBookshelf();
       this.postInput = "";
     },
@@ -164,7 +178,6 @@ export default {
       );
       let data = await response.json();
       this.bookshelf = data;
-      console.log("friend's bookshelf data", data);
     },
     async getFriendsBooks() {
       let response = await fetch(
@@ -175,7 +188,6 @@ export default {
       );
       let data = await response.json();
       this.books = data.listOfBooks;
-      console.log("friends books: ", data);
     },
 
     bookClickHandler(index) {
@@ -233,15 +245,13 @@ export default {
     },
 
     async deletePost(postID, bookshelfID) {
-      let response = await fetch(
+      await fetch(
         `http://localhost:3000/posts/${postID}/bookshelf/${bookshelfID}`,
         {
           method: "DELETE",
           credentials: "include",
         }
       );
-      let data = await response.json();
-      console.log(data);
       this.getFriendsBookshelf();
     },
 
@@ -250,10 +260,8 @@ export default {
         credentials: "include",
       });
       if (response.status == 200) {
-        console.log("LOGGED IN");
         let data = await response.json();
         this.currentUser = data.username;
-        console.log("username: ", this.currentUser);
       }
     },
 
@@ -273,7 +281,6 @@ export default {
   justify-content: end;
   flex-direction: row-reverse;
 }
-
 
 h1 {
   color: rgb(201, 201, 201);
@@ -320,7 +327,7 @@ i {
   max-height: 700px;
   max-width: 700px;
   overflow-y: scroll;
-  overflow:scroll;
+  overflow: scroll;
 }
 
 #comments::-webkit-scrollbar {
@@ -358,5 +365,4 @@ i {
     max-width: 325px;
   }
 }
-
 </style>

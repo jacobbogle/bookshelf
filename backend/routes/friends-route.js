@@ -67,7 +67,7 @@ router.patch("/send/:id", async (req, res) => {
 
   // updating possible friends friend status to 1 (a request was made to you)
   try {
-    let userObject = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       possibleFriendID,
       {
         $push: {
@@ -80,7 +80,6 @@ router.patch("/send/:id", async (req, res) => {
       },
       { new: true }
     );
-    console.log(userObject);
   } catch (err) {
     console.log(err);
     res.status(500).json({

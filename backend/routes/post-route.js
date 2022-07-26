@@ -6,7 +6,6 @@ let router = express.Router();
 
 router.post("", async (req, res) => {
   let sentComment = req.body.comment;
-  console.log("this is the comment, ", sentComment);
   if (!req.user) {
     res.status(401).json({ message: "unauthenticated" });
     return;
@@ -85,8 +84,6 @@ router.delete("/:post_id/bookshelf/:bookshelf_id", async (req, res) => {
   }
 
   let authorizedToDelete = false;
-
-  console.log("bookshelf you are trying to delete: ", bookshelf);
 
   if (req.user.id == bookshelf.user_id) authorizedToDelete = true;
 

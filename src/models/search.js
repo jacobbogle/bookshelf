@@ -59,7 +59,6 @@ const SearchBar = () => {
       description: book.description,
       isbn: book.isbn,
     };
-    console.log("newBook: ", newBook);
     let response = await fetch("http://localhost:3000/bookshelves", {
       method: "POST",
       body: JSON.stringify(newBook),
@@ -68,14 +67,11 @@ const SearchBar = () => {
       },
       credentials: "include",
     });
-    let data = await response.json();
     if (response.status == 400) {
       state.value.responseStatus = response.status;
-      console.log(state.value.responseStatus);
     } else if (response.status == 200) {
       state.value.responseStatus = null;
     }
-    console.log(data);
   };
 
   return {

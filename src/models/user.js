@@ -14,7 +14,6 @@ const User = () => {
       credentials: "include",
     });
     if (response.status == 200) {
-      console.log("LOGGED IN");
       let data = await response.json();
       state.value.currentUser = data.username;
       stateSec.value.currentUser = data.username;
@@ -22,19 +21,17 @@ const User = () => {
     } else if (response.status == 401) {
       state.value.currentUser = "";
       stateSec.value.currentUser = "";
-      console.log("NOT LOGGED IN");
       this.$router.push({ path: "/login", replace: true });
     } else {
       state.value.currentUser = "";
       stateSec.value.currentUser = "";
-      console.log("SOME ERROR IN GET /session", response.status, response);
     }
   };
 
   return {
     getSession,
     state,
-    stateSec
+    stateSec,
   };
 };
 

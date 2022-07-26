@@ -24,7 +24,10 @@
           <div class="text-content">
             <h2 ref="title">{{ book.volumeInfo.title }}</h2>
             <!-- Book Title -->
-            <w-rating :model-value="numGive(book.volumeInfo.averageRating)" ref="rating"></w-rating>
+            <w-rating
+              :model-value="numGive(book.volumeInfo.averageRating)"
+              ref="rating"
+            ></w-rating>
             <!-- Book Rating -->
             <h4 ref="authors">By: {{ textGive(book.volumeInfo.authors) }}</h4>
             <!-- Author's Name -->
@@ -84,10 +87,9 @@ export default {
   },
   methods: {
     openLink(link) {
-      window.open(link)
+      window.open(link);
     },
     onDecode(isbn) {
-      console.log(isbn);
       this.state.searchISBN = isbn;
       this.bookSearched = true;
       this.searchByISBN();
@@ -99,9 +101,7 @@ export default {
         }
       }, 5000);
     },
-    onLoaded() {
-      console.log("load");
-    },
+    onLoaded() {},
     serveBook(index) {
       this.bookObject.image = String(this.$refs.image[index].src);
       this.bookObject.title = this.$refs.title[index].innerHTML;

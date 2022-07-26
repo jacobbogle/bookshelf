@@ -48,19 +48,12 @@ export default {
       });
       let data = await response.json();
       this.users = data;
-      console.log(data);
     },
 
     async getUsersBookshelf(userid) {
-      let response = await fetch(
-        `http://localhost:3000/bookshelves/${userid}`,
-        {
-          credentials: "include",
-        }
-      );
-
-      let data = await response.json();
-      console.log("this users bookshelf is: ", data);
+      await fetch(`http://localhost:3000/bookshelves/${userid}`, {
+        credentials: "include",
+      });
     },
 
     async sendFriendRequest(userid) {
@@ -71,14 +64,11 @@ export default {
           credentials: "include",
         }
       );
-      console.log(response.status);
       if (response.status == 400) {
         this.responseStatus = 400;
       } else if (response.status == 201) {
         this.responseStatus = null;
       }
-      let data = await response.json();
-      console.log("sendFriendRequest: ", data);
     },
   },
   computed: {

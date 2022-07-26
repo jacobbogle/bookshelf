@@ -4,20 +4,18 @@
       ><a>Sign In</a></router-link
     >
     <w-flex v-else align-center class="pr5">
-      
-      <w-button
-      icon="mdi mdi-account-circle"
-      xl
-      class="account-button">
+      <w-button icon="mdi mdi-account-circle" xl class="account-button">
       </w-button>
     </w-flex>
-    <w-menu hide-on-menu-click v-show="state.currentUser.length > 0" activator=".account-button" arrow>
-      <p  class="pr2">{{state.currentUser}}</p>
+    <w-menu
+      hide-on-menu-click
+      v-show="state.currentUser.length > 0"
+      activator=".account-button"
+      arrow
+    >
+      <p class="pr2">{{ state.currentUser }}</p>
       <w-button @click="logOut()">Sign Out</w-button>
     </w-menu>
-
-    
-    
   </div>
 </template>
 
@@ -39,8 +37,7 @@ export default {
           credentials: "include",
         });
         if (response.status == 200) {
-          console.log("successful logout");
-          this.state.currentUser = ""
+          this.state.currentUser = "";
         }
         this.getSession();
       } catch (err) {

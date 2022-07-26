@@ -79,13 +79,12 @@ export default {
   },
   methods: {
     openLink(link) {
-      window.open(link)
+      window.open(link);
     },
     async getPublicBookShelves() {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
       this.books = this.shuffle(data);
-      console.log(data);
     },
     getUsername() {},
     reset() {
@@ -95,7 +94,6 @@ export default {
     bookClickHandler(Nindex) {
       this.$emit("openBookContent");
       if (this.IndexOfOpenedBook != Nindex && this.isBookOpen === true) {
-        console.log("if");
         this.openBookContent(Nindex);
         this.closeBookContent(this.IndexOfOpenedBook);
         this.isBookOpen = true;
@@ -104,18 +102,15 @@ export default {
         this.IndexOfOpenedBook === Nindex &&
         this.isBookOpen === true
       ) {
-        console.log("else-if");
         this.closeBookContent(Nindex);
         this.isBookOpen = false;
       } else if (
         this.IndexOfOpenedBook === Nindex &&
         this.isBookOpen === false
       ) {
-        console.log("else-if: 2");
         this.openBookContent(Nindex);
         this.isBookOpen = true;
       } else {
-        console.log("else");
         this.openBookContent(Nindex);
         this.IndexOfOpenedBook = Nindex;
         this.isBookOpen = true;
@@ -218,7 +213,6 @@ span {
   display: flex;
   justify-content: space-evenly;
 }
-
 
 @media only screen and (max-width: 684px) {
   .book-recommend {
