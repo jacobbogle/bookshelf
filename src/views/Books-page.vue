@@ -62,7 +62,7 @@
                 Google
                 <w-icon>mdi mdi-link</w-icon></w-button
               ><!-- Product Link -->
-              <w-button @click="deleteBook(book._id)" s>
+              <w-button @click="closeAllBooks(), deleteBook(book._id)" s>
                 DELETE <w-icon>mdi mdi-delete</w-icon>
               </w-button>
             </div>
