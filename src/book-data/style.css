@@ -1,4 +1,4 @@
-*:not(html) {
+*:not(html, .bm-menu) {
   border-radius: 10px;
   user-select: none;
 }

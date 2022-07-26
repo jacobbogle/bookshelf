@@ -4,7 +4,7 @@
       ><a>Sign In</a></router-link
     >
     <w-flex v-else align-center class="pr5">
-      <p class="pr2">{{ state.currentUser }}</p>
+      <p class="pr2"></p>
       <w-button
       icon="mdi mdi-account-circle"
       xl

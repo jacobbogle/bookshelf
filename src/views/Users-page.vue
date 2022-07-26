@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <h1 class="mt10">Users</h1>
+    <h1 class="mt12">Users</h1>
     <w-input id="searchUser" class="mt3 pl3 pr3 mb10" bg-color="secondary" type="text" label="Search" v-model="searchInput" />
     <div v-for="(user, index) in filteredUsers" :key="index">
       <h2 @click="getUsersBookshelf(user._id)">

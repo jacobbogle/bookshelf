@@ -14,16 +14,18 @@ const SearchBar = () => {
   //makes the querystring and adds the needed api string for the GET of google books api
   //example : [?q=<searchTitle>&key=<googleApiKey>]
   //this needs to be appended to the url
-  function urlString() {
+  function urlString(Num) {
     let title = encodeURIComponent(state.value.searchTitle);
+
     let key = googleApiKey;
-    return "?q=" + title + "&maxResults=11" + "&key=" + key;
+    let num = Num
+    return "?q=" + title + "&maxResults="+ num + "&key=" + key;
   }
 
   //returns a json file of related books from searchTitle
-  const searchByTitle = async () => {
+  const searchByTitle = async (Num) => {
     try {
-      let URLSTRING = urlString();
+      let URLSTRING = urlString(Num);
       await fetch(googleBooksURL + "/volumes" + URLSTRING)
         .then((res) => {
           let response = res.json();
@@ -31,7 +33,6 @@ const SearchBar = () => {
         })
         .then((data) => {
           state.value.books = shuffle(data.items)
-          console.log(state.value.books);
         });
     } catch (err) {
       console.log(err);

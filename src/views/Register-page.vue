@@ -1,6 +1,5 @@
 <template>
   <div id="wrapper">
-    <h1>Register</h1>
     <w-card content-class="pa0">
       <div class="message-box">
         <w-transition-fade>

@@ -1,19 +1,29 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
-    <w-flex justify-center align-center>
+    <w-flex class="mt12" justify-center align-center>
       <w-form ref="test" id="searchBar">
+        <w-slider
+          ref="slider"
+          class="big-label.ma12 mt12 ml5 mr5"
+          v-model="sliderValue"
+          thumb-label
+          :max="40"
+          :min="10"
+          >
+        </w-slider>
         <w-input
-          class="mt12 mb4 ml5 mr5"
+          class="mt2 mb4 ml5 mr5"
           type="text"
           label="Search"
-          @keyup.enter="closeAllBooks(), searchByTitle(), searchReset()"
+          @keyup.enter="closeAllBooks(), searchFunc(), searchReset()"
           v-model="state.searchTitle"
           bg-color="secondary"
+          autocomplete="off"
         />
       </w-form>
     </w-flex>
     <w-flex justify-center align-center>
-      <w-button xl v-on:click="searchByTitle()">Search</w-button>
+      <w-button xl v-on:click="closeAllBooks(), searchFunc(), searchReset()">Search</w-button>
       <a id="scanner" class="ml4" bg-color="secondary">
         <img
           @click="toScanner()"
@@ -74,6 +84,7 @@ export default {
   },
   data() {
     return {
+      sliderValue: 15,
       isBookOpen: false,
       IndexOfOpenedBook: null,
       bookObject: {
@@ -88,6 +99,10 @@ export default {
     };
   },
   methods: {
+    searchFunc() {
+      let Num = this.sliderValue
+      this.searchByTitle(Math.floor(Num))
+    },
     openLink(link) {
       window.open(link)
     },
