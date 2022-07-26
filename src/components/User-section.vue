@@ -4,7 +4,7 @@
       ><a>Sign In</a></router-link
     >
     <w-flex v-else align-center class="pr5">
-      <p class="pr2"></p>
+      
       <w-button
       icon="mdi mdi-account-circle"
       xl
@@ -12,6 +12,7 @@
       </w-button>
     </w-flex>
     <w-menu hide-on-menu-click v-show="state.currentUser.length > 0" activator=".account-button" arrow>
+      <p  class="pr2">{{state.currentUser}}</p>
       <w-button @click="logOut()">Sign Out</w-button>
     </w-menu>
 
@@ -58,11 +59,12 @@ export default {
 a {
   cursor: pointer;
   font-size: large;
-}
-
-a,
-p {
   color: rgb(201, 201, 201);
   text-decoration: none;
+  text-align: center;
+}
+
+p {
+  text-align: center;
 }
 </style>

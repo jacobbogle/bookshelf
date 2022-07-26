@@ -1,8 +1,8 @@
 <template>
   <div id="wrapper">
     <w-flex row justify-center align-center class="mt12" gap="3">
-      <w-button lg v-if="state.bookshelf.public === true"  @click="patchBookShelfPublic()">Is Private</w-button>
-      <w-button lg v-else  @click="patchBookShelfPublic()">Is Public</w-button>
+      <w-button lg v-if="state.bookshelf.public === true"  @click="patchBookShelfPublic()">Public Bookshelf</w-button>
+      <w-button lg v-else  @click="patchBookShelfPublic()">Private Bookshelf</w-button>
       <w-button  lg v-show="viewComments === false" @click="viewComments = true">See Comments</w-button>
       <w-button lg  v-show="viewComments === true" @click="viewComments = false">See Books</w-button>
     </w-flex>

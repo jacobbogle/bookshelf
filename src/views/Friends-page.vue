@@ -19,7 +19,7 @@
       </div>
     </div>
     <div v-if="activeTabNum === 1">
-      <div v-show="friends.length === 0 || friends[0].value != 1" ><h1 class="mr3 ml3">Don't worry we built it so they will come.</h1></div>
+      <div v-show="friends.length === 0 || friends[0].value == 1" ><h1 class="mr3 ml3">Don't worry we built it so they will come.</h1></div>
       <div  v-for="(friend, index) in friends" :key="index">
         <h2 class="mt8 mb2 secondary" color="" v-if="friend.value == 1">
           <w-card bg-color="secondary" color="primary" >{{ friend.name }}</w-card>
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div v-if="activeTabNum === 2">
-      <div v-show="friends.length === 0" ><h1 class="mr3 ml3">Waiting on you...</h1></div>
+      <div v-show="friends.length === 0 || friends[0].value == 2" ><h1 class="mr3 ml3">Waiting on you...</h1></div>
       <div v-for="(friend, index) in friends" :key="index">
         <h2 class="mb1">
           <w-card bg-color="secondary" color="primary" v-if="friend.value == 2">{{ friend.name }}</w-card>
