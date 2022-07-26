@@ -20,7 +20,7 @@ const bookSchema = new mongoose.Schema({
     type: String,
   },
   user_id: {
-    type: String,
+    type: [String],
   },
   isbn: {
     type: String,

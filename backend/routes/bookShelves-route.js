@@ -26,9 +26,18 @@ router.post("", async (req, res) => {
         link: req.body.link,
         description: req.body.description,
         isbn: req.body.isbn,
+        user_id: [req.user.id],
       });
     } else if (testBookInDatabase) {
       book = testBookInDatabase;
+      let test = await bookModel.findOneAndUpdate(
+        { _id: testBookInDatabase._id.toString() },
+        {
+          $push: { user_id: req.user.id },
+        },
+        { new: true }
+      );
+      console.log(test);
     }
   } catch (err) {
     console.log(err);
