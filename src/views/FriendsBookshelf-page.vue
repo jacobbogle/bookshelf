@@ -72,7 +72,7 @@
             <w-button
               v-show="hover"
               v-if="checkIfDeleteable(post)"
-              @click="deletePost(bookshelf.posts[i]._id, bookshelf._id), hover = false"
+              @click="deletePost(bookshelf.posts[i]._id, bookshelf._id)"
               class="mt1 ml3"
             >
               Delete
@@ -316,9 +316,9 @@ i {
 }
 
 #comments {
-  width: 100%;
+  width: 70vw;
   max-height: 700px;
-  max-width: 1400px;
+  max-width: 700px;
   overflow-y: scroll;
   overflow:scroll;
 }
