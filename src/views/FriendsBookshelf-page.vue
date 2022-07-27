@@ -105,6 +105,7 @@
           type="text"
           label="Leave A Comment"
           v-model="postInput"
+          @keyup.enter="console.log(hi)"
         />
         <w-button @click="postPosts()">Add Comment</w-button>
       </w-flex>
@@ -153,7 +154,8 @@ export default {
       window.open(link);
     },
     async postPosts() {
-      let newPost = {
+      if (this.postInput != "") {
+        let newPost = {
         comment: this.postInput,
         bookshelf_id: this.bookshelf._id,
       };
@@ -165,8 +167,11 @@ export default {
         },
         credentials: "include",
       });
+      this.postInput = "";
       this.getFriendsBookshelf();
       this.postInput = "";
+      }
+      
     },
 
     async getFriendsBookshelf() {

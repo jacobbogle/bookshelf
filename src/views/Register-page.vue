@@ -64,6 +64,7 @@
           required
           outline
           shadow
+          @keyup.enter="userRegister()"
         />
 
       </w-form>

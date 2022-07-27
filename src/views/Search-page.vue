@@ -13,6 +13,8 @@
     </div>
     <w-flex class="mt12" justify-center align-center>
       <w-form ref="test" id="searchBar">
+
+        <h5>Search #</h5>
         <w-slider
           ref="slider"
           class="big-label.ma12 mt12 ml5 mr5"
@@ -22,6 +24,7 @@
           :min="10"
         >
         </w-slider>
+
         <w-input
           class="mt2 mb4 ml5 mr5"
           type="text"
@@ -292,6 +295,10 @@ export default {
 
 #scanner:hover {
   background-color: white;
+}
+
+h5 {
+  color: rgb(201, 201, 201);
 }
 
 #scanner img {

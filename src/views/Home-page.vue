@@ -9,7 +9,7 @@
             params: { name: object.username, id: object.user_id },
           }"
         >
-          <span class="ml12" id="usernamePublic">
+          <span class="ml12 pl2 pr2 pb1" id="usernamePublic">
             {{ object.username }}
           </span>
         </router-link>
