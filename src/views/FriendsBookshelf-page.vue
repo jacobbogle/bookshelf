@@ -105,7 +105,7 @@
           type="text"
           label="Leave A Comment"
           v-model="postInput"
-          @keyup.enter="console.log(hi)"
+          @keydown.enter.stop="postPosts()"
         />
         <w-button @click="postPosts()">Add Comment</w-button>
       </w-flex>
@@ -143,6 +143,7 @@ export default {
     this.getSession();
   },
   methods: {
+    test() {},
     compareName(name) {
       if (name === this.username) {
         return true;
@@ -156,22 +157,21 @@ export default {
     async postPosts() {
       if (this.postInput != "") {
         let newPost = {
-        comment: this.postInput,
-        bookshelf_id: this.bookshelf._id,
-      };
-      await fetch(`http://localhost:3000/posts`, {
-        method: "POST",
-        body: JSON.stringify(newPost),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-      this.postInput = "";
-      this.getFriendsBookshelf();
-      this.postInput = "";
+          comment: this.postInput,
+          bookshelf_id: this.bookshelf._id,
+        };
+        await fetch(`http://localhost:3000/posts`, {
+          method: "POST",
+          body: JSON.stringify(newPost),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        this.postInput = "";
+        this.getFriendsBookshelf();
+        this.postInput = "";
       }
-      
     },
 
     async getFriendsBookshelf() {

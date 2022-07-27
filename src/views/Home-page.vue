@@ -91,9 +91,19 @@ export default {
     async getPublicBookShelves() {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
-      this.books = this.shuffle(data);
-      this.listOfUsernames = Object.keys(data);
+      let newData = [];
+      for (let i in data) {
+        console.log(data[i].books);
+        console.log(data[i].books.length);
+        if (data[i].books.length === 0) {
+          console.log("data is empty");
+        } else {
+          newData.push(data[i]);
+        }
+      }
+      this.books = this.shuffle(newData);
       console.log(data);
+      console.log(newData);
     },
     getUsername() {},
     reset() {
