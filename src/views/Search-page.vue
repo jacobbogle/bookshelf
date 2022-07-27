@@ -14,7 +14,7 @@
     <w-flex class="mt12" justify-center align-center>
       <w-form ref="test" id="searchBar">
 
-        <h5>Search #</h5>
+        <h5>Search Amount</h5>
         <w-slider
           ref="slider"
           class="big-label.ma12 mt12 ml5 mr5"

@@ -105,7 +105,6 @@
           type="text"
           label="Leave A Comment"
           v-model="postInput"
-          @keyup.enter="console.log(hi)"
         />
         <w-button @click="postPosts()">Add Comment</w-button>
       </w-flex>
