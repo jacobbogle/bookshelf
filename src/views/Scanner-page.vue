@@ -74,7 +74,7 @@ export default {
       bookObject: {
         image: "",
         title: "",
-        rating: null,
+        // rating: null,
         authors: "",
         link: "",
         description: "",
@@ -118,6 +118,7 @@ export default {
       this.bookObject.isbn = this.isbnGive(
         this.state.scannedBooks.items[index].volumeInfo.industryIdentifiers
       );
+      console.log(this.bookObject);
     },
     isbnGive(text) {
       try {
@@ -149,12 +150,12 @@ export default {
     numGive(num) {
       try {
         if (num > 0) {
-          return num + " // 5";
+          return num;
         } else {
-          return "N/A";
+          return 0;
         }
       } catch (error) {
-        return "N//A";
+        return 0;
       }
     },
     imageTest(book) {
