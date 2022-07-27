@@ -6,7 +6,7 @@
           <router-link @click="closeMenu" to="/"><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-home</w-icon>Home</w-flex></span></router-link>
         
           <router-link @click="closeMenu" to="/books"
-            ><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-bookshelf</w-icon>Books</w-flex></span></router-link
+            ><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-bookshelf</w-icon>Bookshelf</w-flex></span></router-link
           >
           <router-link @click="closeMenu" to="/search"
             ><span><w-flex justify-center align-center><w-icon class="mr8" color="secondary">mdi mdi-magnify</w-icon>Search</w-flex></span></router-link

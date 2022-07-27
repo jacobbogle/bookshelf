@@ -8,7 +8,7 @@
       center
     ></w-tabs>
     <div v-if="activeTabNum === 0">
-      <h3 style="color: white" class="mr3 ml3 mb3">
+      <h3 class="mr3 ml3 mb3">
         Reach out young scholar. Your friends await!
       </h3>
       <div v-for="(friend, index) in friends" :key="index">
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div v-if="activeTabNum === 1">
-      <h3 style="color: white" class="mr3 ml3 mb3">
+      <h3 class="mr3 ml3 mb3">
         Don't worry we built it so they will come.
       </h3>
       <div v-for="(friend, index) in friends" :key="index">
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div v-if="activeTabNum === 2">
-      <h3 style="color: white" class="mr3 ml3 mb3">Waiting on them...</h3>
+      <h3 class="mr3 ml3 mb3">Waiting on them...</h3>
       <div v-for="(friend, index) in friends" :key="index">
         <h2 class="mb1">
           <w-card
@@ -165,6 +165,10 @@ h1 {
 
 h2 {
   text-align: center;
+}
+
+h3 {
+  color: rgb(201, 201, 201);
 }
 
 #name {
