@@ -70,7 +70,9 @@ const SearchBar = () => {
     if (response.status == 400) {
       state.value.responseStatus = response.status;
     } else if (response.status == 200) {
-      state.value.responseStatus = null;
+      state.value.responseStatus = response.status;
+    } else {
+      state.value.responseStatus = response.status;
     }
   };
 

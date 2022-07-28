@@ -1,5 +1,25 @@
 <template>
   <div id="wrapper">
+    <div class="message-box">
+      <w-transition-fade>
+        <w-alert
+          v-if="state.responseStatus === 400"
+          error
+          no
+          border
+          clas="my0 text-light"
+        >
+          This Book Is Already In Your Bookshelf</w-alert
+        >
+        <w-alert
+          v-if="state.responseStatus === 200"
+          success
+          no-border
+          class="my0 text-light"
+          >Book Added Successfully</w-alert
+        >
+      </w-transition-fade>
+    </div>
     <StreamBarcodeReader
       ref="scannerCam"
       v-show="bookSearched === false"
