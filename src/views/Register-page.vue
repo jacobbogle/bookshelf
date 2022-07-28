@@ -7,7 +7,8 @@
             v-if="state.responseStatus === 201"
             success
             no-border
-            class="my0 text-light">
+            class="my0 text-light"
+          >
             Setting up your accout!
           </w-alert>
 
@@ -23,14 +24,15 @@
             v-else-if="state.responseStatus === 500"
             error
             no-border
-            class="my0 text-light">
-          That email or username is already taken. try again...
+            class="my0 text-light"
+          >
+            That email or username is already taken. try again...
           </w-alert>
         </w-transition-fade>
       </div>
 
       <w-form class="centered">
-
+        <h1 class="mb12">Registration</h1>
         <w-input
           label="Username"
           v-model="username"
@@ -89,14 +91,13 @@
           shadow
           @keyup.enter="userRegister()"
         />
-
       </w-form>
     </w-card>
-    <br>
+    <br />
     <w-flex column align-center justify-center class="mt4">
       <w-button @click="userRegister()" type="submit">Register</w-button>
-      <br>
-      <w-button @click="this.$router.go({path: '/login'})">Login</w-button>
+      <br />
+      <w-button @click="this.$router.go({ path: '/login' })">Login</w-button>
     </w-flex>
   </div>
 </template>
@@ -105,8 +106,8 @@
 import Register from "../models/register";
 export default {
   setup() {
-    const {state, postUser} = Register();
-    return {state, postUser};
+    const { state, postUser } = Register();
+    return { state, postUser };
   },
   data() {
     return {
@@ -116,8 +117,8 @@ export default {
       passwordOne: '',
       passwordTwo: '',
       validators: {
-      required: value => !!value || 'This field is required',
-      }
+        required: (value) => !!value || "This field is required",
+      },
     };
   },
   methods: {
@@ -145,7 +146,6 @@ h1 {
   align-content: center;
   justify-content: center;
 }
-
 
 h1 {
   color: white;

@@ -1,35 +1,39 @@
 <template>
   <div id="wrapper" class="mt7">
-    <w-card content-class="pa0" >
-
+    <w-card content-class="pa0">
       <div class="message-box">
         <w-transition-fade>
           <w-alert
             v-if="state.responseStatus === 201"
             success
             no-border
-            class="my0 text-light">
+            class="my0 text-light"
+          >
             Trying to sign you in!
           </w-alert>
 
           <w-alert
-            v-else-if="state.responseStatus === 401" 
+            v-else-if="state.responseStatus === 401"
             error
             no-border
-            class="my0 text-light">
-          Wrong Password</w-alert>
+            class="my0 text-light"
+          >
+            Wrong Password</w-alert
+          >
 
           <w-alert
             v-else-if="state.responseStatus === 500"
             error
             no-border
-            class="my0 text-light">
-          Hmmm... Something went wrong. Try again.
+            class="my0 text-light"
+          >
+            Hmmm... Something went wrong. Try again.
           </w-alert>
         </w-transition-fade>
       </div>
 
       <w-form class="centered">
+        <h1 class="mb12">Log In</h1>
 
         <w-input
           class="mb3"
@@ -62,20 +66,21 @@
     </w-card>
     <w-flex column align-center justify-center class="mt4">
       <w-button @click="loginFunc()" type="submit">Sign In</w-button>
-      <br>
-      <w-button @click="google()" >Google Sign In</w-button>
-      <br>
+      <br />
+      <w-button @click="google()">Google Sign In</w-button>
+      <br />
       <p>Don't have an acount?</p>
-      <br>
-      <w-button @click="this.$router.push({ path: '/register'})">Sign Up</w-button>
+      <br />
+      <w-button @click="this.$router.push({ path: '/register' })"
+        >Sign Up</w-button
+      >
     </w-flex>
   </div>
-    
 </template>
 
 <script>
 import Login from "../models/login";
-import User from "../models/user"
+import User from "../models/user";
 
 export default {
   setup() {
@@ -89,27 +94,30 @@ export default {
       password: "",
       isPassword: true,
       validators: {
-      required: value => !!value || 'This field is required',
-      }
+        required: (value) => !!value || "This field is required",
+      },
     };
   },
   methods: {
     async loginFunc() {
-      await this.postSession(this.email, this.password)
-      await this.getSession
+      await this.postSession(this.email, this.password);
+      await this.getSession;
     },
     async google() {
-      await window.open('http://localhost:3000/auth/google', 'newwindow','width=500,height=600')
+      await window.open(
+        "http://localhost:3000/auth/google",
+        "newwindow",
+        "width=500,height=600"
+      );
     },
   },
-}
+};
 </script>
 
 <style scoped>
 .mdi-email::before {
-  color: #2196f3 !important
+  color: #2196f3 !important;
 }
-
 
 #wrapper {
   grid-column: 1/-1;
@@ -136,10 +144,10 @@ p {
   cursor: default;
 }
 
-a, p {
+a,
+p {
   font-weight: 700;
   color: rgb(201, 201, 201);
   text-decoration: none;
 }
-
 </style>
