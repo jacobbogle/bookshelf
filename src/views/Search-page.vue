@@ -9,11 +9,17 @@
           class="my0 text-light"
           >This Book Is Already In Your Bookshelf</w-alert
         >
+        <w-alert
+          v-if="state.responseStatus === 200"
+          success
+          no-border
+          class="my0 text-light"
+          >Book Added Successfully</w-alert
+        >
       </w-transition-fade>
     </div>
     <w-flex class="mt12" justify-center align-center>
       <w-form ref="test" id="searchBar">
-
         <h5>Search Amount</h5>
         <w-slider
           ref="slider"

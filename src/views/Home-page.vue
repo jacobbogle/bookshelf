@@ -1,5 +1,23 @@
 <template>
   <div id="wrapper" @dblclick="closeAllBooks()">
+    <div class="message-box">
+      <w-transition-fade>
+        <w-alert
+          v-if="state.responseStatus === 400"
+          error
+          no-border
+          class="my0 text-light"
+          >This Book Is Already In Your Bookshelf</w-alert
+        >
+        <w-alert
+          v-if="state.responseStatus === 200"
+          success
+          no-border
+          class="my0 text-light"
+          >Book Added Successfully</w-alert
+        >
+      </w-transition-fade>
+    </div>
     <h1 class="mt12 mb8">Public Shelves</h1>
     <div class="user-shelf">
       <div v-for="(object, i) in books" :key="i">
@@ -65,8 +83,8 @@
 import Search from "../models/search";
 export default {
   setup() {
-    const { postBook, shuffle } = Search();
-    return { postBook, shuffle };
+    const { postBook, shuffle, state } = Search();
+    return { postBook, shuffle, state };
   },
   data() {
     return {

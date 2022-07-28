@@ -9,6 +9,13 @@
           class="my0 text-light"
           >Can't Double Add User</w-alert
         >
+        <w-alert
+          v-if="responseStatus === 201"
+          success
+          no-border
+          class="my0 text-light"
+          >Friend Request Sent</w-alert
+        >
       </w-transition-fade>
     </div>
     <h1 class="mt12">Users</h1>
@@ -20,7 +27,11 @@
       label="Search"
       v-model="searchInput"
     />
-    <div v-show="searchInput.length > 0" v-for="(user, index) in filteredUsers" :key="index">
+    <div
+      v-show="searchInput.length > 0"
+      v-for="(user, index) in filteredUsers"
+      :key="index"
+    >
       <h2 @click="getUsersBookshelf(user._id)">
         {{ user.username }}
       </h2>
@@ -67,7 +78,7 @@ export default {
       if (response.status == 400) {
         this.responseStatus = 400;
       } else if (response.status == 201) {
-        this.responseStatus = null;
+        this.responseStatus = 201;
       }
     },
   },
