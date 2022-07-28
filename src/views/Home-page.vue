@@ -9,7 +9,7 @@
             params: { name: object.username, id: object.user_id },
           }"
         >
-          <span class="ml12 pl2 pr2 pb1" id="usernamePublic">
+          <span class="ml12" id="usernamePublic">
             {{ object.username }}
           </span>
         </router-link>
@@ -91,15 +91,9 @@ export default {
     async getPublicBookShelves() {
       let response = await fetch("http://localhost:3000/bookshelves/public");
       let data = await response.json();
-      let newData = [];
-      for (let i in data) {
-        if (data[i].books.length === 0) {
-          console.log("data is empty");
-        } else {
-          newData.push(data[i]);
-        }
-      }
-      this.books = this.shuffle(newData);
+      this.books = this.shuffle(data);
+      this.listOfUsernames = Object.keys(data);
+      console.log(data);
     },
     getUsername() {},
     reset() {
