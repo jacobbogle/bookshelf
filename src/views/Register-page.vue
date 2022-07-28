@@ -12,6 +12,14 @@
           </w-alert>
 
           <w-alert
+            v-else-if="this.passwordOne != this.passwordTwo"
+            error
+            no-border
+            class="my0 text-light">
+            Passwords dont match!
+          </w-alert>
+
+          <w-alert
             v-else-if="state.responseStatus === 500"
             error
             no-border
@@ -52,9 +60,24 @@
         />
 
         <w-input
-          v-model="password"
+          v-model="passwordOne"
           class="mb3"
           label="Password"
+          :validators="[validators.required]"
+          name="password"
+          :type="isPassword ? 'password' : 'text'"
+          :inner-icon-right="isPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
+          @click:inner-icon-right="isPassword = !isPassword"
+          bg-color="secondary"
+          required
+          outline
+          shadow
+        />
+
+        <w-input
+          v-model="passwordTwo"
+          class="mb3"
+          label="Confirm Password"
           :validators="[validators.required]"
           name="password"
           :type="isPassword ? 'password' : 'text'"
@@ -89,8 +112,9 @@ export default {
     return {
       username: "",
       email: "",
-      password: "",
       isPassword: true,
+      passwordOne: '',
+      passwordTwo: '',
       validators: {
       required: value => !!value || 'This field is required',
       }
@@ -98,7 +122,9 @@ export default {
   },
   methods: {
     userRegister() {
-      this.postUser(this.email, this.username, this.password)
+      if (this.passwordOne === this.passwordTwo) {
+        this.postUser(this.email, this.username, this.passwordTwo)
+      }
     }
   },
 };
