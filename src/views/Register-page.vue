@@ -72,7 +72,7 @@
     <w-flex column align-center justify-center class="mt4">
       <w-button @click="userRegister()" type="submit">Register</w-button>
       <br>
-      <w-button @click="this.$router.go({path: '/login'})">Login</w-button>
+      <!-- <w-button @click="this.$router.go({path: '/login'})">Login</w-button> -->
     </w-flex>
   </div>
 </template>

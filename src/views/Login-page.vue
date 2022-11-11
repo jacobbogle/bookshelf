@@ -63,7 +63,7 @@
     <w-flex column align-center justify-center class="mt4">
       <w-button @click="loginFunc()" type="submit">Sign In</w-button>
       <br>
-      <w-button @click="google()" >Google Sign In</w-button>
+      <!-- <w-button @click="google()" >Google Sign In</w-button> -->
       <br>
       <p>Don't have an acount?</p>
       <br>
