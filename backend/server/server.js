@@ -5,12 +5,20 @@ const app = express();
 const cors = require("cors");
 const setUpAuth = require("./auth");
 const setUpSession = require("./session");
-// app.use(express.static("public"))
-//Middle wear
+
+const path = require("path");
+
+
+const path2 = path.join(__dirname, "../../public", "index.html")
+app.use(express.static(path2))
+app.get('/', function (req,res) {
+  res.sendFile(path2);
+});
+
 app.use(express.json());
 
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin: "http://localhost:3000",
   credentials: true,
 };
 app.use(cors(corsOptions));

@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createSSRApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import WaveUI from 'wave-ui'
@@ -6,7 +6,8 @@ import 'wave-ui/dist/wave-ui.css'
 import '@mdi/font/css/materialdesignicons.min.css'
 
  // <---
- const app = createApp(App)
+//  edit
+const app = createSSRApp(App)
 
 new WaveUI(app, {
   // Some Wave UI options.
@@ -17,3 +18,13 @@ new WaveUI(app, {
 })
 app.use(router)
 app.mount('#app');
+
+
+
+// // app.js (shared between server and client)
+// import { createSSRApp } from 'vue'
+
+// export function createApp() {
+//   return createSSRApp(App)
+// }
+

@@ -13,7 +13,7 @@ import FriendsBookshelf from "@/views/FriendsBookshelf-page.vue";
 const routes = [
   {
     //we are kind of linking everything together here to use esle where.
-    path: "", // Used to link to App.vue.
+    path: "/", // Used to link to App.vue.
     name: "Home", // dont know yet.
     component: Home, // links the top imports, linking everything to everything else.
   },
