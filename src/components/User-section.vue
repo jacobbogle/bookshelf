@@ -34,7 +34,7 @@ export default {
   methods: {
     async logOut() {
       try {
-        let response = await fetch("http://localhost:3000/logout", {
+        let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/logout", {
           credentials: "include",
         });
         if (response.status == 200) {

@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async getUsers() {
-      let response = await fetch("http://localhost:3000/users", {
+      let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/users", {
         credentials: "include",
       });
       let data = await response.json();
@@ -32,7 +32,7 @@ export default {
 
     async getUsersBookshelf(userid) {
       let response = await fetch(
-        `http://localhost:3000/bookshelves/${userid}`,
+        `http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves/${userid}`,
         {
           credentials: "include",
         }
@@ -44,7 +44,7 @@ export default {
 
     async sendFriendRequest(userid) {
       let response = await fetch(
-        `http://localhost:3000/friends/send/${userid}`,
+        `http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/friends/send/${userid}`,
         {
           method: "PATCH",
           credentials: "include",

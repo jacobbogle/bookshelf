@@ -7,7 +7,7 @@ const BookShelf = () => {
   });
 
   const getBooks = async function () {
-    let response = await fetch("http://localhost:3000/bookshelves/books", {
+    let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves/books", {
       credentials: "include",
     });
     let data = await response.json();
@@ -16,7 +16,7 @@ const BookShelf = () => {
   };
 
   const getBookshelf = async function () {
-    let response = await fetch("http://localhost:3000/bookshelves", {
+    let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves", {
       credentials: "include",
     });
     let data = await response.json();
@@ -26,7 +26,7 @@ const BookShelf = () => {
 
   const deleteBook = async function (bookID) {
     console.log(bookID);
-    let response = await fetch(`http://localhost:3000/bookshelves/${bookID}`, {
+    let response = await fetch(`http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves/${bookID}`, {
       method: "DELETE",
       credentials: "include",
     });

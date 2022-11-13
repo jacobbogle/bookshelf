@@ -82,7 +82,7 @@ export default {
       window.open(link)
     },
     async getPublicBookShelves() {
-      let response = await fetch("http://localhost:3000/bookshelves/public");
+      let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves/public");
       let data = await response.json();
       this.books = this.shuffle(data);
       console.log(data);

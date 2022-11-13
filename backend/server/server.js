@@ -10,7 +10,7 @@ const setUpSession = require("./session");
 app.use(express.json());
 
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin: "https://git.heroku.com/cryptic-island-01171.git",
   credentials: true,
 };
 app.use(cors(corsOptions));

@@ -99,7 +99,7 @@ export default {
       await this.getSession
     },
     async google() {
-      await window.open('http://localhost:3000/auth/google', 'newwindow','width=500,height=600')
+      await window.open('http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/auth/google', 'newwindow','width=500,height=600')
     },
   },
 }

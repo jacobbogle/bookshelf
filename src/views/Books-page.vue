@@ -118,7 +118,7 @@ export default {
         comment: this.postInput,
         bookshelf_id: this.state.bookshelf._id,
       };
-      let response = await fetch(`http://localhost:3000/posts`, {
+      let response = await fetch(`http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/posts`, {
         method: "POST",
         body: JSON.stringify(newPost),
         headers: {
@@ -192,7 +192,7 @@ export default {
       } else {
         requestBody["public"] = true;
       }
-      let response = await fetch("http://localhost:3000/bookshelves", {
+      let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves", {
         credentials: "include",
         method: "PATCH",
         body: JSON.stringify(requestBody),
@@ -207,7 +207,7 @@ export default {
     },
     async deletePost(postID, bookshelfID) {
       let response = await fetch(
-        `http://localhost:3000/posts/${postID}/bookshelf/${bookshelfID}`,
+        `http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/posts/${postID}/bookshelf/${bookshelfID}`,
         {
           method: "DELETE",
           credentials: "include",

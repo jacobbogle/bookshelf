@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     async getFriends() {
-      let response = await fetch("http://localhost:3000/friends", {
+      let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/friends", {
         credentials: "include",
       });
       let data = await response.json();
@@ -76,7 +76,7 @@ export default {
     },
 
     async acceptFriendRequest(id) {
-      let response = await fetch(`http://localhost:3000/friends/accept/${id}`, {
+      let response = await fetch(`http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/friends/accept/${id}`, {
         method: "PATCH",
         credentials: "include",
       });
@@ -86,7 +86,7 @@ export default {
     },
 
     async denyFriendRequest(id) {
-      let response = await fetch(`http://localhost:3000/friends/deny/${id}`, {
+      let response = await fetch(`http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/friends/deny/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

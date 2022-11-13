@@ -59,7 +59,7 @@ const SearchBar = () => {
       isbn: book.isbn,
     };
     console.log("newBook: ", newBook);
-    let response = await fetch("http://localhost:3000/bookshelves", {
+    let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves", {
       method: "POST",
       body: JSON.stringify(newBook),
       headers: {

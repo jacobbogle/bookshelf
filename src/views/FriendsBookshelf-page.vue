@@ -141,7 +141,7 @@ export default {
         comment: this.postInput,
         bookshelf_id: this.bookshelf._id,
       };
-      let response = await fetch(`http://localhost:3000/posts`, {
+      let response = await fetch(`http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/posts`, {
         method: "POST",
         body: JSON.stringify(newPost),
         headers: {
@@ -157,7 +157,7 @@ export default {
 
     async getFriendsBookshelf() {
       let response = await fetch(
-        `http://localhost:3000/bookshelves/${this.id}`,
+        `http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves/${this.id}`,
         {
           credentials: "include",
         }
@@ -168,7 +168,7 @@ export default {
     },
     async getFriendsBooks() {
       let response = await fetch(
-        `http://localhost:3000/bookshelves/books/${this.id}`,
+        `http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/bookshelves/books/${this.id}`,
         {
           credentials: "include",
         }
@@ -234,7 +234,7 @@ export default {
 
     async deletePost(postID, bookshelfID) {
       let response = await fetch(
-        `http://localhost:3000/posts/${postID}/bookshelf/${bookshelfID}`,
+        `http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/posts/${postID}/bookshelf/${bookshelfID}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -246,7 +246,7 @@ export default {
     },
 
     async getSession() {
-      let response = await fetch("http://localhost:3000/session", {
+      let response = await fetch("http://mongodb+srv://bogle:pleasework@cluster0.86noxeo.mongodb.net/?retryWrites=true&w=majority/session", {
         credentials: "include",
       });
       if (response.status == 200) {
