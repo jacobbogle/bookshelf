@@ -1,0 +1,9 @@
+{
+    "API_KEY": "AIzaSyCPVCGAuh8MmIzEBxQK1OyPt21c2DLbG74",
+
+    "GOOGLE_CLIENT_ID": "1010499892824-u6umagvodajh2scqfm8save6qnkg20nm.apps.googleusercontent.com",
+
+    "GOOGLE_CLIENT_SECRET": "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",
+
+    "GOOGLE_AUTH_REDIRECT_URL": "http://localhost:3000/api/session/auth/google"
+}
