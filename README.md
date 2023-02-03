@@ -26,7 +26,7 @@ SESSION_SECRET = <replace me with secret>
 
 ### Compiles and hot-reloads for development
 ```
-npm start
+vercel dev
 ```
 
 ### Compiles and minifies for production
