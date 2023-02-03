@@ -1,4 +1,6 @@
-# bookshelf
+# bookshelfpurple
+
+## full site --> 👉 https://bookshelfpurple.vercel.app/ 👈
 
 ## Project setup
 ```
@@ -15,12 +17,6 @@ PORT = 3000
 
 SESSION_SECRET = <replace me with secret>
 
-GOOGLE_CLIENT_ID = <replace me>
-
-GOOGLE_CLIENT_SECRET = <replace me>
-
-GOOGLE_AUTH_REDIRECT_URL = <replace me>
-```
 ## api.config.json file
 ```
 {
